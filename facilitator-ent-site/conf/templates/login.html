@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>企业服务商管理系统</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/animate.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <div class="logo-name">
+                    <img class="logo-name-img" src="/images/logo_log.png" alt="logo" />
+                </div>
+            </div>           
+            <div class="container login-box" style="margin-top: 10px;">
+            <form class="form-horizontal" id="formLogin" method="POST">
+               <div class="form-group">
+                   <h2 class="login-title">企业服务商管理系统</h2>
+               </div>
+               <div class="form-group login-text" style="margin: 15px 0px;">
+                   <input type="text" class="form-control" id="loginName" name="loginName" placeholder="登录名" th:value="${loginName}"/>
+               </div>
+               <div class="form-group login-text" style="margin: 15px 0px;">
+                   <input type="password" class="form-control" id="password" name="password" placeholder="密码" th:value="${password}"/>
+               </div>
+               <button type="submit" class="btn btn-primary block full-width m-b login-btn">登录</button>
+               <div class="validation-summary-errors" style="color:red;" th:text="${result}"></div>
+               </form>
+            </div>
+            <p class="m-t copyright"> <small style="color:#fff;">&copy; 绵阳市教育投资发展有限责任公司 保留所有权利. </small> </p>
+        </div>
+    </div>
+    <script type="text/javascript">
+  		setTimeout(function(){
+			document.getElementById("loginName").focus();
+		}, 300);
+   
+	   /*function submitForm() {
+		   $("#btnLogin").linkbutton({
+               disabled: true
+        });
+        $("#formLogin").submit();
+	   }
+
+	   $(document).ready(function(){
+		   $("#loginName").focus();
+	        $("#formLogin").keydown(function(event) {
+	            if(event.which == 13){
+	            	submitForm();
+	            }
+	        });
+	    });*/
+		</script>
+</body>
+</html>

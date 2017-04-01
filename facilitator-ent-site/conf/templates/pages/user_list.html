@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<head th:substituteby="/includes/header :: header" />
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="ibox ">
+        <div class="ibox-content">
+            <form id="searchForm" class="form-inline list-search" role="form">
+                <div class="form-group">
+                    <label>
+                        姓名 <input type="text" id="name" name="name"
+                                  class="input-sm form-control" autocomplete="off" value="" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        用户名 <input type="text" name="userName" autocomplete="off"
+                                   class="input-sm form-control" value="" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        组织机构 <input id="orz" readonly="readonly" type="text" name="orgName" autocomplete="off"
+                                    class="input-sm form-control" />
+                        <!--<div id="tree" hidden="hidden" style="position:absolute;margin-left:60px; width:180px;z-index: 999999;"></div>-->
+                        <ul id="tree" class="ztree" style="border: 1px solid #DFE4ED;position:absolute;margin-left:60px;z-index: 999999;background-color:#FFFFFF; display: none;"></ul>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        角色 <!--<select  id="role" class="selectpicker" data-style="btn-inverse	"   data-live-search="true">-->
+                        <div class="input-group">
+                            <select id="roleselect" data-placeholder="Choose a Country..." name="roleId" class="chosen-select" tabindex="-1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+            </form>
+            <div class="list-btn">
+                <button id="search" class="btn btn-primary btn-sm"
+                        onclick="search()">
+                    搜 索 <i class="fa fa-search"></i>
+                </button>
+                <button id="search-reset" class="btn btn-primary btn-sm">显示所有</button>
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm">
+                    新 增 <i class="fa fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="jqGrid_wrapper">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--<div id="add-config"  style="position:absolute; top:100px; left:50%; margin-left:-200px; width:400px;">-->
+<div id="add-config" class="modal fade" style="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="title"></h4>
+            </div>
+            <div class="modal-body" style="height:430px; overflow:auto">
+                <form id="addform" class="form-horizontal" action="/system/user/updatePwd.josn" method="post">
+
+                    <input name="id" style="display: none;" />
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*角色</label>
+                        <div class="col-md-9" style="">
+                            <select id="roleselect1" style="width:350px;" data-bv-notempty="true"
+                                    name="roleId" class="select-fixed"
+                                    tabindex="-1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*所属企业</label>
+                        <div class="col-md-9 ">
+                            <select id="companyselect" name="companyCode" class="select-fixed"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*组织机构</label>
+                        <div class="col-md-9">
+                            <input type="text" id="orz1" readonly="readonly" name="orgName" data-bv-notempty="true" class="input-sm form-control" autocomplete="off" />
+                            <!--<div id="tree1" hidden="hidden" style="position:absolute;margin-left:0px; width:250px;z-index: 999999;"></div>-->
+                            <ul id="tree1" class="ztree" style="position:absolute;margin-left:0px;width:230px;z-index: 999999;background-color:#F5F5F6;display: none;"></ul>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*用户名</label>
+                        <div class="col-md-9">
+                            <input type="text" autocomplete="off" id="userName" name="userName" placeholder=""
+                                   data-bv-notempty="true" class="input-sm form-control" checked="checked" />
+                        </div>
+                    </div>
+
+                    <div class="form-group " id="password2">
+                        <label class="col-md-2 control-label">*密码</label>
+
+                        <div class="col-md-9">
+                            <input type="password" autocomplete="off" data-bv-notempty="true" name="password" placeholder="" class="input-sm form-control" value="" />
+                        </div>
+
+                    </div>
+                    <div class="form-group" id="password3">
+                        <label class="col-md-2 control-label">*再次确认</label>
+                        <div class="col-md-9">
+                            <input id="password4" autocomplete="off" type="password" data-bv-notempty="true" name="password1" placeholder="" class="input-sm form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*姓名</label>
+                        <div class="col-md-9">
+                            <input type="text" autocomplete="off" name="name" placeholder=""
+                                   data-bv-notempty="true" class="input-sm form-control" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*Email</label>
+
+                        <div class="col-md-9">
+                            <input type="email" autocomplete="off" data-bv-notempty="true" placeholder="" name="email" class="input-sm form-control" />
+                            <!--<span class="help-block m-b-none">Email做为登录账号</span>-->
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">&nbsp;电话</label>
+
+                        <div class="col-md-9">
+                            <input type="text" autocomplete="off" name="phone" data-bv-notempty="false" placeholder="" class="input-sm form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*权限</label>
+                        <div class="col-md-9">
+                            <div class="radio i-checks">
+                                <label><input type="radio" id="power1" value="1" name="power" checked="checked" /> <i></i> 部门权限 </label>
+                                <label><input type="radio" id="power2" value="2" name="power" checked="checked" /> <i></i> 公司权限 </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">是否启用</label>
+                        <div class="col-md-9">
+                            <label class="checkbox-inline i-checks"> <input type="checkbox" name="status" id="status" checked="true" value="1" /> 启用请打勾 </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit" type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+            </div>
+            <div class="modal-body ">
+                <form id="pwdform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group ">
+                        <label class="col-md-2 control-label">*密码</label>
+
+                        <div class="col-md-9">
+                            <input type="password" data-bv-notempty="true" id="pwd" name="password" placeholder="" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">*再次确认</label>
+
+                        <div class="col-md-9">
+                            <input id="password1" type="password" data-bv-notempty="true" name="password1" placeholder="" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover1" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit1" type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+
+    $(function () {
+        $(window).resize(function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list_1').setGridWidth(width);
+
+        });
+
+        $("#orz").mouseover(function () {
+            $(this).css("cursor", "pointer");
+        }).mouseout(function () {
+            $(this).css("cursor", "default");
+        });
+        $("#orz1").mouseover(function () {
+            $(this).css("cursor", "pointer");
+        }).mouseout(function () {
+            $(this).css("cursor", "default");
+        });
+    });
+
+    var jsonCondition = {};
+    $(function () {
+
+    });
+
+    setTimeout(function () {
+        loadTree();
+        loadrole();
+        loadlist();
+        loadAddFrom();
+        formvalidate();
+        pwdvalidator();
+
+
+        document.getElementById("name").focus();
+        $('#searchForm').keydown(function (e) {
+            if (e.keyCode == 13) {
+                search();
+                e.preventDefault();
+            }
+        });
+    }, 200);
+
+    function loadlist() {
+        var dataGrid = new DataGrid({
+            multiselect: false,
+            url: '/system/user/userList.json',
+            dataGridTable: $("#table_list_1"),
+            pagerId: '#pager_list_1',
+            colNames: ['编号', '姓名', '用户名', 'Email', '联系电话', '角色', 'roleid', 'orgid', '组织机构', 'code', '所属公司', 'power', '状态', '操作'],
+            colModel: [
+                { name: 'id', index: 'id', editable: true, width: 30, align: "center", sortable: false, search: true },
+                { name: 'name', index: 'name', editable: true, width: 50, sortable: false, align: "center", classes: "text" },
+                { name: 'userName', index: 'userName', editable: true, width: 80, sortable: false, align: "center", classes: "text" },
+                { name: 'email', index: 'email', editable: true, width: 80, align: "center", sortable: false, classes: "text" },
+                { name: 'phone', index: 'phone', editable: true, sortable: false, width: 70, align: "center", classes: "text" },
+                { name: 'roleName', index: 'roleName', editable: true, width: 60, sortable: false, align: "center", classes: "text" },
+                { name: 'roleId', index: 'roleId', editable: true, sortable: false, align: "right", hidden: true },
+                { name: 'orgId', index: 'orgId', editable: true, sortable: false, align: "right", hidden: true },
+                { name: 'orgName', index: 'orgName', editable: true, width: 90, sortable: false, align: "left", classes: "text" },
+                { name: 'companyCode', index: 'compayCode', editable: true, sortable: false, align: "right", hidden: true },
+                { name: 'companyName', index: 'companyName', editable: true, width: 60, sortable: false, align: "center", classes: "text" },
+                { name: 'power', index: 'power', editable: true, sortable: false, align: "right", hidden: true },
+                { name: 'status', index: 'status', editable: true, width: 30, sortable: false, align: "center", formatter: status },
+                { name: 'operate', index: 'operate', sortable: false, width: 60, sortable: false, align: "center", formatter: addButton },
+            ]
+        });
+    }
+
+
+    function status(val, row) {
+        if (val == 1) {
+            return '<a style="cursor:default;" data-id="' + val + '" tostatus="1" title="启用" class="data-status">' +
+            '<i class="fa fa-check-square"></i></a>';
+        } else {
+            return '<a style="cursor:default;" data-id="' + val + '" tostatus="0" title="禁用" class="data-status">' +
+            '<i class="fa fa-minus-square"></i></a>';
+        }
+    }
+
+
+    function addButton(cellvalue, options, rowObject) {
+        var edit = "[[${hasEditBtn}]]" === "true";
+        var pwd = "[[${hasPwdeBtn}]]" === "true";
+        if (!edit && !pwd)
+            return "";
+
+        var cont = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
+        '<ul class="dropdown-menu">';
+        if (edit) {
+            cont = cont + '<li><a onclick="edit(' + rowObject.id + ');" >编辑用户 <i class="fa fa-edit"/></a></li>';
+        }
+        if (pwd) {
+            cont = cont + '<li><a onclick="updpwd(' + rowObject.id + ');">修改密码 <i class="fa fa-unlock"/></a></li>';
+
+        }
+        return cont + '</ul></div>';
+    }
+
+    function loadTree() {
+        $.ajax({
+            type: "GET",
+            url: "/system/user/orgInfo.json",
+            async: true,
+            dataType: "json",
+            success: function (resp) {
+                initTree(resp, "tree", false);
+            },
+            error: function (errMsg) {
+                layer.msg('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+    }
+
+
+    function loadrole() {
+        $.ajax({
+            type: "GET",
+            url: "/system/user/roleList.json",
+            async: true,
+            success: function (resp) {
+                for (i in resp) {
+                    $("#roleselect").append('<option value="' + resp[i].id + '">' + resp[i].name + '</option>');
+                }
+
+                $("#roleselect").chosen();
+                $("#roleselect").trigger("liszt:d");
+            },
+            error: function (errMsg) {
+                layer.msg('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+    }
+
+
+    function search() {
+        $($("#searchForm").serializeArray()).each(function () {
+            jsonCondition[this.name] = this.value;
+        });
+        $("#table_list_1").jqGrid("setGridParam", { search: true }).trigger("reloadGrid", [{ page: 1 }]);
+    }
+    var comCode = "";
+    function loadAddFrom() {
+        $.ajax({
+            type: "GET",
+            url: "/system/user/createInfo.json",
+            async: true,
+            dataType: "json",
+            success: function (resp) {
+                if (document.getElementById("roleselect1").options.length == 1) {
+                    for (i in resp[0].roleList) {
+                        $("#roleselect1").append('<option value="' + (resp[0].roleList)[i].id + '">' + (resp[0].roleList[i]).name + '</option>');
+                    }
+                    //      						syk.initFixedChosen(resp[0].roleList, {selector:$("#roleselect1")});
+                    $("#roleselect1").chosen({ width: "100%" });
+                    $("#roleselect1").chosen();
+                    $("#roleselect1").trigger("chosen:updated");
+                }
+                if (document.getElementById("companyselect").options.length == 0) {
+                    if (resp[0].company.length > 1) {
+                        $("#orz").parent().hide();
+                    }
+                    for (var i in resp[0].company) {
+                        $("#companyselect").append('<option value="' + (resp[0].company)[i].code + '">' + (resp[0].company)[i].fullName + '</option>');
+                    }
+                    $("#companyselect").chosen({ width: "100%" });
+                    $("#companyselect").trigger("chosen:updated");
+                    $("#companyselect").chosen();
+                    loadOrgTree($("#companyselect").val());
+                    //								initTree(resp[0].orgList,"tree1","orz1",true);
+                    $("#companyselect").on('change', function (e, param) {
+                        zTreeObj.destroy();
+                        loadOrgTree($("#companyselect").val());
+                    });
+                }
+                //						syk.initFixedChosen(resp, {selector:$("#roleselect1")});
+
+                //						setTimeout(function(){
+                //							comCode= resp[0].companyCode;
+                //			        		$("#companyselect").val(resp[0].companyCode);
+                //			        		$("#companyselect").chosen();
+                //							$("#companyselect").trigger("chosen:updated");
+                //			        	},200);
+            },
+            error: function (errMsg) {
+                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+
+    }
+    function loadOrgTree(code) {
+        $.ajax({
+            type: "get",
+            url: "/system/user/loadOrgTree.json/" + code,
+            async: true,
+            dataType: 'json',
+            success: function (resp) {
+                initTree(resp, "tree1", true);
+            },
+            error: function (errMsg) {
+                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+    }
+
+    $("#search-reset").on("click", function () {
+        $("#searchForm")[0].reset();
+        $("#roleselect").val("");
+        $("#roleselect").trigger("chosen:updated");
+        jsonCondition = {};
+        search();
+    });
+    $('#add-config').on('hide.bs.modal', function (e) {
+        setTimeout(function () {
+            document.getElementById("name").focus();
+        }, 200);
+    });
+    $('#myModal').on('hide.bs.modal', function (e) {
+        setTimeout(function () {
+            document.getElementById("name").focus();
+        }, 200);
+
+    });// input 获得焦点
+    $('#add-config').on('shown.bs.modal', function (e) {
+        $("#userName")[0].focus();// input 获得焦点
+    })
+    $('#myModal').on('shown.bs.modal', function (e) {
+        $("#pwd")[0].focus();// input 获得焦点
+    })
+    $("#add").on("click", function () {
+        $("#title").html("新增用户");
+        $("#tree1").hide();
+        $("#password2").show();
+        $("#password3").show();
+        $('#addform').bootstrapValidator('resetForm', true);
+        $("#addform")[0].reset();
+        var treeObj = $.fn.zTree.getZTreeObj("tree1");
+        treeObj.checkAllNodes(false);
+        //			$("#roleselect1").trigger("chosen:updated");
+        //			$("#companyselect").val(comCode);
+        //			$("#companyselect").chosen();
+        //			$("#companyselect").trigger("chosen:updated");
+        $('[name="status"]').iCheck("check");
+        $('#power1').iCheck("check");
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+            increaseArea: '20%' // optional
+        });
+        $("#add-config").modal('show');
+    });
+
+    $("#orz").on("click.b", function () {
+        $("#tree").show();
+        var width = $("#tree").width() + 10;
+        $("#orz").attr({ "style": 'width:' + width + 'px;' });
+        event.stopPropagation();
+        event.preventDefault();
+        $("#tree").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        });
+        $(document).one("click", function () {
+            $("#tree").hide();
+        })
+        //			 $("#tree").off("click.b").on("click.b",function(e){
+        //
+        //			});
+    });
+    //		$(document).one("click", function () {//对document绑定一个影藏Div方法
+    //		$(myDiv).hide();
+    //		});
+    //		$("#orz").on('blur',function(){
+    //			$("#tree").hide();
+    //		});
+
+
+    var zTreeObj;
+    function initTree(param, id, checkbox) {
+        param = JSON.stringify(param);
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "parentOrgId",
+                    //							rootPId: "0"
+                },
+                key: {
+                    url: ""
+                }
+            },
+            check: {
+                chkStyle: "checkbox",
+                autoCheckTrigger: false,
+                chkboxType: { "Y": "", "N": "" },
+                enable: checkbox
+            },
+            callback: {
+                onClick: zTreeOnClick,
+                onCheck: zTreeOnCheck
+            }
+        };
+        zTreeObj = $.fn.zTree.init($("#" + id), setting, JSON.parse(param));
+        zTreeObj.expandAll(true);
+    }
+
+
+    function zTreeOnClick(event, treeId, treeNode) {
+        $("#orz").val(treeNode.name);
+        $("#tree").hide();
+    }
+
+
+    function zTreeOnCheck(event, treeId, treeNode) {
+        if (treeNode.checked) {
+            if ($('#orz1').val() == '') {
+                $('#orz1').val(treeNode.name);
+            } else {
+                $('#orz1').val($('#orz1').val() + "," + treeNode.name);
+            }
+        } else {
+            var param = $('#orz1').val().split(',');
+            for (var i in param) {
+                if (treeNode.name == param[i]) {
+                    param.splice(i, 1);
+                    $('#orz1').val('');
+                    for (var i in param) {
+                        if ($('#orz1').val() == '') {
+                            $('#orz1').val(param[i]);
+                        } else {
+                            $('#orz1').val($('#orz1').val() + "," + param[i]);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    var jqdata;
+    function edit(id) {
+        $("#title").html("编辑用户");
+        $("#tree1").hide();
+        $("#password2").hide();
+        $("#password3").hide();
+        $('#addform').bootstrapValidator('resetForm', true);
+        $('#addform').data('bootstrapValidator').updateStatus('password', 'VALID', null);
+        $('#addform').data('bootstrapValidator').updateStatus('password1', 'VALID', null);
+
+        jqdata = $("#table_list_1").jqGrid('getRowData', id);
+
+        $("#addform")[0].reset();
+        $('[name="id"]').val(jqdata.id);
+        formload($("#addform"), jqdata);
+        jqdata.status.indexOf('禁用') > 0 ? $("#status").iCheck("uncheck") : $('#status').iCheck('check');
+        jqdata.power == 1 ? $('#power1').iCheck('check') : $('#power2').iCheck('check');
+        $("#add-config").modal('show');
+        //			$.ajax({
+        //      		type:"GET",
+        //      		url:"/system/user/createInfo.json",
+        //      		async:true,
+        //      		dataType:"json",
+        //      		success:function(resp){
+        //      					if(document.getElementById("roleselect1").options.length == 1){
+        //      						for(i in resp[0].roleList){
+        //      							$("#roleselect1").append('<option value="'+(resp[0].roleList)[i].id+'">'+(resp[0].roleList[i]).name+'</option>');
+        //      						}
+        //      						$("#roleselect1").chosen({width: "180px"});
+        //      						$("#roleselect1").chosen();
+        //      						$("#roleselect1").trigger("chosen:updated");
+        //      					}
+        //							if(document.getElementById("companyselect").options.length == 1){
+        //		        				$("#companyselect").append('<option value="'+resp[0].companyCode+'">'+resp[0].companyName+'</option>');
+        //		        				$("#companyselect").chosen({width: "180px"});
+        //		        				$("#companyselect").chosen();
+        //		        				$("#companyselect").trigger("chosen:updated");
+        //							}
+        //			        		initTree(resp[0].orgList,"tree1",true);
+        //
+        //
+        //			    },
+        //			    error: function(errMsg) {
+        //              	layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
+        //              }
+        ////
+        //      	});
+
+        //      		jqdata.status.indexOf('禁用')>0?$('[name="status"]').attr("checked",false):$('[name="status"]').attr("checked",true);
+        $("#roleselect1").val(jqdata.roleId);
+        $("#roleselect1").trigger("chosen:updated");
+        $("#companyselect").val(jqdata.companyCode);
+        $("#companyselect").trigger("chosen:updated");
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+            increaseArea: '20%' // optional
+        });
+        loadOrgTree($("#companyselect").val());
+        setTimeout(function () {
+            var treeObj = $.fn.zTree.getZTreeObj("tree1");
+            treeObj.checkAllNodes(false);
+            var nodes = treeObj.transformToArray(treeObj.getNodes());
+            var param = $('#orz1').val().split(',');
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                for (var j in param) {
+                    if (nodes[i].name == param[j]) {
+                        treeObj.checkNode(nodes[i], true, false);
+                        break;
+                    }
+                }
+            }
+        }, 150);
+
+    }
+
+
+    $('#orz1').on('click', function () {
+
+        $("#tree1").show();
+        event.stopPropagation();
+        event.preventDefault();
+        $("#tree1").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        });
+
+        $(document).one("click", function () {
+            $("#tree1").hide();
+        })
+
+    });
+
+    function updpwd(id) {
+        var data = $("#table_list_1").jqGrid('getRowData', id);
+        $('#pwdform').bootstrapValidator('resetForm', true);
+        $('[name="id"]').val(data.id);
+        $('[name="password"]').val('');
+        $('[name="password1"]').val('');
+        $("#myModal").modal('show');
+    }
+
+
+    $("#submit").on("click", function () {
+        $('#addform').data('bootstrapValidator').updateStatus('orgName', 'VALIDATING', null);
+        var bootstrapValidator = $("#addform").data('bootstrapValidator').validate();
+        if (bootstrapValidator.isValid()) {
+            $("#submit").hide();
+            $("#cover").show();
+            $("#password4").attr({ "name": "" });
+            var data = {};
+            $($("#addform").serializeArray()).each(function () {
+                data[this.name] = this.value;
+            });
+            var treeObj = $.fn.zTree.getZTreeObj("tree1");
+            var nodes = treeObj.getCheckedNodes();
+            data['orgIdArr'] = [];
+            for (var i in nodes) {
+                data['orgIdArr'].push(nodes[i].id);
+            }
+            var url = "";
+            if (data.id) {
+                url = "/system/user/updateInfo.json";
+            } else {
+                url = "/system/user/createSysUser.json";
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: function (resp) {
+                    if (resp.result == true) {
+                        $("#add-config").modal('hide');
+                        layer.msg('保存成功');
+                        $("#table_list_1").trigger("reloadGrid");
+                    } else if (resp.msg) {
+                        layer.msg(resp.msg);
+
+                    } else {
+                        layer.msg('保存失败！');
+
+                    }
+                    $("#cover").hide();
+                    $("#submit").show();
+                },
+                error: function (errMsg) {
+                    $("#add-config").modal('hide');
+                    layer.alert('<span style="color: red;">发生系统错误，保存失败</span>');
+
+                }
+            });
+            $("#password4").attr({ "name": "password1" });
+        } else {
+            layer.msg("请补全信息");
+
+        }
+        //				$("#pwdform").ajaxSubmit({
+        //					type: 'post',
+        //					contentType : 'application/json',
+        //		            url: '/system/user/updatePwd.josn',
+        //		            success: function(data) {
+        //		            	if(data){
+        //		            		$("#add-config").modal('hide');
+        //		            		alert('保存成功');
+        //		            		$("#table_list_1").trigger("reloadGrid");
+        //		            	}
+        //
+        //		               }
+        //		            });
+        //					return false;
+
+    });
+
+
+    $("#submit1").on("click", function () {
+        var bootstrapValidator = $("#pwdform").data('bootstrapValidator').validate();
+        if (bootstrapValidator.isValid()) {
+            $("#submit1").hide();
+            $("#cover1").show();
+            $("#password1").attr({ "name": "" });
+            var data = {};
+            $($("#pwdform").serializeArray()).each(function () {
+                data[this.name] = this.value;
+            });
+            $.ajax({
+                type: "POST",
+                url: "/system/user/updatePwd.json",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: function (resp) {
+                    $("#myModal").modal('hide');
+                    $("#cover1").hide();
+                    $("#submit1").show();
+                    if (resp.result == true) {
+                        layer.msg('保存成功');
+                    } else {
+                        layer.msg('保存失败！');
+                    }
+                    $("#submit1").show();
+                    $("#cover1").hide();
+                },
+                error: function (errMsg) {
+                    $("#myModal").modal('hide');
+                    layer.alert('<span style="color: red;">发生系统错误，保存失败</span>');
+                }
+            });
+            $("#password1").attr({ "name": "password1" });
+        } else {
+            layer.msg("请正确填写信息");
+        }
+    });
+    //				$("#addform").ajaxSubmit({
+    //					type: 'post',
+    //		            url: '/system/user/updateInfo.josn',
+    //		            success: function(data) {
+    //		            	if(data){
+    //		            		$("#add-config").modal('hide');
+    //		            		alert('保存成功');
+    //		            	}
+    //
+    //		               }
+    //		            });
+    //					return false;
+    //		});
+
+    function formload(form, data) {
+        for (var name in data) {
+            var val = data[name];
+            var rr = $("input[name=\"" + name + "\"][type=radio], input[name=\"" + name + "\"][type=checkbox]", form);
+            //		$.fn.prop?rr.prop("checked",false):rr.attr("checked",false);
+            //		rr.each(function(){
+            //			var f=$(this);
+            //			if(f.val()==String(val)){
+            //				$.fn.prop?f.prop("checked",true):f.attr("checked",true);
+            //			}
+            //		});
+            if (!rr.length) {
+                $("input[name=\"" + name + "\"]", form).val(val);
+                $("textarea[name=\"" + name + "\"]", form).val(val);
+                //			$("select[name=\""+name+"\"]  option[value='"+val+"']",form).attr("select","selected").text('123');
+                //			simulateClick($("select[name=\""+name+"\"]",form).val(val)[0]);
+            }
+        }
+    }
+
+
+    function formvalidate() {
+        $('#addform').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                userName: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 15,
+                            message: '用户名长度非法'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: '姓名只能是英文/数字'
+                        }
+                    }
+                },
+                name: {
+                    message: '姓名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '姓名不能为空'
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 15,
+                            message: '姓名长度非法'
+                        },
+                        regexp: {
+                            regexp: /^[\u4e00-\u9fa5a-zA-Z]+$/,
+                            message: '姓名只能是中文/英文'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '邮箱不能为空'
+                        },
+                        emailAddress: {
+                            message: '不是一个有效的邮箱'
+                        }
+                    }
+                },
+
+                phone: {
+                    validators: {
+                        regexp: {
+                            regexp: /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/,
+                            message: '手机号码非法'
+                        }
+                    }
+
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 12,
+                            message: '密码长度应在6-12位'
+                        }
+
+                    }
+                },
+                password1: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+
+                        identical: {
+                            field: 'password',
+                            message: '两次密码不一致'
+                        }
+                    }
+                },
+                roleId: {
+                    validators: {
+                        notEmpty: {
+                            message: '角色不能为空'
+                        }
+                        //                      regexp: {
+                        //                          regexp: /\d{8}/,
+                        //                          message: '角色不能为空'
+                        //                      }
+                    }
+
+                },
+                companyCode: {
+                    validators: {
+                        notEmpty: {
+                            message: '公司不能为空'
+                        }
+                        //                      regexp: {
+                        //                          regexp: /\d{8}/,
+                        //                          message: '公司不能为空'
+                        //                      }
+                    }
+                },
+                orgName: {
+                    validators: {
+                        notEmpty: {
+                            message: '组织机构不能为空'
+                        }
+                    }
+                }
+                //              power: {
+                //                  validators: {
+                //                      notEmpty: {
+                //                          message: '权限不能为空'
+                //                      }
+                //                  }
+                //              }
+            }
+
+        });
+    }
+
+    function pwdvalidator() {
+        $('#pwdform').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 12,
+                            message: '密码长度应在6-12位'
+                        }
+
+                    }
+                },
+                password1: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+
+                        identical: {
+                            field: 'password',
+                            message: '两次密码不一致'
+                        }
+                    }
+                },
+            }
+        });
+    }
+    //]]>
+</script>
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        text-overflow: ellipsis;
+    }
+</style>

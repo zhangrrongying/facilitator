@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE guzz-configs PUBLIC "-//GUZZ//DTD MAIN CONFIG//EN" "http://www.guzz.org/dtd/guzz.dtd">
+<guzz-configs>
+	<sqlMap dbgroup="facMysql">
+		<select orm="sysOrg" id="findNextId">
+		<![CDATA[
+		SELECT auto_increment id FROM information_schema.`TABLES` WHERE TABLE_SCHEMA='sunyuki_agms' AND TABLE_NAME='sys_org'
+		]]>
+		</select>
+		<update orm="sysOrg" id="updOrgName">
+			<![CDATA[
+			UPDATE sys_org SET name = :name WHERE Id=:id
+			]]>
+		</update>
+  	</sqlMap>
+ </guzz-configs>

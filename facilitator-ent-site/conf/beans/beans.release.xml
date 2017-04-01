@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:utils="http://www.springframework.org/schema/util"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:ldap="http://www.springframework.org/schema/ldap"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+       http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap.xsd">
+	<mvc:interceptors>
+		<bean class="com.ec.facilitator.base.util.SiteAuthInterceptor" />
+	</mvc:interceptors>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="guzzContext" class="org.guzz.web.context.spring.GuzzContextBeanFactory"
+		factory-method="createGuzzContext">
+		<constructor-arg>
+			<value>file:./conf/guzz.xml</value>
+		</constructor-arg>
+	</bean>
+     <bean id="velocityEngineFactoryBean" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="resourceLoaderPath"><value>file:./conf/templates/includes,file:./conf/mailtemplate</value></property> 
+      <property name="preferFileSystemAccess"><value>true</value></property> 
+    </bean>
+
+	<bean id="transactionManager" class="org.guzz.web.context.spring.GuzzTransactionManager">
+		<property name="GuzzContext" ref="guzzContext"></property>
+	</bean>
+	
+	<bean id="guzzLocalTranMgr" factory-bean="transactionManager"
+		factory-method="getTransactionManager">
+	</bean>
+
+	<bean id="writeTemplate" class="com.ec.facilitator.base.util.SpringGuzzWriteTemplate">
+		<property name="GuzzContext" ref="guzzContext"></property>
+		<property name="TransactionManager" ref="guzzLocalTranMgr"></property>
+	</bean>
+
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="basenames">
+			<list>
+				<value>file:./conf/localization/bizError</value>
+				<value>file:./conf/localization/bizMessage</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+				<property name="dateFormat">
+					<bean class="java.text.SimpleDateFormat">
+						<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss:SSS"></constructor-arg>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- 1024 * 1024 * 1 B = 10MB-->
+    <property name="maxUploadSize" value="10485760"/>
+	</bean>
+	
+	<!--Http client Factory -->
+	<bean id="httpClientFactory"
+		class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+		<property name="connectTimeout" value="90000" />
+		<property name="readTimeout" value="90000" />
+	</bean>
+
+</beans>

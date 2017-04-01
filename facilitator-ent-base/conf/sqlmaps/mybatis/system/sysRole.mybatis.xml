@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE guzz-configs PUBLIC "-//GUZZ//DTD MAIN CONFIG//EN" "http://www.guzz.org/dtd/guzz.dtd">
+<guzz-configs>
+	<sqlMap dbgroup="facMysql">
+		
+		<select id="getRoleList" orm="sysRole" templated="true">
+		<![CDATA[
+			SELECT a.* FROM sys_role a where 1= 1
+			#notEmpty($roleName)
+	          AND NAME LIKE '%$roleName%' 
+	        #end
+	        limit :start,:end
+	        ]]>
+		</select>
+		<select orm="jqresp" id="getRoleCount" templated="true">
+			<![CDATA[
+				SELECT count(1) records FROM sys_role a where 1= 1
+				#notEmpty($roleName)
+		          AND NAME LIKE '%$roleName%' 
+		        #end
+	        ]]>
+		</select>
+		<select id="getRolePowerListById" orm="sysAuthFunc">
+			<![CDATA[
+		select r.Func_Id id,a.Parent_Key_Id parentKeyId from sys_role_func r,sys_auth_func a WHERE a.Id=r.Func_Id and r.Role_Id = :id  
+			]]>
+		</select>
+		<update orm="sysRole" id="updateRole" templated="true">
+			<![CDATA[
+			UPDATE sys_role SET Name = :name,Status=:status,Description=:description WHERE Id=:id
+			]]>
+		</update>
+		<update orm="sysRoleFunc" id="delRolePower">
+			<![CDATA[
+			DELETE FROM sys_role_func WHERE Role_Id=:id
+			]]>
+		</update>
+		
+		<select id="getFuncsByUserId" orm="sysAuthFunc">
+			<![CDATA[
+				SELECT c.* FROM sys_auth_func c LEFT JOIN sys_role_func d  ON c.Id = d.Func_Id LEFT JOIN sys_role a ON d.Role_Id = a.Id 
+				LEFT JOIN sys_role_user b ON a.Id = b.Role_Id  WHERE b.User_Id = :userId
+			]]>
+		</select>
+		<orm class="com.ec.facilitator.base.model.common.JQGridResponseModel" id="jqresp">
+			<result column="records" property="records"/>
+		</orm>
+  	</sqlMap>
+ </guzz-configs>

@@ -1,0 +1,38 @@
+<project>
+	<target name="instrument">
+		<!-- Add all modules that should be included below -->
+		<!-- <antcall target="instrumentAModule">
+            <param name="module" value="MODULE_NAME_TO_REPLACE"/>
+        </antcall> -->
+		<antcall target="instrumentAModule">
+			<param name="module" value="sunyuki-erp-base" />
+		</antcall>
+        <antcall>
+			<param name="module" value="sunyuki-erp-api" />
+		</antcall>
+	</target>
+
+	<target name="instrumentAModule">
+		<property name="classes.dir" value="target/classes" />
+		<cobertura-instrument todir="./../${module}/${classes.dir}">
+			<fileset dir="./../${module}/target/classes">
+				<include name="**/*.class" />
+                <exclude name="**/swagger/**" />
+                <exclude name="**/ApiExceptionHandler**" />
+                <exclude name="**/Application**" />
+                <exclude name="**/SystemController**" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<property environment="env" />
+	<property name="COBERTURA_HOME" value="/usr/local/cobertura-2.0.3" />
+	<property name="cobertura.dir" value="${COBERTURA_HOME}" />
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura-2.0.3.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+</project>

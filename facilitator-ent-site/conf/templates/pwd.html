@@ -1,0 +1,48 @@
+﻿<form id="pwdform" class="form-horizontal">
+    <input name="id" id="pwid" type="hidden" th:value="${id}" />
+    <div class="form-group ">
+        <label class="col-md-2 control-label">新密码</label>
+        <div class="col-md-9">
+            <input type="password" data-bv-notempty="true" name="password" id="password" class="input-sm form-control" placeholder="请输入新密码" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">确认密码</label>
+        <div class="col-md-9">
+            <input id="password1" type="password" data-bv-notempty="true" name="password1" placeholder="请再输入一次新密码" class="input-sm form-control" />
+        </div>
+    </div>
+</form>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+    $(function () {
+        var pwd = $("#password");
+        setTimeout(function () {
+            pwd.focus();
+        }, 300);
+
+        sykModal.submit = {
+            url: "/system/user/updatePwd.json",
+            data: function () {
+                if (pwd.val().length == 0) {
+                    layer.msg("请输入新密码");
+                    return null;
+                }
+                if (pwd.val() != $("#password1").val()) {
+                    layer.msg("两次输入的密码不一致哟");
+                    return null;
+                }
+                return { id: $("#pwid").val(), password: pwd.val() };;
+            },
+            done: function (ret) {
+                if (ret.result != true) {
+                    syk.alertError("提交失败，请与信息部联系");
+                } else {
+                    layer.msg("提交成功", { time: 1500 });
+                    sykModal.close();
+                }
+            }
+        };
+    });
+    //]]>
+</script>
