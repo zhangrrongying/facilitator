@@ -20,7 +20,7 @@
     <appender name="MAIL" class="org.apache.log4j.net.SMTPAppender">
         <param name="threshold" value="ERROR" />
         <param name="BufferSize" value="512" />
-        <param name="To" value="zhangrongying@sunyuki.com,ryan@sunyuki.com,zorro@sunyuki.com" />
+        <param name="To" value="zhangrongying@sunyuki.com" />
         <param name="From" value="sysmonitor@sunyuki.com" />
         <param name="SMTPHost" value="smtp.exmail.qq.com" />
         <param name="Subject" value="[DEV]System ERROR" />

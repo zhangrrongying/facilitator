@@ -12,9 +12,9 @@ import com.ec.facilitator.base.model.system.SysOrgModel;
 import com.ec.facilitator.base.util.JSONHelper;
 
 /**
- * 菜品报告业务类
+ * 组织结构
  * @author 张荣英
- * @date 2016年7月1日 下午3:05:58
+ * @date 2017年4月5日 下午5:22:14
  */
 @Component
 public class CommonBiz {
@@ -26,12 +26,11 @@ public class CommonBiz {
 	/**
 	 * 查询部门code
 	 * @param userId
-	 * @param requestModel
 	 * @return
-	 * @return JQGridResponseModel<ProductReportModel>
+	 * @throws Exception
+	 * @return String
 	 * @author 张荣英
-	 * @throws Exception 
-	 * @date 2016年7月5日 下午3:34:35
+	 * @date 2017年4月5日 下午5:22:41
 	 */
 	public String getOrgCodeByUserId(int userId) throws Exception{
 		List<SysOrgModel> orgList = sysUserDao.getOrgsByUserId(userId);

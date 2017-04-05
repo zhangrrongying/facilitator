@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.guzz.orm.se.SearchExpression;
-import org.guzz.orm.se.Terms;
 import org.guzz.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -24,7 +22,6 @@ import com.ec.facilitator.base.dal.system.SysUserDao;
 import com.ec.facilitator.base.model.common.AuthMenuModel;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
-import com.ec.facilitator.base.model.common.LoginModel;
 import com.ec.facilitator.base.model.common.TreeModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysOrgModel;
@@ -38,8 +35,8 @@ import com.ec.facilitator.base.util.WebConfig;
 
 /**
  * 系统用户业务处理
- * @author ryan
- * @date 2016年1月25日 下午4:18:00
+ * @author 张荣英
+ * @date 2017年4月5日 下午5:23:17
  */
 @Component
 public class SysUserBiz {
@@ -61,10 +58,10 @@ public class SysUserBiz {
 	 * @param loginName
 	 * @param password
 	 * @return
+	 * @throws Exception
 	 * @return AuthData
 	 * @author 张荣英
-	 * @throws Exception 
-	 * @date 2016年6月28日 下午3:41:34
+	 * @date 2017年4月5日 下午5:23:54
 	 */
 	public AuthData login(String loginName, String password) throws Exception {
 		if (StringUtil.isEmpty(loginName) || StringUtil.isEmpty(password)) {
@@ -99,11 +96,11 @@ public class SysUserBiz {
 	
 	/**
 	 * 根据功能点Key值来获取导航菜单树
-	 * @param funcs
+	 * @param userId
 	 * @return
 	 * @return AuthMenuModel
-	 * @author ryan 
-	 * @date 2016年1月25日 下午4:26:36
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:24:46
 	 */
 	public AuthMenuModel getMenusByPCodes(int userId) {
 		List<SysAuthFuncModel> sysMenus = sysUserDao.getMenusByUserId(userId);
@@ -116,8 +113,8 @@ public class SysUserBiz {
 	 * @param sysMenus
 	 * @return
 	 * @return AuthMenuModel
-	 * @author ryan 
-	 * @date 2016年1月25日 下午6:11:45
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:25:07
 	 */
 	private AuthMenuModel buildAuthMenus(List<SysAuthFuncModel> sysMenus) {
 		AuthMenuModel rootMenu = new AuthMenuModel();
@@ -132,8 +129,8 @@ public class SysUserBiz {
 	 * @param rootMenu
 	 * @param sysMenus
 	 * @return void
-	 * @author ryan 
-	 * @date 2016年1月26日 上午11:48:59
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:25:25
 	 */
 	private void loadMenuTree(AuthMenuModel rootMenu, List<SysAuthFuncModel> sysMenus) {
 		rootMenu.setChildMenu(new ArrayList<AuthMenuModel>());
@@ -161,14 +158,12 @@ public class SysUserBiz {
 	
 	/**
 	 * 获取用户列表
-	 * @param page
-	 * @param rows
+	 * @param requestModel
 	 * @return
-	 * @return ListResultModel<SysUserModel>
-	 * @author Tang
-	 * @throws Exception 
-	 * @throws BizErrorException 
-	 * @date 2016年6月30日 下午12:16:03
+	 * @throws Exception
+	 * @return JQGridResponseModel<SysUserModel>
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:25:39
 	 */
 	public JQGridResponseModel<SysUserModel> getUserList(SysUserModel requestModel) throws Exception{
 		int id = AuthManager.getCurrentAuthData().getId();
@@ -187,13 +182,11 @@ public class SysUserBiz {
 	 * 获取角色列表
 	 * @return
 	 * @return List<SysRoleModel>
-	 * @author Tang
-	 * @date 2016年7月4日 下午3:16:17
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:29:47
 	 */
 	public List<SysRoleModel> getRoleList(){
-		int id = AuthManager.getCurrentAuthData().getId();
-		SysUserModel user = sysUserDao.getUserByUserId(id);
-		return sysUserDao.getRoleListByCompanyCode(user.getCompanyCode());
+		return sysUserDao.getRoleList();
 	}
 	
 	/**
@@ -201,8 +194,8 @@ public class SysUserBiz {
 	 * @param userId
 	 * @return
 	 * @return List<TreeModel>
-	 * @author Tang
-	 * @date 2016年7月5日 上午11:42:46
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:30:05
 	 */
 	public List<TreeModel> getOrgInfoTree(int userId){
 		SysUserModel user = sysUserDao.getUserByUserId(userId);
@@ -233,8 +226,8 @@ public class SysUserBiz {
 	 * @param userId
 	 * @return
 	 * @return List<SysOrgModel>
-	 * @author Tang
-	 * @date 2016年7月12日 下午6:07:01
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:30:22
 	 */
 	public List<SysOrgModel> getOrgList(int userId){
 		SysUserModel user = sysUserDao.getUserByUserId(userId);
@@ -249,11 +242,11 @@ public class SysUserBiz {
 	
 	/**
 	 * 转化org列表数据为树形结构
-	 * @param list
+	 * @param orgList
 	 * @param tree
 	 * @return void
-	 * @author Tang
-	 * @date 2016年7月5日 下午2:09:47
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:30:40
 	 */
 	public void changeOrgData(List<SysOrgModel> orgList,TreeModel tree){
 		tree.setNodes(new ArrayList<TreeModel>());
@@ -286,21 +279,14 @@ public class SysUserBiz {
 	 * @param userId
 	 * @return
 	 * @return List<Map<String,Object>>
-	 * @author Tang
-	 * @date 2016年7月4日 下午3:22:19
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:31:23
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> findCreateInfo(int userId){
 		 SysUserModel user = (SysUserModel) sysUserDao.findObjectByPK(SysUserModel.class, userId);
 		 if(user != null){
-			 String companyCode = user.getCompanyCode();
 			 Map<String, Object> map = new HashMap<String, Object>();
-			 List<String> companyCodeList = new ArrayList<>();
-			 String[] codes = companyCode.split(",");
-			 for (String string : codes) {
-				companyCodeList.add(string.replace("'", ""));
-			 }
-			 List<SysRoleModel> roleList = sysUserDao.getRoleListByCompanyCode(companyCode);
+			 List<SysRoleModel> roleList = sysUserDao.getRoleList();
 			 map.put("roleList", roleList);
 			 List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 			 list.add(map);
@@ -314,8 +300,8 @@ public class SysUserBiz {
 	 * @param companyCode
 	 * @return
 	 * @return List<SysOrgModel>
-	 * @author Tang
-	 * @date 2016年10月31日 下午2:52:34
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:31:40
 	 */
 	public List<SysOrgModel> getOrgTree(String companyCode){
 		if(StringUtils.hasText(companyCode)){
@@ -327,16 +313,14 @@ public class SysUserBiz {
 		
 	}
 	
-	
-	
 	/**
 	 * 新增用户
 	 * @param user
 	 * @return
+	 * @throws Exception
 	 * @return Boolean
-	 * @author Tang
-	 * @throws Exception 
-	 * @date 2016年7月4日 下午2:13:12
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:31:50
 	 */
 	public Boolean addUser(SysUserModel user) throws Exception{
 		if(StringUtils.hasText(user.getUserName()) && StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()) && StringUtils.hasText(user.getPassword()) && StringUtils.hasText(user.getCompanyCode())  && user.getRoleId() != null && (user.getOrgIdArr() != null || user.getOrgId() != null)){
@@ -359,6 +343,9 @@ public class SysUserBiz {
 	 * 更新用户
 	 * @param user
 	 * @return
+	 * @return BooleanResultModel
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:32:30
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
 	public BooleanResultModel updUser(SysUserModel user){
@@ -369,22 +356,6 @@ public class SysUserBiz {
 				br.setMsg("用户名已被占用");
 				br.setResult(false);
 				return br;
-			}
-//			SearchExpression se = SearchExpression.forClass(SysRoleModel.class);
-//			se.and(Terms.eq("id", user.getRoleId()));
-//			SysRoleModel role = (SysRoleModel) sysUserDao.findObject(se);
-			if(user.getRoleId()==2 || user.getRoleId()==8){
-				for(int orgId : user.getOrgIdArr()){
-					SearchExpression se = SearchExpression.forClass(SysOrgModel.class);
-					se.and(Terms.eq("id", orgId));
-					SysOrgModel org = (SysOrgModel) sysUserDao.findObject(se);
-					if(org.getFarmId() == null || org.getFarmId() == 0){
-						br.setResult(false);
-						br.setMsg("场长或农场技术员的组织机构必须勾选一个农场");
-						return br;
-					}
-				}
-				
 			}
 			Map<String,Object> map = new LinkedCaseInsensitiveMap<Object>();
 			map.put("companyCode", user.getCompanyCode());
@@ -412,26 +383,6 @@ public class SysUserBiz {
 				}
 				br.setResult(sysUserDao.executeUpdate("updateUser", map)>0?true:false);
 				return br;
-//				WriteTranSession session = sysUserDao.getTransactionManager().openRWTran(false);
-//				String sql = "INSERT INTO sys_org_user(Org_Id,User_Id) VALUES(:orgId,:userId)";
-//				CompiledSQL cs = sysUserDao.getTransactionManager().getCompiledSQLBuilder().buildCompiledSQL(SysOrgUserModel.class,sql);
-//				SQLBatcher batcher = session.createCompiledSQLBatcher(cs);
-//				for (int orgId : user.getOrgIdArr()) {
-//					Map<String,Object> params  = new LinkedCaseInsensitiveMap<Object>();
-//					params.put("orgId", orgId);
-//					params.put("userId", user.getId());
-//					batcher.addNewBatchParams(params);
-//				}
-//				try {
-//					batcher.executeBatch();
-//					session.commit();
-//					return count;
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					throw new RuntimeException();
-//				}finally{
-//					session.close();
-//				}
 			}else{
 				SysOrgUserModel org = new SysOrgUserModel();
 				org.setOrgId(user.getOrgIdArr()[0]);

@@ -23,7 +23,7 @@ import com.ec.facilitator.site.ThymeleafHelper;
 /**
  * 首页登陆controller
  * @author 张荣英
- * @date 2016年6月23日 下午4:41:54
+ * @date 2017年4月5日 下午4:43:23
  */
 @Controller
 public class HomeController {

@@ -10,15 +10,6 @@ public class BizErrorModel {
 	/** 登录相关错误*/
 	public static final String LOGIN_ERROR = "app.login.error";
 	
-	/** 登录相关错误*/
-	public static final String FARM_ERROR = "app.farm.error";
-	
-	/** 天气相关错误*/
-	public static final String WEATHER_GET_ERROR = "app.weather.error";
-	
-	/** 农场溯源相关错误*/
-	public static final String ORIGIN_ERROR = "app.origin.error";
-	
 	/**  错误信息*/
 	private String reason;
 	

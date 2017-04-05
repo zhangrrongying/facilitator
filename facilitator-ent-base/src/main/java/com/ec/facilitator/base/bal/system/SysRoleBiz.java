@@ -1,6 +1,5 @@
 package com.ec.facilitator.base.bal.system;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +8,9 @@ import javax.annotation.Resource;
 
 import org.guzz.jdbc.SQLBatcher;
 import org.guzz.orm.se.SearchExpression;
-import org.guzz.orm.se.Terms;
 import org.guzz.orm.sql.CompiledSQL;
 import org.guzz.transaction.WriteTranSession;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedCaseInsensitiveMap;
@@ -25,7 +23,13 @@ import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
-@Service
+
+/**
+ * 角色业务处理
+ * @author 张荣英
+ * @date 2017年4月5日 下午5:37:49
+ */
+@Component
 public class SysRoleBiz {
 		
 	@Resource
@@ -38,8 +42,8 @@ public class SysRoleBiz {
 	 * @param role
 	 * @return
 	 * @return JQGridResponseModel<SysRoleModel>
-	 * @author Tang
-	 * @date 2016年7月7日 下午2:37:33
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:35:09
 	 */
 	@SuppressWarnings("unchecked")
 	public JQGridResponseModel<SysRoleModel> roleList(SysRoleModel role){
@@ -65,8 +69,8 @@ public class SysRoleBiz {
 	 * @param userId
 	 * @return
 	 * @return Boolean
-	 * @author Tang
-	 * @date 2016年7月11日 上午10:11:18
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:35:21
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
 	public Boolean createRole(SysRoleModel role,int userId){
@@ -90,8 +94,8 @@ public class SysRoleBiz {
 	 * @param role
 	 * @return
 	 * @return Boolean
-	 * @author Tang
-	 * @date 2016年7月8日 上午9:42:49
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:35:38
 	 */
 	public Boolean updateRole(SysRoleModel role){
 		if(role.getId() != null &&  StringUtils.hasText(role.getName())){
@@ -117,11 +121,10 @@ public class SysRoleBiz {
 	
 	/**
 	 * 全局菜单权限列表
-	 * @param id
 	 * @return
 	 * @return List<SysAuthFuncModel>
-	 * @author Tang
-	 * @date 2016年7月8日 下午5:45:37
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:35:51
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysAuthFuncModel> getPower(){
@@ -148,12 +151,12 @@ public class SysRoleBiz {
 	/**
 	 * 角色权限修改
 	 * @param id
+	 * @param param
 	 * @return
 	 * @return Boolean
-	 * @author Tang
-	 * @date 2016年7月11日 下午3:49:33
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:36:13
 	 */
-//	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
 	public Boolean editRolePower(Integer id,int[] param){
 		if( id != null){
 				Map<String,Object> roleId = new LinkedCaseInsensitiveMap<>();

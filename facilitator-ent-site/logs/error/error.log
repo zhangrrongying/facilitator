@@ -236,3 +236,319 @@ Caused by: org.guzz.exception.InvalidConfigurationException: unknown database gr
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:162)
 	... 76 more
+2017-04-05 16:15:10,568 - org.springframework.boot.SpringApplication -0    [main] ERROR  - Application startup failed
+java.lang.IllegalStateException: Tomcat connector in failed state
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:157)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:287)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:141)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:540)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:118)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:691)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:961)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:950)
+	at com.ec.facilitator.site.Application.main(Application.java:22)
+2017-04-05 22:03:00,547 - mailLogger -2    [http-nio-8080-exec-8] ERROR  - 
+http://localhost:8080/system/user/list
+
+host:localhost:8080
+connection:keep-alive
+accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+upgrade-insecure-requests:1
+user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+referer:http://localhost:8080/index
+accept-encoding:gzip, deflate, sdch
+accept-language:zh-CN,zh;q=0.8
+cookie:x-sunyuki-agms-authtoken-ssl="f/1NvBJnLrvsJ53Rak8q7uRcW4PPCjDpu3qvP7xcP1ugSvF3IlylNhBx79V45kGGKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMM0T8uHAvH3KtLFpMTn7AoQE+KwBQpVN8crYprqReiFA="; x-sunyuki-agms-authtoken="f/1NvBJnLrvsJ53Rak8q7oyUwRDfal4XU1T3ajHxdv1LwRltn81jj6122dRzUaVhKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMh16pYriJeGesJZKU452ZcA=="
+
+User-ID: 1
+User-NAME: 张荣英
+
+org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.ServletContext]: Specified class is an interface
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:101)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.createAttribute(ModelAttributeMethodProcessor.java:137)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor.createAttribute(ServletModelAttributeMethodProcessor.java:80)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:106)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:78)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:162)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:129)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:219)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:106)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:142)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:88)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:537)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:658)
+	at org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler.process(Http11NioProtocol.java:222)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1556)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.run(NioEndpoint.java:1513)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+2017-04-05 22:06:24,416 - mailLogger -5    [http-nio-8080-exec-5] ERROR  - 
+http://localhost:8080/system/user/list
+
+host:localhost:8080
+connection:keep-alive
+accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+upgrade-insecure-requests:1
+user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+accept-encoding:gzip, deflate, sdch
+accept-language:zh-CN,zh;q=0.8
+cookie:x-sunyuki-agms-authtoken-ssl="f/1NvBJnLrvsJ53Rak8q7uRcW4PPCjDpu3qvP7xcP1ugSvF3IlylNhBx79V45kGGKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMM0T8uHAvH3KtLFpMTn7AoQE+KwBQpVN8crYprqReiFA="; x-sunyuki-agms-authtoken="f/1NvBJnLrvsJ53Rak8q7oyUwRDfal4XU1T3ajHxdv1LwRltn81jj6122dRzUaVhKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMh16pYriJeGesJZKU452ZcA=="
+
+User-ID: 1
+User-NAME: 张荣英
+
+org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.ServletContext]: Specified class is an interface
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:101)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.createAttribute(ModelAttributeMethodProcessor.java:137)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor.createAttribute(ServletModelAttributeMethodProcessor.java:80)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:106)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:78)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:162)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:129)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:219)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:106)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:142)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:88)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:537)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:658)
+	at org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler.process(Http11NioProtocol.java:222)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1556)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.run(NioEndpoint.java:1513)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+2017-04-05 22:15:14,076 - mailLogger -529665 [http-nio-8080-exec-4] ERROR  - 
+http://localhost:8080/system/user/list
+
+host:localhost:8080
+connection:keep-alive
+accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+upgrade-insecure-requests:1
+user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+referer:http://localhost:8080/index
+accept-encoding:gzip, deflate, sdch
+accept-language:zh-CN,zh;q=0.8
+cookie:x-sunyuki-agms-authtoken-ssl="f/1NvBJnLrvsJ53Rak8q7uRcW4PPCjDpu3qvP7xcP1ugSvF3IlylNhBx79V45kGGKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMM0T8uHAvH3KtLFpMTn7AoQE+KwBQpVN8crYprqReiFA="; x-sunyuki-agms-authtoken="f/1NvBJnLrvsJ53Rak8q7oyUwRDfal4XU1T3ajHxdv1LwRltn81jj6122dRzUaVhKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMh16pYriJeGesJZKU452ZcA=="
+
+User-ID: 1
+User-NAME: 张荣英
+
+org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.ServletContext]: Specified class is an interface
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:101)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.createAttribute(ModelAttributeMethodProcessor.java:137)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor.createAttribute(ServletModelAttributeMethodProcessor.java:80)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:106)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:78)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:162)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:129)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:219)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:106)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:142)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:88)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:537)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:658)
+	at org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler.process(Http11NioProtocol.java:222)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1556)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.run(NioEndpoint.java:1513)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+2017-04-05 22:24:19,835 - mailLogger -2    [http-nio-8080-exec-2] ERROR  - 
+http://localhost:8080/system/user/list
+
+host:localhost:8080
+connection:keep-alive
+accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+upgrade-insecure-requests:1
+user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+referer:http://localhost:8080/index
+accept-encoding:gzip, deflate, sdch
+accept-language:zh-CN,zh;q=0.8
+cookie:x-sunyuki-agms-authtoken-ssl="f/1NvBJnLrvsJ53Rak8q7uRcW4PPCjDpu3qvP7xcP1ugSvF3IlylNhBx79V45kGGKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMM0T8uHAvH3KtLFpMTn7AoQE+KwBQpVN8crYprqReiFA="; x-sunyuki-agms-authtoken="f/1NvBJnLrvsJ53Rak8q7oyUwRDfal4XU1T3ajHxdv1LwRltn81jj6122dRzUaVhKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMh16pYriJeGesJZKU452ZcA=="
+
+User-ID: 1
+User-NAME: 张荣英
+
+org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.ServletContext]: Specified class is an interface
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:101)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.createAttribute(ModelAttributeMethodProcessor.java:137)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor.createAttribute(ServletModelAttributeMethodProcessor.java:80)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:106)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:78)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:162)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:129)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:219)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:106)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:142)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:88)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:537)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:658)
+	at org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler.process(Http11NioProtocol.java:222)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1556)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.run(NioEndpoint.java:1513)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+2017-04-05 22:33:39,965 - mailLogger -2    [http-nio-8080-exec-2] ERROR  - 
+http://localhost:8080/system/user/list
+
+host:localhost:8080
+connection:keep-alive
+accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+upgrade-insecure-requests:1
+user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+referer:http://localhost:8080/index
+accept-encoding:gzip, deflate, sdch
+accept-language:zh-CN,zh;q=0.8
+cookie:x-sunyuki-agms-authtoken-ssl="f/1NvBJnLrvsJ53Rak8q7uRcW4PPCjDpu3qvP7xcP1ugSvF3IlylNhBx79V45kGGKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMM0T8uHAvH3KtLFpMTn7AoQE+KwBQpVN8crYprqReiFA="; x-sunyuki-agms-authtoken="f/1NvBJnLrvsJ53Rak8q7oyUwRDfal4XU1T3ajHxdv1LwRltn81jj6122dRzUaVhKz/eNln0HIgKIS1CB5KDiupQcLy7jUHH2dpbBuV+blMeUyN4ZoDCUbtCsE40DSVVTzJ6oUufIbW5LCKfWU80J9CTmMQBEKwMqnqpL4RArntAd734V/jVdS226C7xUAJ0WyXC5Pc1sU5d/mRS5bbNhXf8/JI3VemQp2b4Mxk39lrPRRlF/t97BjwroJd4Z/G/o5wftlDqnwLcMfAwAoyIO3TMtLDNSKT4qjggL8fQ4i+HdOMectjVsGjfnvsGwtP2IdWjVq9Eyf19888eKWSOdp2FDfW3ZfeQ5Iz82YiDL6HKUBSTa2bwLyCxulWcnzRnGQi901pn2VrvwsUgwBl/Y5oOJwA/iJ81mWxH/bqGof++ImvACxyS4n2FeOcHBjTMh16pYriJeGesJZKU452ZcA=="
+
+User-ID: 1
+User-NAME: 张荣英
+
+org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.servlet.ServletContext]: Specified class is an interface
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:101)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.createAttribute(ModelAttributeMethodProcessor.java:137)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor.createAttribute(ServletModelAttributeMethodProcessor.java:80)
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:106)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:78)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:162)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:129)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:618)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:725)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:219)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:106)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:501)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:142)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:88)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:537)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:658)
+	at org.apache.coyote.http11.Http11NioProtocol$Http11ConnectionHandler.process(Http11NioProtocol.java:222)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1556)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.run(NioEndpoint.java:1513)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)

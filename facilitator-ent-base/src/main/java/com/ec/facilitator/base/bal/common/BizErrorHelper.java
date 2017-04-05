@@ -9,16 +9,14 @@ import org.springframework.context.ApplicationContext;
 public class BizErrorHelper {
 
 	/**
-	 * 
-	 * @param springContext 
-	 * @param masterErrorKey 主错误key
-	 * @param tranErrorKey  详细错误key
-	 * @param tags  错误关联资源
+	 * 错误关联资源
+	 * @param springContext
+	 * @param masterErrorKey
+	 * @param tranErrorKey
 	 * @return
-	 * @description TODO
 	 * @return BizErrorModel
-	 * @author zx
-	 * @date 2015年6月4日 上午11:13:26
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:20:32
 	 */
 	public static BizErrorModel getBizErrorModel(ApplicationContext springContext, String masterErrorKey,String tranErrorKey) {
 		BizErrorModel bizError = new BizErrorModel();

@@ -16,11 +16,9 @@ public class BizErrorException extends Exception {
 	 * 错误原因Key值
 	 */
 	private String reasonKey;
+	
 	/**
-	 * 100000-余额不够；
-	 * 100001-优惠卷不存在或者已经使用；
-	 * 100002-订单所选赠品超限；
-	 * 100003-订单所需库存操库；
+	 * 错误内容
 	 */
 	private String errorCode;
 	/**

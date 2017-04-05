@@ -27,18 +27,18 @@ import com.ec.facilitator.base.util.SpringGuzzBaseDao;
 /**
  * 系统用户及权限数据访问
  * @author 张荣英
- * @date 2016年6月29日 上午10:52:23
+ * @date 2017年4月5日 下午5:38:30
  */
 @Component
 public class SysUserDao extends SpringGuzzBaseDao {
 	
 	/**
 	 * 根据邮箱查询用户
-	 * @param mail
+	 * @param userName
 	 * @return
-	 * @return SystemUserModel
+	 * @return SysUserModel
 	 * @author 张荣英
-	 * @date 2016年6月27日 上午10:36:41
+	 * @date 2017年4月5日 下午5:38:46
 	 */
 	public SysUserModel getSysUserByUserName(String userName) {
 		SearchExpression se = SearchExpression.forClass(SysUserModel.class);
@@ -51,9 +51,9 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * 根据用户ID查询角色
 	 * @param userId
 	 * @return
-	 * @return List<SystemRoleModel>
+	 * @return List<SysAuthFuncModel>
 	 * @author 张荣英
-	 * @date 2016年6月27日 上午10:37:01
+	 * @date 2017年4月5日 下午5:39:12
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysAuthFuncModel> getFuncsByUserId(int userId) {
@@ -68,7 +68,7 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * @return
 	 * @return List<SysOrgModel>
 	 * @author 张荣英
-	 * @date 2016年7月5日 下午3:44:26
+	 * @date 2017年4月5日 下午5:39:28
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysOrgModel> getOrgsByUserId(int userId) {
@@ -83,7 +83,7 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * @return
 	 * @return List<SysAuthFuncModel>
 	 * @author 张荣英
-	 * @date 2016年6月27日 下午5:15:59
+	 * @date 2017年4月5日 下午5:39:39
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysAuthFuncModel> getMenusByUserId(int userId) {
@@ -91,14 +91,15 @@ public class SysUserDao extends SpringGuzzBaseDao {
 		map.put("userId", userId);
 		return (List<SysAuthFuncModel>)this.list("getMenusByUserId", map);
 	}
+	
 	/**
 	 * 分页查询用户列表
-	 * @param page
-	 * @param rows
+	 * @param requestModel
+	 * @param code
 	 * @return
-	 * @return ListResultModel<SysUserModel>
-	 * @author Tang
-	 * @date 2016年6月30日 上午11:53:12
+	 * @return JQGridResponseModel<SysUserModel>
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:39:50
 	 */
 	@SuppressWarnings("unchecked")
 	public JQGridResponseModel<SysUserModel> getUserList(SysUserModel requestModel,String code){
@@ -133,8 +134,8 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * 查询用户角色列表
 	 * @return
 	 * @return List<SysRoleModel>
-	 * @author Tang
-	 * @date 2016年7月1日 下午3:58:20
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午5:40:08
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysRoleModel> getRoleList(){
@@ -147,12 +148,11 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	/**
 	 * 新增用户
 	 * @param user
-	 * @param org
-	 * @param role
 	 * @return
+	 * @throws Exception
 	 * @return Boolean
-	 * @author Tang
-	 * @date 2016年7月7日 上午11:07:35
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午9:27:09
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
 	public Boolean addUser(SysUserModel user) throws Exception{
@@ -201,31 +201,14 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * @param map
 	 * @return
 	 * @return int
-	 * @author Tang
-	 * @date 2016年7月19日 上午11:35:41
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午9:28:41
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.MANDATORY)
 	public int updUser(SysUserModel user,Map<String,Object> map){
-		
 		return this.executeUpdate("updateUser", map);
-		
 	}
 	
-	/**
-	 * 根据公司code查询角色列表
-	 * @param CompanyCode
-	 * @return
-	 * @return List<SysRoleModel>
-	 * @author Tang
-	 * @date 2016年7月4日 下午3:30:41
-	 */
-	@SuppressWarnings("unchecked")
-	public List<SysRoleModel> getRoleListByCompanyCode(String CompanyCode){
-		SearchExpression se = SearchExpression.forClass(SysRoleModel.class);
-		se.setCondition(Terms.eq("status", 1)).and(Terms.notNull("status"));
-		return this.list(se);
-		
-	}
 	
 	/**
 	 * 根据userId查询用户
@@ -236,9 +219,7 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * @date 2016年7月4日 下午3:34:18
 	 */
 	public SysUserModel getUserByUserId(int userId){
-//		SearchExpression se = SearchExpression.forClass(SysUserModel.class);
 		SysUserModel user =  (SysUserModel) findObjectByPK(SysUserModel.class, userId);
-//		se.and(Terms.eq("id", userId));
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", userId);
 		map.put("companyCode", user.getCompanyCode());
@@ -251,8 +232,8 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	 * @param companyCode
 	 * @return
 	 * @return List<SysOrgModel>
-	 * @author Tang
-	 * @date 2016年7月4日 下午4:31:02
+	 * @author 张荣英
+	 * @date 2017年4月5日 下午9:44:13
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SysOrgModel> getOrgListByCompanyCode(List<String> companyCode){
