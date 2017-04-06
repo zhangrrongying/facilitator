@@ -46,7 +46,6 @@
         </div>
     </div>
 </div>
-<!--<div id="add-config"  style="position:absolute; top:100px; left:50%; margin-left:-200px; width:400px;">-->
 <div id="add-config" class="modal fade" style="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -54,7 +53,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="title"></h4>
             </div>
-            <div class="modal-body" style="height:430px; overflow:auto">
+            <div class="modal-body" style="height:350px; overflow:auto">
                 <form id="addform" class="form-horizontal" action="/system/user/updatePwd.josn" method="post">
 
                     <input name="id" style="display: none;" />
@@ -67,21 +66,6 @@
                                 <option value="">--请选择--</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*所属企业</label>
-                        <div class="col-md-9 ">
-                            <select id="companyselect" name="companyCode" class="select-fixed"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*组织机构</label>
-                        <div class="col-md-9">
-                            <input type="text" id="orz1" readonly="readonly" name="orgName" data-bv-notempty="true" class="input-sm form-control" autocomplete="off" />
-                            <!--<div id="tree1" hidden="hidden" style="position:absolute;margin-left:0px; width:250px;z-index: 999999;"></div>-->
-                            <ul id="tree1" class="ztree" style="position:absolute;margin-left:0px;width:230px;z-index: 999999;background-color:#F5F5F6;display: none;"></ul>
-                        </div>
-
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label">*用户名</label>
@@ -126,16 +110,6 @@
 
                         <div class="col-md-9">
                             <input type="text" autocomplete="off" name="phone" data-bv-notempty="false" placeholder="" class="input-sm form-control" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*权限</label>
-                        <div class="col-md-9">
-                            <div class="radio i-checks">
-                                <label><input type="radio" id="power1" value="1" name="power" checked="checked" /> <i></i> 部门权限 </label>
-                                <label><input type="radio" id="power2" value="2" name="power" checked="checked" /> <i></i> 公司权限 </label>
-                            </div>
                         </div>
                     </div>
 
@@ -204,17 +178,6 @@
             $('#table_list_1').setGridWidth(width);
 
         });
-
-        $("#orz").mouseover(function () {
-            $(this).css("cursor", "pointer");
-        }).mouseout(function () {
-            $(this).css("cursor", "default");
-        });
-        $("#orz1").mouseover(function () {
-            $(this).css("cursor", "pointer");
-        }).mouseout(function () {
-            $(this).css("cursor", "default");
-        });
     });
 
     var jsonCondition = {};
@@ -223,7 +186,6 @@
     });
 
     setTimeout(function () {
-        loadTree();
         loadrole();
         loadlist();
         loadAddFrom();
@@ -246,7 +208,7 @@
             url: '/system/user/userList.json',
             dataGridTable: $("#table_list_1"),
             pagerId: '#pager_list_1',
-            colNames: ['编号', '姓名', '用户名', 'Email', '联系电话', '角色', 'roleid', 'orgid', '组织机构', 'code', '所属公司', 'power', '状态', '操作'],
+            colNames: ['编号', '姓名', '用户名', 'Email', '联系电话', '角色', 'roleid', '状态', '操作'],
             colModel: [
                 { name: 'id', index: 'id', editable: true, width: 30, align: "center", sortable: false, search: true },
                 { name: 'name', index: 'name', editable: true, width: 50, sortable: false, align: "center", classes: "text" },
@@ -255,11 +217,6 @@
                 { name: 'phone', index: 'phone', editable: true, sortable: false, width: 70, align: "center", classes: "text" },
                 { name: 'roleName', index: 'roleName', editable: true, width: 60, sortable: false, align: "center", classes: "text" },
                 { name: 'roleId', index: 'roleId', editable: true, sortable: false, align: "right", hidden: true },
-                { name: 'orgId', index: 'orgId', editable: true, sortable: false, align: "right", hidden: true },
-                { name: 'orgName', index: 'orgName', editable: true, width: 90, sortable: false, align: "left", classes: "text" },
-                { name: 'companyCode', index: 'compayCode', editable: true, sortable: false, align: "right", hidden: true },
-                { name: 'companyName', index: 'companyName', editable: true, width: 60, sortable: false, align: "center", classes: "text" },
-                { name: 'power', index: 'power', editable: true, sortable: false, align: "right", hidden: true },
                 { name: 'status', index: 'status', editable: true, width: 30, sortable: false, align: "center", formatter: status },
                 { name: 'operate', index: 'operate', sortable: false, width: 60, sortable: false, align: "center", formatter: addButton },
             ]
@@ -295,22 +252,6 @@
         }
         return cont + '</ul></div>';
     }
-
-    function loadTree() {
-        $.ajax({
-            type: "GET",
-            url: "/system/user/orgInfo.json",
-            async: true,
-            dataType: "json",
-            success: function (resp) {
-                initTree(resp, "tree", false);
-            },
-            error: function (errMsg) {
-                layer.msg('<span style="color: red;">发生系统错误，加载失败</span>');
-            }
-        });
-    }
-
 
     function loadrole() {
         $.ajax({
@@ -350,56 +291,16 @@
                     for (i in resp[0].roleList) {
                         $("#roleselect1").append('<option value="' + (resp[0].roleList)[i].id + '">' + (resp[0].roleList[i]).name + '</option>');
                     }
-                    //      						syk.initFixedChosen(resp[0].roleList, {selector:$("#roleselect1")});
                     $("#roleselect1").chosen({ width: "100%" });
                     $("#roleselect1").chosen();
                     $("#roleselect1").trigger("chosen:updated");
                 }
-                if (document.getElementById("companyselect").options.length == 0) {
-                    if (resp[0].company.length > 1) {
-                        $("#orz").parent().hide();
-                    }
-                    for (var i in resp[0].company) {
-                        $("#companyselect").append('<option value="' + (resp[0].company)[i].code + '">' + (resp[0].company)[i].fullName + '</option>');
-                    }
-                    $("#companyselect").chosen({ width: "100%" });
-                    $("#companyselect").trigger("chosen:updated");
-                    $("#companyselect").chosen();
-                    loadOrgTree($("#companyselect").val());
-                    //								initTree(resp[0].orgList,"tree1","orz1",true);
-                    $("#companyselect").on('change', function (e, param) {
-                        zTreeObj.destroy();
-                        loadOrgTree($("#companyselect").val());
-                    });
-                }
-                //						syk.initFixedChosen(resp, {selector:$("#roleselect1")});
-
-                //						setTimeout(function(){
-                //							comCode= resp[0].companyCode;
-                //			        		$("#companyselect").val(resp[0].companyCode);
-                //			        		$("#companyselect").chosen();
-                //							$("#companyselect").trigger("chosen:updated");
-                //			        	},200);
             },
             error: function (errMsg) {
                 layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
             }
         });
 
-    }
-    function loadOrgTree(code) {
-        $.ajax({
-            type: "get",
-            url: "/system/user/loadOrgTree.json/" + code,
-            async: true,
-            dataType: 'json',
-            success: function (resp) {
-                initTree(resp, "tree1", true);
-            },
-            error: function (errMsg) {
-                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
-            }
-        });
     }
 
     $("#search-reset").on("click", function () {
@@ -433,14 +334,7 @@
         $("#password3").show();
         $('#addform').bootstrapValidator('resetForm', true);
         $("#addform")[0].reset();
-        var treeObj = $.fn.zTree.getZTreeObj("tree1");
-        treeObj.checkAllNodes(false);
-        //			$("#roleselect1").trigger("chosen:updated");
-        //			$("#companyselect").val(comCode);
-        //			$("#companyselect").chosen();
-        //			$("#companyselect").trigger("chosen:updated");
         $('[name="status"]').iCheck("check");
-        $('#power1').iCheck("check");
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
@@ -448,96 +342,6 @@
         });
         $("#add-config").modal('show');
     });
-
-    $("#orz").on("click.b", function () {
-        $("#tree").show();
-        var width = $("#tree").width() + 10;
-        $("#orz").attr({ "style": 'width:' + width + 'px;' });
-        event.stopPropagation();
-        event.preventDefault();
-        $("#tree").click(function (event) {
-            event.stopPropagation();
-            event.preventDefault();
-        });
-        $(document).one("click", function () {
-            $("#tree").hide();
-        })
-        //			 $("#tree").off("click.b").on("click.b",function(e){
-        //
-        //			});
-    });
-    //		$(document).one("click", function () {//对document绑定一个影藏Div方法
-    //		$(myDiv).hide();
-    //		});
-    //		$("#orz").on('blur',function(){
-    //			$("#tree").hide();
-    //		});
-
-
-    var zTreeObj;
-    function initTree(param, id, checkbox) {
-        param = JSON.stringify(param);
-        var setting = {
-            data: {
-                simpleData: {
-                    enable: true,
-                    idKey: "id",
-                    pIdKey: "parentOrgId",
-                    //							rootPId: "0"
-                },
-                key: {
-                    url: ""
-                }
-            },
-            check: {
-                chkStyle: "checkbox",
-                autoCheckTrigger: false,
-                chkboxType: { "Y": "", "N": "" },
-                enable: checkbox
-            },
-            callback: {
-                onClick: zTreeOnClick,
-                onCheck: zTreeOnCheck
-            }
-        };
-        zTreeObj = $.fn.zTree.init($("#" + id), setting, JSON.parse(param));
-        zTreeObj.expandAll(true);
-    }
-
-
-    function zTreeOnClick(event, treeId, treeNode) {
-        $("#orz").val(treeNode.name);
-        $("#tree").hide();
-    }
-
-
-    function zTreeOnCheck(event, treeId, treeNode) {
-        if (treeNode.checked) {
-            if ($('#orz1').val() == '') {
-                $('#orz1').val(treeNode.name);
-            } else {
-                $('#orz1').val($('#orz1').val() + "," + treeNode.name);
-            }
-        } else {
-            var param = $('#orz1').val().split(',');
-            for (var i in param) {
-                if (treeNode.name == param[i]) {
-                    param.splice(i, 1);
-                    $('#orz1').val('');
-                    for (var i in param) {
-                        if ($('#orz1').val() == '') {
-                            $('#orz1').val(param[i]);
-                        } else {
-                            $('#orz1').val($('#orz1').val() + "," + param[i]);
-                        }
-
-                    }
-                }
-            }
-        }
-    }
-
-
 
     var jqdata;
     function edit(id) {
@@ -557,80 +361,14 @@
         jqdata.status.indexOf('禁用') > 0 ? $("#status").iCheck("uncheck") : $('#status').iCheck('check');
         jqdata.power == 1 ? $('#power1').iCheck('check') : $('#power2').iCheck('check');
         $("#add-config").modal('show');
-        //			$.ajax({
-        //      		type:"GET",
-        //      		url:"/system/user/createInfo.json",
-        //      		async:true,
-        //      		dataType:"json",
-        //      		success:function(resp){
-        //      					if(document.getElementById("roleselect1").options.length == 1){
-        //      						for(i in resp[0].roleList){
-        //      							$("#roleselect1").append('<option value="'+(resp[0].roleList)[i].id+'">'+(resp[0].roleList[i]).name+'</option>');
-        //      						}
-        //      						$("#roleselect1").chosen({width: "180px"});
-        //      						$("#roleselect1").chosen();
-        //      						$("#roleselect1").trigger("chosen:updated");
-        //      					}
-        //							if(document.getElementById("companyselect").options.length == 1){
-        //		        				$("#companyselect").append('<option value="'+resp[0].companyCode+'">'+resp[0].companyName+'</option>');
-        //		        				$("#companyselect").chosen({width: "180px"});
-        //		        				$("#companyselect").chosen();
-        //		        				$("#companyselect").trigger("chosen:updated");
-        //							}
-        //			        		initTree(resp[0].orgList,"tree1",true);
-        //
-        //
-        //			    },
-        //			    error: function(errMsg) {
-        //              	layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
-        //              }
-        ////
-        //      	});
-
-        //      		jqdata.status.indexOf('禁用')>0?$('[name="status"]').attr("checked",false):$('[name="status"]').attr("checked",true);
         $("#roleselect1").val(jqdata.roleId);
         $("#roleselect1").trigger("chosen:updated");
-        $("#companyselect").val(jqdata.companyCode);
-        $("#companyselect").trigger("chosen:updated");
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
             increaseArea: '20%' // optional
         });
-        loadOrgTree($("#companyselect").val());
-        setTimeout(function () {
-            var treeObj = $.fn.zTree.getZTreeObj("tree1");
-            treeObj.checkAllNodes(false);
-            var nodes = treeObj.transformToArray(treeObj.getNodes());
-            var param = $('#orz1').val().split(',');
-            for (var i = 0, l = nodes.length; i < l; i++) {
-                for (var j in param) {
-                    if (nodes[i].name == param[j]) {
-                        treeObj.checkNode(nodes[i], true, false);
-                        break;
-                    }
-                }
-            }
-        }, 150);
-
     }
-
-
-    $('#orz1').on('click', function () {
-
-        $("#tree1").show();
-        event.stopPropagation();
-        event.preventDefault();
-        $("#tree1").click(function (event) {
-            event.stopPropagation();
-            event.preventDefault();
-        });
-
-        $(document).one("click", function () {
-            $("#tree1").hide();
-        })
-
-    });
 
     function updpwd(id) {
         var data = $("#table_list_1").jqGrid('getRowData', id);
@@ -643,7 +381,6 @@
 
 
     $("#submit").on("click", function () {
-        $('#addform').data('bootstrapValidator').updateStatus('orgName', 'VALIDATING', null);
         var bootstrapValidator = $("#addform").data('bootstrapValidator').validate();
         if (bootstrapValidator.isValid()) {
             $("#submit").hide();
@@ -653,12 +390,6 @@
             $($("#addform").serializeArray()).each(function () {
                 data[this.name] = this.value;
             });
-            var treeObj = $.fn.zTree.getZTreeObj("tree1");
-            var nodes = treeObj.getCheckedNodes();
-            data['orgIdArr'] = [];
-            for (var i in nodes) {
-                data['orgIdArr'].push(nodes[i].id);
-            }
             var url = "";
             if (data.id) {
                 url = "/system/user/updateInfo.json";
@@ -697,21 +428,6 @@
             layer.msg("请补全信息");
 
         }
-        //				$("#pwdform").ajaxSubmit({
-        //					type: 'post',
-        //					contentType : 'application/json',
-        //		            url: '/system/user/updatePwd.josn',
-        //		            success: function(data) {
-        //		            	if(data){
-        //		            		$("#add-config").modal('hide');
-        //		            		alert('保存成功');
-        //		            		$("#table_list_1").trigger("reloadGrid");
-        //		            	}
-        //
-        //		               }
-        //		            });
-        //					return false;
-
     });
 
 
@@ -753,36 +469,14 @@
             layer.msg("请正确填写信息");
         }
     });
-    //				$("#addform").ajaxSubmit({
-    //					type: 'post',
-    //		            url: '/system/user/updateInfo.josn',
-    //		            success: function(data) {
-    //		            	if(data){
-    //		            		$("#add-config").modal('hide');
-    //		            		alert('保存成功');
-    //		            	}
-    //
-    //		               }
-    //		            });
-    //					return false;
-    //		});
 
     function formload(form, data) {
         for (var name in data) {
             var val = data[name];
             var rr = $("input[name=\"" + name + "\"][type=radio], input[name=\"" + name + "\"][type=checkbox]", form);
-            //		$.fn.prop?rr.prop("checked",false):rr.attr("checked",false);
-            //		rr.each(function(){
-            //			var f=$(this);
-            //			if(f.val()==String(val)){
-            //				$.fn.prop?f.prop("checked",true):f.attr("checked",true);
-            //			}
-            //		});
             if (!rr.length) {
                 $("input[name=\"" + name + "\"]", form).val(val);
                 $("textarea[name=\"" + name + "\"]", form).val(val);
-                //			$("select[name=\""+name+"\"]  option[value='"+val+"']",form).attr("select","selected").text('123');
-                //			simulateClick($("select[name=\""+name+"\"]",form).val(val)[0]);
             }
         }
     }
@@ -882,38 +576,9 @@
                         notEmpty: {
                             message: '角色不能为空'
                         }
-                        //                      regexp: {
-                        //                          regexp: /\d{8}/,
-                        //                          message: '角色不能为空'
-                        //                      }
                     }
 
-                },
-                companyCode: {
-                    validators: {
-                        notEmpty: {
-                            message: '公司不能为空'
-                        }
-                        //                      regexp: {
-                        //                          regexp: /\d{8}/,
-                        //                          message: '公司不能为空'
-                        //                      }
-                    }
-                },
-                orgName: {
-                    validators: {
-                        notEmpty: {
-                            message: '组织机构不能为空'
-                        }
-                    }
                 }
-                //              power: {
-                //                  validators: {
-                //                      notEmpty: {
-                //                          message: '权限不能为空'
-                //                      }
-                //                  }
-                //              }
             }
 
         });

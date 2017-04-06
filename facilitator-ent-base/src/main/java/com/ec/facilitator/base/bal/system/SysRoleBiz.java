@@ -22,7 +22,6 @@ import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
-import com.ec.facilitator.base.model.system.SysUserModel;
 
 /**
  * 角色业务处理
@@ -73,10 +72,8 @@ public class SysRoleBiz {
 	 * @date 2017年4月5日 下午5:35:21
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
-	public Boolean createRole(SysRoleModel role,int userId){
+	public Boolean createRole(SysRoleModel role){
 		if(role != null && StringUtils.hasText(role.getName())){
-			SysUserModel user = sysUserDao.getUserByUserId(userId);
-			role.setCompanyCode(user.getCompanyCode());
 			role.setCreateDate(new Date());
 			if(role.getStatus() == null){
 				role.setStatus((short) 0);

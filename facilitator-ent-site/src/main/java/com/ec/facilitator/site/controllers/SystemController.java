@@ -47,9 +47,9 @@ public class SystemController {
 		}else{
 			codes = new ArrayList<String>();
 		}
-		variables.put("hasAddBtn", codes.contains("P28"));
-		variables.put("hasEditBtn", codes.contains("P29"));
-		variables.put("hasPwdeBtn", codes.contains("P30"));
+		variables.put("hasAddBtn", codes.contains("P4"));
+		variables.put("hasEditBtn", codes.contains("P5"));
+		variables.put("hasPwdeBtn", codes.contains("P6"));
 		return thymeleafHelper.processHtml(variables,"pages/user_list", request, response, servletContext);
 	} 
 	
@@ -64,9 +64,9 @@ public class SystemController {
 		}else{
 			codes = new ArrayList<String>();
 		}
-		variables.put("hasAddBtn", codes.contains("P31"));
-		variables.put("hasEditBtn", codes.contains("P32"));
-		variables.put("hasPowerBtn", codes.contains("P33"));
+		variables.put("hasAddBtn", codes.contains("P7"));
+		variables.put("hasEditBtn", codes.contains("P8"));
+		variables.put("hasPowerBtn", codes.contains("P9"));
 		return thymeleafHelper.processHtml(variables,"pages/role_list", request, response, servletContext);
 	}
 

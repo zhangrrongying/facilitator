@@ -10,17 +10,10 @@
 			]]>
 		</select>
 		
-		<select id="getOrgListByUserId" orm="sysOrg">
-			<![CDATA[
-			SELECT a.* FROM sys_org a LEFT JOIN sys_org_user b ON a.Id = b.Org_Id WHERE b.User_Id = :userId 
-			]]>
-		</select>
-		
 		<select orm="sysUser" id="findUserList"  templated="true">
 		<![CDATA[
-			SELECT a.id,a.userName,a.name,a.Email,a.Power,a.Phone,a.Company_Code,a.status, b.`Name` AS companyName,GROUP_CONCAT( DISTINCT d.`Name`) AS orgName,GROUP_CONCAT( DISTINCT d.Id) AS orgId, e.Role_Id roleId,f.`Name` AS roleName FROM sys_user a LEFT JOIN sys_company b ON a.Company_Code = b.`Code` 
-			LEFT JOIN sys_org_user c ON a.Id = c.User_Id LEFT JOIN sys_org d ON c.Org_Id = d.Id LEFT JOIN sys_role_user e ON a.Id = e.User_Id LEFT JOIN sys_role f ON e.Role_Id = f.Id  where 
-	           a.Company_Code IN ($code) 
+			SELECT a.id,a.userName,a.name,a.Email,a.Phone,a.status, e.Role_Id roleId,f.`Name` AS roleName FROM sys_user a 
+			LEFT JOIN sys_role_user e ON a.Id = e.User_Id LEFT JOIN sys_role f ON e.Role_Id = f.Id  where 1=1  
 	        #notEmpty($name)
 	           AND a.name like '%$name%'
 	        #end
@@ -30,18 +23,15 @@
 			#notEmpty($roleId)
 	           AND e.Role_Id =:roleId 
 	        #end
-	        #notEmpty($orgName)
-	           AND d.Name =:orgName 
-	        #end
 			GROUP BY a.Id 
 			limit :start,:end
 			]]>
 		</select>
 		<select orm="jqresp" id="getUserCount" templated="true">
 			<![CDATA[
-				SELECT count(1) records from (SELECT count(1) records FROM sys_user a LEFT JOIN sys_company b ON a.Company_Code = b.`Code` 
-				LEFT JOIN sys_org_user c ON a.Id = c.User_Id LEFT JOIN sys_org d ON c.Org_Id = d.Id LEFT JOIN sys_role_user e ON a.Id = e.User_Id LEFT JOIN sys_role f ON e.Role_Id = f.Id 
-		          where a.Company_Code IN ($code) 
+				SELECT count(1) records from (SELECT count(1) records FROM sys_user a 
+				LEFT JOIN sys_role_user e ON a.Id = e.User_Id LEFT JOIN sys_role f ON e.Role_Id = f.Id 
+		          where 1=1
 		        #notEmpty($name)
 		           AND a.name like '%$name%'
 		        #end
@@ -51,37 +41,19 @@
 				#notEmpty($roleId)
 		           AND e.Role_Id =:roleId 
 		        #end
-		        #notEmpty($orgName)
-		           AND d.Name =:orgName 
-		        #end
 		        GROUP BY a.Id ) a
 			]]>
 		</select>
-		<select orm="sysUser" id="findUserById" templated="true">
-		<![CDATA[
-			SELECT a.Id,a.Name,a.Email,a.Phone,c.Name companyName, a.status,a.Company_Code, r.Role_Id roleId, (select name from sys_role where id=r.Role_Id) roleName, o.Name orgName 
-			FROM sys_user a LEFT JOIN sys_role_user r ON a.id = r.User_Id LEFT JOIN sys_org_user u  ON u.User_Id = a.Id LEFT JOIN sys_org o on  o.id = u.Org_Id LEFT JOIN sys_company c ON c.Code = a.Company_Code WHERE a.Company_Code =:companyCode 
-			 #notEmpty($id)
-	           AND a.id =:id 
-	        #end
-		]]>
-		</select>
-		
 		<update orm="sysUser" id="updateUser" templated="true">
 		<![CDATA[
 			update sys_user a,sys_role_user r 
-			set r.Role_Id=:roleId,a.UserName=:userName, a.Name=:name,a.Company_Code=:companyCode,a.Email=:email,a.Phone= :phone,a.Status=:status,a.Power=:power
+			set r.Role_Id=:roleId,a.UserName=:userName, a.Name=:name,a.Email=:email,a.Phone= :phone,a.Status=:status
 			WHERE  r.User_Id=a.Id AND a.Id=:id
 		]]>
 		</update>
 		<update orm="sysUser" id="updatePwd">
 		<![CDATA[
 			update sys_user set Password = :password where id = :id 
-			]]>
-		</update>
-		<update orm="sysUser" id="delUserOrg">
-			<![CDATA[
-			DELETE FROM sys_org_user WHERE User_Id=:id
 			]]>
 		</update>
 		<orm class="com.ec.facilitator.base.model.common.JQGridResponseModel" id="jqresp">

@@ -19,8 +19,6 @@
     <service name="guzzTemplatedSQL" class="org.guzz.service.core.impl.VelocityTemplatedSQLService" />
     
     <business dbgroup="facMysql" name="sysAuthFunc" file="./conf/sqlmaps/hbm/system/sysAuthFunc.hbm.xml" />
-    <business dbgroup="facMysql" name="sysOrg" file="./conf/sqlmaps/hbm/system/sysOrg.hbm.xml" />
-    <business dbgroup="facMysql" name="sysOrgUser" file="./conf/sqlmaps/hbm/system/sysOrgUser.hbm.xml" />
     <business dbgroup="facMysql" name="sysRole" file="./conf/sqlmaps/hbm/system/sysRole.hbm.xml" />
     <business dbgroup="facMysql" name="sysRoleFunc" file="./conf/sqlmaps/hbm/system/sysRoleFunc.hbm.xml" />
     <business dbgroup="facMysql" name="sysRoleUser" file="./conf/sqlmaps/hbm/system/sysRoleUser.hbm.xml" />
@@ -28,5 +26,4 @@
     
     <import resource="sqlmaps/mybatis/system/sysUser.mybatis.xml"/>
     <import resource="sqlmaps/mybatis/system/sysRole.mybatis.xml"/>
-    <import resource="sqlmaps/mybatis/system/sysOrg.mybatis.xml"/>
 </guzz-configs>

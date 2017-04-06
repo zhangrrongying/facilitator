@@ -17,19 +17,14 @@ import org.springframework.util.StringUtils;
 import com.ec.facilitator.base.bal.common.BizErrorException;
 import com.ec.facilitator.base.bal.common.BizErrorItemModel;
 import com.ec.facilitator.base.bal.common.BizErrorModel;
-import com.ec.facilitator.base.bal.common.CommonBiz;
 import com.ec.facilitator.base.dal.system.SysUserDao;
 import com.ec.facilitator.base.model.common.AuthMenuModel;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
-import com.ec.facilitator.base.model.common.TreeModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
-import com.ec.facilitator.base.model.system.SysOrgModel;
-import com.ec.facilitator.base.model.system.SysOrgUserModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
 import com.ec.facilitator.base.util.AuthData;
-import com.ec.facilitator.base.util.AuthManager;
 import com.ec.facilitator.base.util.BizHelper;
 import com.ec.facilitator.base.util.WebConfig;
 
@@ -49,9 +44,6 @@ public class SysUserBiz {
 	
 	@Autowired
 	private WebConfig webConfig;
-	
-	@Autowired
-	private CommonBiz commonBiz;
 	
 	/**
 	 * 后台登陆授权
@@ -166,19 +158,11 @@ public class SysUserBiz {
 	 * @date 2017年4月5日 下午5:25:39
 	 */
 	public JQGridResponseModel<SysUserModel> getUserList(SysUserModel requestModel) throws Exception{
-		int id = AuthManager.getCurrentAuthData().getId();
-		SysUserModel user = (SysUserModel)sysUserDao.findObjectByPK(SysUserModel.class, id);
-		String code = "";
-		if(user.getPower() == SysUserModel.POWER_ORG){
-			code =  commonBiz.getOrgCodeByUserId(id);
-		}else{
-			code = "'"+user.getCompanyCode()+"'";
-		}
-		JQGridResponseModel<SysUserModel> jQModel = sysUserDao.getUserList(requestModel,code);
+		JQGridResponseModel<SysUserModel> jQModel = sysUserDao.getUserList(requestModel);
 		return jQModel;
 	}
 	
-	/**
+	/*
 	 * 获取角色列表
 	 * @return
 	 * @return List<SysRoleModel>
@@ -188,91 +172,6 @@ public class SysUserBiz {
 	public List<SysRoleModel> getRoleList(){
 		return sysUserDao.getRoleList();
 	}
-	
-	/**
-	 * 获取树形组织结构
-	 * @param userId
-	 * @return
-	 * @return List<TreeModel>
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:30:05
-	 */
-	public List<TreeModel> getOrgInfoTree(int userId){
-		SysUserModel user = sysUserDao.getUserByUserId(userId);
-		 List<String> companyCodeList = new ArrayList<>();
-		 String[] codes = user.getCompanyCode().split(",");
-		 for (String string : codes) {
-			companyCodeList.add(string.replace("'", ""));
-		}
-		List<SysOrgModel> orgList = sysUserDao.getOrgListByCompanyCode(companyCodeList);
-		List<TreeModel> list = new ArrayList<TreeModel>();
-		if(!orgList.isEmpty()){
-			for (SysOrgModel org : orgList) {
-				if(org.getParentOrgId() == 0){
-					TreeModel tree = new TreeModel();
-					tree.setId(org.getId());
-					tree.setText(org.getName());
-					changeOrgData(orgList, tree);
-					list.add(tree);
-				}
-			}
-			return list;
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取树形组织列表
-	 * @param userId
-	 * @return
-	 * @return List<SysOrgModel>
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:30:22
-	 */
-	public List<SysOrgModel> getOrgList(int userId){
-		SysUserModel user = sysUserDao.getUserByUserId(userId);
-		 List<String> companyCodeList = new ArrayList<>();
-		 String[] codes = user.getCompanyCode().split(",");
-		 for (String string : codes) {
-			companyCodeList.add(string.replace("'", ""));
-		}
-		List<SysOrgModel> orgList = sysUserDao.getOrgListByCompanyCode(companyCodeList);
-		return orgList;
-	}
-	
-	/**
-	 * 转化org列表数据为树形结构
-	 * @param orgList
-	 * @param tree
-	 * @return void
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:30:40
-	 */
-	public void changeOrgData(List<SysOrgModel> orgList,TreeModel tree){
-		tree.setNodes(new ArrayList<TreeModel>());
-		
-		List<SysOrgModel> list = new ArrayList<SysOrgModel>();
-		for (int i = 0;i< orgList.size();i++) {
-			list.add(orgList.get(i));	
-		}
-		for (int i = list.size()-1; i >=0; i--) {
-			SysOrgModel org = list.get(i);
-			if(tree.getId() == org.getParentOrgId()){
-					TreeModel childTree = new TreeModel();
-					childTree.setText(org.getName());
-					childTree.setId(org.getId());
-					tree.getNodes().add(childTree);
-					list.remove(i);
-				
-			}
-		}
-		if(list.size()>0){
-			for (TreeModel treeModel : tree.getNodes()) {
-				changeOrgData(list, treeModel);
-			}
-		}
-	}
-	
 	
 	/**
 	 * 获取创建用户必要信息
@@ -296,24 +195,6 @@ public class SysUserBiz {
 	}
 	
 	/**
-	 * 获取组织机构树
-	 * @param companyCode
-	 * @return
-	 * @return List<SysOrgModel>
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:31:40
-	 */
-	public List<SysOrgModel> getOrgTree(String companyCode){
-		if(StringUtils.hasText(companyCode)){
-			List<String> list = new ArrayList<>();
-			list.add(companyCode);
-			return sysUserDao.getOrgListByCompanyCode(list);
-		}
-		return null;
-		
-	}
-	
-	/**
 	 * 新增用户
 	 * @param user
 	 * @return
@@ -323,7 +204,7 @@ public class SysUserBiz {
 	 * @date 2017年4月5日 下午5:31:50
 	 */
 	public Boolean addUser(SysUserModel user) throws Exception{
-		if(StringUtils.hasText(user.getUserName()) && StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()) && StringUtils.hasText(user.getPassword()) && StringUtils.hasText(user.getCompanyCode())  && user.getRoleId() != null && (user.getOrgIdArr() != null || user.getOrgId() != null)){
+		if(StringUtils.hasText(user.getUserName()) && StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()) && StringUtils.hasText(user.getPassword())){
 			user.setPassword(BizHelper.encodeStr("MD5", user.getPassword().trim()));
 			if(user.getStatus() == null){
 				user.setStatus((short) 0);
@@ -350,7 +231,7 @@ public class SysUserBiz {
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
 	public BooleanResultModel updUser(SysUserModel user){
 		BooleanResultModel br = new BooleanResultModel();
-		if(user.getId() != null || (StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail())  && StringUtils.hasText(user.getCompanyCode())  && (user.getOrgIdArr() != null) || user.getId() != null)){
+		if(user.getId() != null || (StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()))){
 			SysUserModel hasUser =sysUserDao.getSysUserByUserName(user.getUserName());
 			if(hasUser!=null && hasUser.getId() != user.getId()){
 				br.setMsg("用户名已被占用");
@@ -358,14 +239,12 @@ public class SysUserBiz {
 				return br;
 			}
 			Map<String,Object> map = new LinkedCaseInsensitiveMap<Object>();
-			map.put("companyCode", user.getCompanyCode());
 			map.put("name", user.getName());
 			map.put("userName", user.getUserName());
 			map.put("email", user.getEmail());
 			map.put("phone", user.getPhone());
 			map.put("roleId", user.getRoleId());
 			map.put("id", user.getId());
-			map.put("power", user.getPower());
 			Map<String,Object> param = new LinkedCaseInsensitiveMap<Object>();
 			param.put("id", user.getId());
 			sysUserDao.executeUpdate("delUserOrg", param);
@@ -374,23 +253,8 @@ public class SysUserBiz {
 			}else{
 				map.put("status", user.getStatus());
 			}
-			if(user.getOrgIdArr().length>1){
-				for(int orgId : user.getOrgIdArr()){
-					SysOrgUserModel org = new SysOrgUserModel();
-					org.setOrgId(orgId);
-					org.setUserId(user.getId());
-					sysUserDao.insert(org);
-				}
-				br.setResult(sysUserDao.executeUpdate("updateUser", map)>0?true:false);
-				return br;
-			}else{
-				SysOrgUserModel org = new SysOrgUserModel();
-				org.setOrgId(user.getOrgIdArr()[0]);
-				org.setUserId(user.getId());
-				sysUserDao.insert(org);
-				br.setResult(sysUserDao.executeUpdate("updateUser", map)>0?true:false);
-				return br;
-			}
+			br.setResult(sysUserDao.executeUpdate("updateUser", map)>0?true:false);
+			return br;
 		}
 		br.setResult(false);
 		br.setMsg("用户信息不全，更新失败");

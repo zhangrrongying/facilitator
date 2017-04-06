@@ -7,17 +7,12 @@ import com.ec.facilitator.base.model.common.JQGridRequestModel;
 /**
  * 角色Model
  * @author 张荣英
- * @date 2016年6月27日 下午2:46:07
+ * @date 2017年4月6日 下午9:40:05
  */
-
 public class SysRoleModel extends JQGridRequestModel{
 
-	//巡场人员
-	public static final int ROLE_M = 15;
-	
 	private Integer id;
 	private String name;
-	private String companyCode;
 	private Date createDate;
 	private String description;
 	private Short status;
@@ -54,14 +49,6 @@ public class SysRoleModel extends JQGridRequestModel{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCompanyCode() {
-		return this.companyCode;
-	}
-
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
 	}
 
 	public Short getStatus() {

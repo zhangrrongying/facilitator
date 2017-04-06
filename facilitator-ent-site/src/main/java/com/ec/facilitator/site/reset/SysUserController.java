@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +18,6 @@ import com.ec.facilitator.base.bal.system.SysUserBiz;
 import com.ec.facilitator.base.dal.system.SysUserDao;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
-import com.ec.facilitator.base.model.system.SysOrgModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
 import com.ec.facilitator.base.util.AuthManager;
@@ -47,22 +45,6 @@ public class SysUserController {
 		@RequestMapping(value ="/roleList.json",method = RequestMethod.GET)
 		public List<SysRoleModel> roleList(){
 			return sysUserBiz.getRoleList();
-		}
-		
-		@AuthTag
-		@SSLTag
-		@RequestMapping(value ="/orgInfo.json" , method=RequestMethod.GET)
-		public List<SysOrgModel> orgInfo(){
-			int userId = AuthManager.getCurrentAuthData().getId();
-			return sysUserBiz.getOrgList(userId);
-			
-		}
-		
-		@AuthTag
-		@SSLTag
-		@RequestMapping(value = "/loadOrgTree.json/{code}" , method = RequestMethod.GET)
-		public List<SysOrgModel> loadOrgTree(@PathVariable("code") String code){
-			return sysUserBiz.getOrgTree(code);
 		}
 		
 		@AuthTag
