@@ -1,0 +1,28 @@
+**/target
+**/trace
+**/logs
+*.class
+*.iml
+*.log
+.DS_Store
+.classpath
+.project
+.settings
+.idea
+velocity.log
+.metadata
+
+/facilitator-ent-site/conf/sqlmaps
+/facilitator-ent-site/conf/localization
+/facilitator-ent-site/conf/guzz.properties
+/facilitator-ent-site/conf/guzz.xml
+/facilitator-ent-site/conf/log4j.xml
+/facilitator-ent-site/application.properties
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Ryan profile #
+startapp.sh
