@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.util.StringUtils;
 
 import com.ec.facilitator.base.bal.common.BizErrorException;
@@ -23,6 +22,7 @@ import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
+import com.ec.facilitator.base.model.system.SysRoleUserModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
 import com.ec.facilitator.base.util.AuthData;
 import com.ec.facilitator.base.util.BizHelper;
@@ -130,7 +130,6 @@ public class SysUserBiz {
 			SysAuthFuncModel sysMenu = sysMenus.get(i);
 			if (rootMenu.getId() == sysMenu.getParentKeyId()) {
 				AuthMenuModel authMenu = new AuthMenuModel();
-//				authMenu.setFuncKey(AUTH_KEY_M + sysMenu.getId() + AUTH_KEY_Q);
 				authMenu.setFuncKey(sysMenu.getUrl());
 				authMenu.setId(sysMenu.getId());
 				authMenu.setParentId(sysMenu.getParentKeyId());
@@ -174,91 +173,42 @@ public class SysUserBiz {
 	}
 	
 	/**
-	 * 获取创建用户必要信息
-	 * @param userId
-	 * @return
-	 * @return List<Map<String,Object>>
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:31:23
-	 */
-	public List<Map<String,Object>> findCreateInfo(int userId){
-		 SysUserModel user = (SysUserModel) sysUserDao.findObjectByPK(SysUserModel.class, userId);
-		 if(user != null){
-			 Map<String, Object> map = new HashMap<String, Object>();
-			 List<SysRoleModel> roleList = sysUserDao.getRoleList();
-			 map.put("roleList", roleList);
-			 List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-			 list.add(map);
-			 return list;
-		 }
-		return null;
-	}
-	
-	/**
-	 * 新增用户
-	 * @param user
-	 * @return
-	 * @throws Exception
-	 * @return Boolean
-	 * @author 张荣英
-	 * @date 2017年4月5日 下午5:31:50
-	 */
-	public Boolean addUser(SysUserModel user) throws Exception{
-		if(StringUtils.hasText(user.getUserName()) && StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()) && StringUtils.hasText(user.getPassword())){
-			user.setPassword(BizHelper.encodeStr("MD5", user.getPassword().trim()));
-			if(user.getStatus() == null){
-				user.setStatus((short) 0);
-			}
-			try {
-				return sysUserDao.addUser(user);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-		return false;
-		
-	}
-	
-	/**
-	 * 更新用户
+	 * 保存用户
 	 * @param user
 	 * @return
 	 * @return BooleanResultModel
 	 * @author 张荣英
+	 * @throws Exception 
 	 * @date 2017年4月5日 下午5:32:30
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.REQUIRED)
-	public BooleanResultModel updUser(SysUserModel user){
+	public BooleanResultModel saveUser(SysUserModel user) throws Exception{
 		BooleanResultModel br = new BooleanResultModel();
-		if(user.getId() != null || (StringUtils.hasText(user.getName()) && StringUtils.hasText(user.getEmail()))){
-			SysUserModel hasUser =sysUserDao.getSysUserByUserName(user.getUserName());
-			if(hasUser!=null && hasUser.getId() != user.getId()){
-				br.setMsg("用户名已被占用");
-				br.setResult(false);
-				return br;
-			}
-			Map<String,Object> map = new LinkedCaseInsensitiveMap<Object>();
-			map.put("name", user.getName());
-			map.put("userName", user.getUserName());
-			map.put("email", user.getEmail());
-			map.put("phone", user.getPhone());
-			map.put("roleId", user.getRoleId());
-			map.put("id", user.getId());
-			Map<String,Object> param = new LinkedCaseInsensitiveMap<Object>();
-			param.put("id", user.getId());
-			sysUserDao.executeUpdate("delUserOrg", param);
-			if(user.getStatus() == null){
-				map.put("status", 0);
-			}else{
-				map.put("status", user.getStatus());
-			}
-			br.setResult(sysUserDao.executeUpdate("updateUser", map)>0?true:false);
+		SysUserModel hasUser =sysUserDao.getSysUserByUserName(user.getUserName());
+		if(hasUser!=null && hasUser.getId() != user.getId()){
+			br.setMsg("用户名已被占用");
+			br.setResult(false);
 			return br;
 		}
-		br.setResult(false);
-		br.setMsg("用户信息不全，更新失败");
+		if(user.getId()  > 0){
+			sysUserDao.updUser(user);
+		}else{
+			user.setPassword(BizHelper.encodeStr("MD5", user.getPassword().trim()));
+			if(user.getStatus() == null){
+				user.setStatus((short) 0);	
+			}
+			sysUserDao.insert(user);
+			SysRoleUserModel role = new SysRoleUserModel();
+			role.setUserId(user.getId());
+			role.setRoleId(user.getRoleId());
+			sysUserDao.insert(role);
+		}
+		br.setResult(true);
 		return br;
+	}
+	
+	public SysUserModel getModelById(int id){
+		return sysUserDao.getSysUserById(id);
 	}
 	
 	/**

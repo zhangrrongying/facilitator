@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ec.facilitator.base.bal.system.SysUserBiz;
+import com.ec.facilitator.base.model.system.SysUserModel;
 import com.ec.facilitator.base.util.AuthManager;
 import com.ec.facilitator.base.util.AuthTag;
 import com.ec.facilitator.base.util.SSLTag;
@@ -27,7 +28,7 @@ import com.ec.facilitator.site.ThymeleafHelper;
  * @date 2016年6月28日 上午10:09:31
  */
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/pages")
 public class SystemController {
 	
 	@Resource
@@ -51,6 +52,19 @@ public class SystemController {
 		variables.put("hasEditBtn", codes.contains("P5"));
 		variables.put("hasPwdeBtn", codes.contains("P6"));
 		return thymeleafHelper.processHtml(variables,"pages/user_list", request, response, servletContext);
+	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/user/obj", method = RequestMethod.GET)
+	public String userPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		HashMap<String, Object> variables = new HashMap<String, Object>();
+		int id = Integer.valueOf(request.getParameter("id"));		 
+		SysUserModel obj = null;
+		if(id > 0)
+			obj =sysUserBiz.getModelById(id);
+		variables.put("obj", obj);
+		return thymeleafHelper.processHtml(variables,"pages/user", request, response, servletContext);
 	} 
 	
 	@SSLTag

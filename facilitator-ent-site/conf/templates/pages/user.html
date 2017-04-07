@@ -1,0 +1,206 @@
+<form id="addform" class="form-horizontal" th:object="${obj}">
+    <input id="id" name="id" type="hidden" value="" th:value="${obj==null}?0:*{id}" />
+    <div class="form-group">
+        <label class="col-md-3 control-label">*角色 </label>
+        <div class="col-md-8">
+            <select id="roleId" name="roleId" class="chosen-select" th:value="${obj==null}?'':*{roleId}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">*用户名</label>
+        <div class="col-md-8">
+             <input type="text" id="userName" name="userName" class="input-sm form-control" th:value="${obj==null}?'':*{userName}"/>
+        </div>
+     </div>
+     <div class="form-group" id="password2">
+        <label class="col-md-3 control-label">*密码</label>
+        <div class="col-md-8">
+             <input type="password" id="password" name="password" class="input-sm form-control" th:value="${obj==null}?'':*{password}"/>
+        </div>
+     </div>
+     <div class="form-group" id="password3">
+        <label class="col-md-3 control-label">*再次确认</label>
+        <div class="col-md-8">
+             <input type="password" id="password4" name="password4" class="input-sm form-control" th:value="${obj==null}?'':*{password}"/>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="col-md-3 control-label">*姓名</label>
+        <div class="col-md-8">
+             <input type="text" id="name" name="name" class="input-sm form-control" th:value="${obj==null}?'':*{name}"/>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="col-md-3 control-label">*Email</label>
+        <div class="col-md-8">
+             <input type="text" id="email" name="email" class="input-sm form-control" th:value="${obj==null}?'':*{email}"/>
+        </div>
+     </div>
+     <div class="form-group">
+        <label class="col-md-3 control-label">&nbsp;电话</label>
+        <div class="col-md-8">
+             <input type="text" id="phone" name="phone" class="input-sm form-control" th:value="${obj==null}?'':*{phone}"/>
+        </div>
+     </div>
+     <div class="form-group">
+         <label class="col-md-3 control-label">是否启用</label>
+         <div class="col-md-9">
+             <label class="checkbox-inline i-checks"> <input type="checkbox" id="status" name="status" checked="checked" value="1" th:checked="${obj eq null or obj.status eq 1}" /> 启用请打勾 </label>
+         </div>
+     </div>
+</form>
+
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+    $(function () {
+        var form = $("#addform");
+        var id = $("#id").val();
+        if(id > 1){
+        	$("#password2").hide();
+            $("#password3").hide();
+        }
+        
+        $("#userName").tipsy({ trigger: 'focus', gravity: 's' });
+        
+        //加载角色
+        syk.get("/system/user/roleList.json", function (datas) {
+        	syk.initFixedChosen(datas, { selector: $("#roleId") });
+        });
+        
+        sykModal.submit = {
+            url: '/system/user/save.json',
+            data: function () {
+            	if(id > 0){
+                    $('#addform').data('bootstrapValidator').updateStatus('password', 'VALID', null);
+                    $('#addform').data('bootstrapValidator').updateStatus('password4', 'VALID', null);
+            	}
+                var bv = form.data('bootstrapValidator');
+                if (bv) { // 修复记忆的组件不验证
+                    bv.validate();
+                    if (!bv.isValid()) {
+                        layer.msg("验证未通过，请检查");
+                        return null;
+                    }
+                }
+                var params = {};
+                $($("#addform").serializeArray()).each(function () {
+                	if (this.name.indexOf('password') > -1) {
+                		params['password'] = this.value; 
+                	}else{
+                		params[this.name] = this.value;
+                	}
+                });
+                return params;
+            },
+            done: function (ret) {
+                if (!ret.result) {
+                    layer.alert("保存失败：{" + ret.msg + "}");
+                } else {
+                    sykModal.close();
+                    layer.msg("保存成功");
+                    index.callIframe({ fun: "saveRefresh" });
+                }
+            }
+        };
+        
+        form.bootstrapValidator({
+        	message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                userName: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 15,
+                            message: '用户名长度非法'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: '姓名只能是英文/数字'
+                        }
+                    }
+                },
+                name: {
+                    message: '姓名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '姓名不能为空'
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 15,
+                            message: '姓名长度非法'
+                        },
+                        regexp: {
+                            regexp: /^[\u4e00-\u9fa5a-zA-Z]+$/,
+                            message: '姓名只能是中文/英文'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '邮箱不能为空'
+                        },
+                        emailAddress: {
+                            message: '不是一个有效的邮箱'
+                        }
+                    }
+                },
+
+                phone: {
+                    validators: {
+                        regexp: {
+                            regexp: /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/,
+                            message: '手机号码非法'
+                        }
+                    }
+
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 12,
+                            message: '密码长度应在6-12位'
+                        }
+
+                    }
+                },
+                password4: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+
+                        identical: {
+                            field: 'password',
+                            message: '两次密码不一致'
+                        }
+                    }
+                },
+                roleId: {
+                    validators: {
+                        notEmpty: {
+                            message: '角色不能为空'
+                        }
+                    }
+
+                }
+            }
+        });
+    });
+    //]]>
+</script>

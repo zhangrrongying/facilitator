@@ -44,6 +44,11 @@
 		        GROUP BY a.Id ) a
 			]]>
 		</select>
+		<select orm="sysUser" id="getSysUserById"  templated="true">
+		<![CDATA[
+			SELECT a.*,b.Role_Id AS roleId FROM sys_user a LEFT JOIN sys_role_user b ON a.Id = b.User_Id WHERE a.Id = :id
+			]]>
+		</select>
 		<update orm="sysUser" id="updateUser" templated="true">
 		<![CDATA[
 			update sys_user a,sys_role_user r 

@@ -142,14 +142,39 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	/**
 	 * 更新用户信息
 	 * @param user
-	 * @param map
 	 * @return
 	 * @return int
 	 * @author 张荣英
 	 * @date 2017年4月5日 下午9:28:41
 	 */
 	@Transactional(rollbackFor=Exception.class,propagation = Propagation.MANDATORY)
-	public int updUser(SysUserModel user,Map<String,Object> map){
-		return this.executeUpdate("updateUser", map);
+	public Boolean updUser(SysUserModel user){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("name", user.getName());
+		params.put("userName", user.getUserName());
+		params.put("email", user.getEmail());
+		params.put("phone", user.getPhone());
+		params.put("roleId", user.getRoleId());
+		params.put("id", user.getId());
+		if(user.getStatus() == null){
+			params.put("status", 0);
+		}else{
+			params.put("status", user.getStatus());
+		}
+		return this.executeUpdate("updateUser", params) > 0;
+	}
+	
+	/**
+	 * 根据用户Id查询用户
+	 * @param id
+	 * @return
+	 * @return SysUserModel
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午4:20:01
+	 */
+	public SysUserModel getSysUserById(int id){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		return (SysUserModel)this.findObject("getSysUserById", params);
 	}
 }

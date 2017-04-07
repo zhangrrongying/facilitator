@@ -5,126 +5,28 @@
         <div class="ibox-content">
             <form id="searchForm" class="form-inline list-search" role="form">
                 <div class="form-group">
-                    <label>
-                        姓名 <input type="text" id="name" name="name"
-                                  class="input-sm form-control" autocomplete="off" value="" />
+                    <label> 姓名 <input type="text" id="name" name="name" class="input-sm form-control" autocomplete="off" value="" />
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>
-                        用户名 <input type="text" name="userName" autocomplete="off" class="input-sm form-control" value="" />
+                    <label> 用户名 <input type="text" name="userName" autocomplete="off" class="input-sm form-control" value="" />
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>
-                        角色<div class="input-group">
-                            <select id="roleselect" data-placeholder="Choose a Country..." name="roleId" class="chosen-select" tabindex="-1">
-                                <option value="">--请选择--</option>
-                            </select>
-                    </div>
+                    <label>角色<select id="roleId" name="roleId" class="chosen-select"></select>
                     </label>
                 </div>
             </form>
             <div class="list-btn">
-                <button id="search" class="btn btn-primary btn-sm"
-                        onclick="search()">
-                    搜 索 <i class="fa fa-search"></i>
-                </button>
+                <button id="search" class="btn btn-primary btn-sm"> 搜 索 <i class="fa fa-search"></i></button>
                 <button id="search-reset" class="btn btn-primary btn-sm">显示所有</button>
-                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm">
-                    新 增 <i class="fa fa-plus"></i>
-                </button>
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="add()"> 新 增 <i class="fa fa-plus"></i></button>
             </div>
-
             <div class="jqGrid_wrapper">
                 <table id="table_list_1"></table>
                 <div id="pager_list_1"></div>
             </div>
 
-        </div>
-    </div>
-</div>
-<div id="add-config" class="modal fade" style="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="title"></h4>
-            </div>
-            <div class="modal-body" style="height:350px; overflow:auto">
-                <form id="addform" class="form-horizontal" action="/system/user/updatePwd.josn" method="post">
-
-                    <input name="id" style="display: none;" />
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*角色</label>
-                        <div class="col-md-9" style="">
-                            <select id="roleselect1" style="width:350px;" data-bv-notempty="true"
-                                    name="roleId" class="select-fixed"
-                                    tabindex="-1">
-                                <option value="">--请选择--</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*用户名</label>
-                        <div class="col-md-9">
-                            <input type="text" autocomplete="off" id="userName" name="userName" placeholder=""
-                                   data-bv-notempty="true" class="input-sm form-control" checked="checked" />
-                        </div>
-                    </div>
-
-                    <div class="form-group " id="password2">
-                        <label class="col-md-2 control-label">*密码</label>
-
-                        <div class="col-md-9">
-                            <input type="password" autocomplete="off" data-bv-notempty="true" name="password" placeholder="" class="input-sm form-control" value="" />
-                        </div>
-
-                    </div>
-                    <div class="form-group" id="password3">
-                        <label class="col-md-2 control-label">*再次确认</label>
-                        <div class="col-md-9">
-                            <input id="password4" autocomplete="off" type="password" data-bv-notempty="true" name="password1" placeholder="" class="input-sm form-control" value="" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*姓名</label>
-                        <div class="col-md-9">
-                            <input type="text" autocomplete="off" name="name" placeholder=""
-                                   data-bv-notempty="true" class="input-sm form-control" checked="checked" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">*Email</label>
-
-                        <div class="col-md-9">
-                            <input type="email" autocomplete="off" data-bv-notempty="true" placeholder="" name="email" class="input-sm form-control" />
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">&nbsp;电话</label>
-
-                        <div class="col-md-9">
-                            <input type="text" autocomplete="off" name="phone" data-bv-notempty="false" placeholder="" class="input-sm form-control" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">是否启用</label>
-                        <div class="col-md-9">
-                            <label class="checkbox-inline i-checks"> <input type="checkbox" name="status" id="status" checked="true" value="1" /> 启用请打勾 </label>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="">
-                    <img id="cover" src="/images/loading1.gif" style="align-content:center;display: none;" />
-                    <button id="submit" type="button" class="btn btn-primary">保存</button>
-                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -168,35 +70,27 @@
 
 <script type="text/javascript" th:inline="text">
     //<![CDATA[
-
+	var jsonCondition = {};
     $(function () {
-        $(window).resize(function () {
-            var width = $('.jqGrid_wrapper').width();
-            $('#table_list_1').setGridWidth(width);
+    	syk.initList();
+        
+        setTimeout(function () {
+            loadrole();
+            loadlist();
+            pwdvalidator();
+        }, 200);
+        
+        $('#myModal').on('hide.bs.modal', function (e) {
+            setTimeout(function () {
+                document.getElementById("name").focus();
+            }, 200);
 
+        });// input 获得焦点
+        
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $("#pwd")[0].focus();// input 获得焦点
         });
     });
-
-    var jsonCondition = {};
-    $(function () {
-
-    });
-
-    setTimeout(function () {
-        loadrole();
-        loadlist();
-        loadAddFrom();
-        formvalidate();
-        pwdvalidator();
-
-        document.getElementById("name").focus();
-        $('#searchForm').keydown(function (e) {
-            if (e.keyCode == 13) {
-                search();
-                e.preventDefault();
-            }
-        });
-    }, 200);
 
     function loadlist() {
         var dataGrid = new DataGrid({
@@ -251,106 +145,16 @@
 
     function loadrole() {
     	syk.get("/system/user/roleList.json", function (datas) {
-        	syk.initFixedChosen(datas, { selector: $("#roleselect") });
+        	syk.initFixedChosen(datas, { selector: $("#roleId") });
         });
     }
 
-
-    function search() {
-        $($("#searchForm").serializeArray()).each(function () {
-            jsonCondition[this.name] = this.value;
-        });
-        $("#table_list_1").jqGrid("setGridParam", { search: true }).trigger("reloadGrid", [{ page: 1 }]);
+    function add() {
+        syk.parent.sykModal.open({ url: "/pages/user/obj?id=0", title: "新增用户", top: '10%', ftitle: '', size: 620 });
     }
-    var comCode = "";
-    function loadAddFrom() {
-        $.ajax({
-            type: "GET",
-            url: "/system/user/createInfo.json",
-            async: true,
-            dataType: "json",
-            success: function (resp) {
-                if (document.getElementById("roleselect1").options.length == 1) {
-                    for (i in resp[0].roleList) {
-                        $("#roleselect1").append('<option value="' + (resp[0].roleList)[i].id + '">' + (resp[0].roleList[i]).name + '</option>');
-                    }
-                    $("#roleselect1").chosen({ width: "100%" });
-                    $("#roleselect1").chosen();
-                    $("#roleselect1").trigger("chosen:updated");
-                }
-            },
-            error: function (errMsg) {
-                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
-            }
-        });
-
-    }
-
-    $("#search-reset").on("click", function () {
-        $("#searchForm")[0].reset();
-        $("#roleselect").val("");
-        $("#roleselect").trigger("chosen:updated");
-        jsonCondition = {};
-        search();
-    });
-    $('#add-config').on('hide.bs.modal', function (e) {
-        setTimeout(function () {
-            document.getElementById("name").focus();
-        }, 200);
-    });
-    $('#myModal').on('hide.bs.modal', function (e) {
-        setTimeout(function () {
-            document.getElementById("name").focus();
-        }, 200);
-
-    });// input 获得焦点
-    $('#add-config').on('shown.bs.modal', function (e) {
-        $("#userName")[0].focus();// input 获得焦点
-    })
-    $('#myModal').on('shown.bs.modal', function (e) {
-        $("#pwd")[0].focus();// input 获得焦点
-    })
-    $("#add").on("click", function () {
-        $("#title").html("新增用户");
-        $("#tree1").hide();
-        $("#password2").show();
-        $("#password3").show();
-        $('#addform').bootstrapValidator('resetForm', true);
-        $("#addform")[0].reset();
-        $('[name="status"]').iCheck("check");
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-            increaseArea: '20%' // optional
-        });
-        $("#add-config").modal('show');
-    });
-
-    var jqdata;
+    
     function edit(id) {
-        $("#title").html("编辑用户");
-        $("#tree1").hide();
-        $("#password2").hide();
-        $("#password3").hide();
-        $('#addform').bootstrapValidator('resetForm', true);
-        $('#addform').data('bootstrapValidator').updateStatus('password', 'VALID', null);
-        $('#addform').data('bootstrapValidator').updateStatus('password1', 'VALID', null);
-
-        jqdata = $("#table_list_1").jqGrid('getRowData', id);
-
-        $("#addform")[0].reset();
-        $('[name="id"]').val(jqdata.id);
-        formload($("#addform"), jqdata);
-        jqdata.status.indexOf('禁用') > 0 ? $("#status").iCheck("uncheck") : $('#status').iCheck('check');
-        jqdata.power == 1 ? $('#power1').iCheck('check') : $('#power2').iCheck('check');
-        $("#add-config").modal('show');
-        $("#roleselect1").val(jqdata.roleId);
-        $("#roleselect1").trigger("chosen:updated");
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-            increaseArea: '20%' // optional
-        });
+        syk.parent.sykModal.open({ url: "/pages/user/obj?id=" + id, title: "编辑用户", top: '10%', ftitle: '', size: 620});
     }
 
     function updpwd(id) {
@@ -361,58 +165,6 @@
         $('[name="password1"]').val('');
         $("#myModal").modal('show');
     }
-
-
-    $("#submit").on("click", function () {
-        var bootstrapValidator = $("#addform").data('bootstrapValidator').validate();
-        if (bootstrapValidator.isValid()) {
-            $("#submit").hide();
-            $("#cover").show();
-            $("#password4").attr({ "name": "" });
-            var data = {};
-            $($("#addform").serializeArray()).each(function () {
-                data[this.name] = this.value;
-            });
-            var url = "";
-            if (data.id) {
-                url = "/system/user/updateInfo.json";
-            } else {
-                url = "/system/user/createSysUser.json";
-            }
-            $.ajax({
-                type: "POST",
-                url: url,
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                dataType: "json",
-                success: function (resp) {
-                    if (resp.result == true) {
-                        $("#add-config").modal('hide');
-                        layer.msg('保存成功');
-                        $("#table_list_1").trigger("reloadGrid");
-                    } else if (resp.msg) {
-                        layer.msg(resp.msg);
-
-                    } else {
-                        layer.msg('保存失败！');
-
-                    }
-                    $("#cover").hide();
-                    $("#submit").show();
-                },
-                error: function (errMsg) {
-                    $("#add-config").modal('hide');
-                    layer.alert('<span style="color: red;">发生系统错误，保存失败</span>');
-
-                }
-            });
-            $("#password4").attr({ "name": "password1" });
-        } else {
-            layer.msg("请补全信息");
-
-        }
-    });
-
 
     $("#submit1").on("click", function () {
         var bootstrapValidator = $("#pwdform").data('bootstrapValidator').validate();
@@ -452,120 +204,6 @@
             layer.msg("请正确填写信息");
         }
     });
-
-    function formload(form, data) {
-        for (var name in data) {
-            var val = data[name];
-            var rr = $("input[name=\"" + name + "\"][type=radio], input[name=\"" + name + "\"][type=checkbox]", form);
-            if (!rr.length) {
-                $("input[name=\"" + name + "\"]", form).val(val);
-                $("textarea[name=\"" + name + "\"]", form).val(val);
-            }
-        }
-    }
-
-
-    function formvalidate() {
-        $('#addform').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            excluded: ':disabled',
-            fields: {
-                userName: {
-                    message: '用户名不合法',
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空'
-                        },
-                        stringLength: {
-                            min: 3,
-                            max: 15,
-                            message: '用户名长度非法'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9]+$/,
-                            message: '姓名只能是英文/数字'
-                        }
-                    }
-                },
-                name: {
-                    message: '姓名不合法',
-                    validators: {
-                        notEmpty: {
-                            message: '姓名不能为空'
-                        },
-                        stringLength: {
-                            min: 1,
-                            max: 15,
-                            message: '姓名长度非法'
-                        },
-                        regexp: {
-                            regexp: /^[\u4e00-\u9fa5a-zA-Z]+$/,
-                            message: '姓名只能是中文/英文'
-                        }
-                    }
-                },
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: '邮箱不能为空'
-                        },
-                        emailAddress: {
-                            message: '不是一个有效的邮箱'
-                        }
-                    }
-                },
-
-                phone: {
-                    validators: {
-                        regexp: {
-                            regexp: /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/,
-                            message: '手机号码非法'
-                        }
-                    }
-
-                },
-                password: {
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 12,
-                            message: '密码长度应在6-12位'
-                        }
-
-                    }
-                },
-                password1: {
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-
-                        identical: {
-                            field: 'password',
-                            message: '两次密码不一致'
-                        }
-                    }
-                },
-                roleId: {
-                    validators: {
-                        notEmpty: {
-                            message: '角色不能为空'
-                        }
-                    }
-
-                }
-            }
-
-        });
-    }
 
     function pwdvalidator() {
         $('#pwdform').bootstrapValidator({

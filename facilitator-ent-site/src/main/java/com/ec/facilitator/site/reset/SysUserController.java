@@ -49,40 +49,9 @@ public class SysUserController {
 		
 		@AuthTag
 		@SSLTag
-		@RequestMapping(value = "/createInfo.json" , method = RequestMethod.GET)
-		public List<Map<String,Object>> createInfo(HttpRequest req){
-			int userId = AuthManager.getCurrentAuthData().getId();
-			return sysUserBiz.findCreateInfo(userId);
-		}
-		
-		@AuthTag
-		@SSLTag
-		@RequestMapping(value = "/createSysUser.json", method = RequestMethod.POST)
+		@RequestMapping(value = "/save.json", method = RequestMethod.POST)
 		public BooleanResultModel createSysUser(@RequestBody SysUserModel user) throws Exception{
-			BooleanResultModel br = new BooleanResultModel();
-			SysUserModel hasUser =sysUserDao.getSysUserByUserName(user.getUserName());
-			if(hasUser!=null){
-				br.setMsg("用户名已被占用");
-				br.setResult(false);
-				return br;
-			}
-			br.setResult(sysUserBiz.addUser(user));
-			return br;
-		}
-		
-		@AuthTag
-		@SSLTag
-		@RequestMapping(value = "/updateInfo.json", method = RequestMethod.POST)
-		public BooleanResultModel updateInfo(@RequestBody SysUserModel user){
-			BooleanResultModel br = new BooleanResultModel();
-			try {
-				 br = sysUserBiz.updUser(user);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				br.setResult(false);
-			}
-			return br;
+			return sysUserBiz.saveUser(user);
 		}
 		
 		@AuthTag

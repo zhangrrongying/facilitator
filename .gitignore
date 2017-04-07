@@ -24,5 +24,10 @@ velocity.log
 *.war
 *.ear
 
-# Ryan profile #
 startapp.sh
+<<<<<<< HEAD
+*.log
+/facilitator-ent-base/.externalToolBuilders
+=======
+*.log
+>>>>>>> farm_sale
