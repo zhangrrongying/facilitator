@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<head th:substituteby="/includes/header :: header" />
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="ibox ">
+        <div class="ibox-content">
+            <form id="searchForm" class="form-inline list-search" role="form">
+                <div class="form-group">
+                    <label> 角色名称<input type="text" id="roleName" name="name" autocomplete="off" class="input-sm form-control" />
+                    </label>
+                </div>
+            </form>
+            <div class="list-btn">
+                <button id="search" class="btn btn-primary btn-sm">搜 索 <i class="fa fa-search"></i></button>
+                <button id="search-reset" class="btn btn-primary btn-sm">显示所有</button>
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm">新 增 <i class="fa fa-plus"></i></button>
+            </div>
+            <div class="jqGrid_wrapper">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add-config" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addrole">新增角色</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">*角色名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="name" autocomplete="off" id="rolename" data-bv-notempty="true" class="input-sm form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">角色描述</label>
+                        <div class="col-md-8">
+                            <textarea type="text" data-bv-notempty="false" placeholder="" name="description" class="input-sm form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">是否启用</label>
+                        <div class="col-md-8">
+                            <label class="checkbox-inline i-checks"> <input type="checkbox" id="status" name="status" checked="true" value="1" /> 启用请打勾 </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit" type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+                <div class="message"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">权限管理&nbsp;&nbsp;&nbsp;&nbsp;<span id="myModalLabel" style="font-size: small;"></span></h4>
+            </div>
+            <div class="modal-body " style="height:400px; overflow:auto">
+                <form id="powerform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group ">
+                        <ul id="tree" class="ztree" style="height: 400px;width: 450px;z-index: 999999;"></ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <!--<label class="checkbox i-checks" style="float:left;"> <input type="checkbox"   id="checked"  checked="true" value=""/> 全选 </label>-->
+                <label class="checkbox-inline i-checks" style="position:absolute;left:50px;"> <input type="checkbox" id="checked" checked="true" value="0" />&nbsp;&nbsp;<span id="text">全选</span></label>
+                <div class="">
+                    <img id="cover1" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit1" type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: none;"><ul id="tree1" class="ztree"></ul> </div>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+    var jsonCondition = {};
+    $(function () {
+    	syk.initList();
+		setTimeout(function () {
+	        loadlist();
+	        loadTree();
+	        formvalidate("addform");
+	    }, 200);
+    });
+    
+    function loadlist() {
+        var dataGrid = new DataGrid({
+            multiselect: false,
+            url: '/system/user/roleList.json',
+            dataGridTable: $("#table_list_1"),
+            pagerId: '#pager_list_1',
+            colNames: ['编号', '角色名称', '描述', '创建时间', '状态', '操作'],
+            colModel: [
+                { name: 'id', index: 'id', editable: true, width: 40, align: "center", sortable: false, search: true },
+                { name: 'name', index: 'name', editable: true, width: 60, sortable: false, align: "center", classes: "text" },
+                { name: 'description', index: 'description', editable: true, sortable: false, align: "left", classes: "text" },
+                { name: 'createDate', index: 'createDate', editable: true, width: 60, sortable: false, classes: "text", align: "center", formatter: "date", formatoptions: { newformat: 'Y-m-d' } },
+                { name: 'status', index: 'status', editable: true, width: 40, sortable: false, align: "center", formatter: status },
+                 { name: 'operate', index: 'operate', sortable: false, width: 60, sortable: false, align: "center", formatter: addButton },
+            ]
+        });
+    }
+    function status(val, row) {
+        if (val == 1) {
+            return '<a style="cursor:default;" data-id="' + val + '" tostatus="0" title="启用" class="data-status">' +
+            '<i class="fa fa-check-square"></i></a>';
+        } else {
+            return '<a style="cursor:default;" data-id="' + val + '" tostatus="1" title="禁用" class="data-status">' +
+            '<i class="fa fa-minus-square"></i></a>';
+        }
+    }
+    function addButton(cellvalue, options, rowObject) {
+        var edit = '[[${hasEditBtn}]]' === 'true';
+        var power = '[[${hasPowerBtn}]]' === 'true';
+        if (!edit && !power) {
+            return "";
+        }
+        var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
+        '<ul class="dropdown-menu">';
+        if (edit) {
+            btns = btns + '<li><a href="#" onclick="editRole(' + rowObject.id + ');" >编辑角色 <i class="fa fa-edit"/></a></li>';
+
+        }
+        if (power) {
+            btns = btns + '<li><a href="#" onclick="editPower(' + rowObject.id + ');">修改权限 <i class="fa fa-edit"/></a></li>';
+        }
+        return btns + '</ul></div>';
+    }
+ 
+    function loadTree() {
+        $.ajax({
+            type: "get",
+            url: "/system/user/powerTree.json",
+            async: true,
+            dataType: 'json',
+            success: function (resp) {
+                initTree(JSON.stringify(resp), "tree")
+            },
+            error: function (errMsg) {
+                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+    }
+    $('#add-config').on('shown.bs.modal', function (e) {
+        $("#rolename")[0].focus();// input 获得焦点
+    })
+    $('#add-config').on('hide.bs.modal', function (e) {
+        setTimeout(function () {
+            document.getElementById("roleName").focus();
+        }, 200);
+    })
+    $('#myModal').on('hide.bs.modal', function (e) {
+        setTimeout(function () {
+            document.getElementById("roleName").focus();
+        }, 200);
+    })
+    $("#add").on("click", function () {
+        $("#addrole").html("新增角色");
+        $("#add-config").modal('show');
+        $("#addform")[0].reset();
+        $('#addform').bootstrapValidator('resetForm', true);
+        $('[name="status"]').iCheck('check');
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            increaseArea: '20%' // optional
+        });
+    });
+    var zTreeObj;
+    function initTree(param, id) {
+        param = JSON.parse(param);
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "parentKeyId",
+                    rootPId: "0"
+                },
+                key: {
+                    url: ""
+                }
+            },
+
+            check: {
+                chkStyle: "checkbox",
+                autoCheckTrigger: false,
+                chkboxType: { "Y": "ps", "N": "ps" },
+                enable: true
+            },
+            callback: {
+                onCheck: beforeCheck
+            }
+        };
+        zTreeObj = $.fn.zTree.init($("#" + id), setting, param);
+
+    }
+
+    function beforeCheck(event, treeId, treeNode) {
+        if (treeNode.isParent) {
+            var treeObj = $.fn.zTree.getZTreeObj("tree");
+            var nodes = treeObj.transformToArray(treeNode.children);
+            for (var i in nodes) {
+                if (nodes[i].type == 2) {
+                    treeObj.checkNode(nodes[i], false, false);
+                }
+            }
+        }
+
+    }
+
+    function editRole(id) {
+        $("#cover").hide();
+        $("#submit").show();
+        $('#addform').bootstrapValidator('resetForm', true);
+        var data = $("#table_list_1").jqGrid('getRowData', id);
+        $("#add-config").modal('show');
+        $("#addrole").html("编辑角色");
+        $("#addform")[0].reset();
+        $('[name="id"]').val(data.id);
+        $('[name="description"]').val(data.description);
+        $('#rolename').val(data.name);
+
+        if (data.status.indexOf('禁用') > 0) {
+            $('[name="status"]').iCheck('uncheck');
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                increaseArea: '20%' // optional
+            });
+        } else {
+            $('[name="status"]').iCheck('check');
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                increaseArea: '20%' // optional
+            });
+        }
+
+    }
+    var role;
+    function editPower(id) {
+
+        role = $("#table_list_1").jqGrid('getRowData', id);
+        $("#powerform")[0].reset();
+        var zTreeObj = $.fn.zTree.getZTreeObj("tree");
+        zTreeObj.expandAll(true);
+        zTreeObj.checkAllNodes(false);
+        $("#myModalLabel").html("您正在为【" + role.name + "】角色分配权限");
+        $('#checked').off('ifUnchecked');
+        $.ajax({
+            type: "get",
+            url: "/system/user/rolePowerTree.json/" + role.id,
+            async: true,
+            dataType: 'json',
+            success: function (resp) {
+                for (var i in resp) {
+                    zTreeObj.checkNode(zTreeObj.getNodeByParam("id", resp[i].id, null), true, false);
+                }
+                $("#myModal").modal('show');
+                var count = zTreeObj.getCheckedNodes(true).length;
+                var all = zTreeObj.transformToArray(zTreeObj.getNodes()).length
+                if (all - 1 == count) {
+                    $("#checked").iCheck('check')
+                } else {
+                    $("#checked").iCheck('uncheck');
+                }
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    increaseArea: '20%' // optional
+                });
+                $('#checked').on('ifChecked', function (event) {
+                    zTreeObj.checkAllNodes(true);
+                    $("#text").html("全不选");
+                });
+                setTimeout(function () {
+                    $('#checked').on('ifUnchecked', function (event) {
+                        zTreeObj.checkAllNodes(false);
+                        $("#text").html("全选");
+                    });
+                }, 200);
+            },
+            error: function (errMsg) {
+                layer.alert('<span style="color: red;">发生系统错误，加载失败</span>');
+            }
+        });
+    }
+
+
+    $("#submit1").on("click", function () {
+        $("#submit1").hide();
+        $("#cover1").show();
+        var treeObj = $.fn.zTree.getZTreeObj("tree");
+        $nodes = $(treeObj.getCheckedNodes(true));
+        var param = [];
+        $nodes.each(function () {
+            param.push(this.id);
+        });
+        $.ajax({
+            type: "POST",
+            url: "/system/user/editPowerTree.json/" + role.id,
+            contentType: 'application/json',
+            data: JSON.stringify(param),
+            dataType: "json",
+            success: function (resp) {
+                $("#myModal").modal('hide');
+                $("#cover1").hide();
+                $("#submit1").show();
+                if (resp.result == true) {
+                    layer.msg('保存成功');
+                } else {
+                    layer.msg('保存失败');
+                }
+            },
+            error: function (errMsg) {
+                $("#myModal").modal('hide');
+                layer.alert('<span style="color: red;">发生系统错误，保存失败</span>');
+            }
+        });
+
+
+    });
+
+    $("#submit").on("click", function () {
+        var bootstrapValidator = $("#addform").data('bootstrapValidator').validate();
+        if (bootstrapValidator.isValid()) {
+            $("#submit").hide();
+            $("#cover").show();
+            var data = {};
+            $($("#addform").serializeArray()).each(function () {
+                data[this.name] = this.value;
+            });
+            var url = "";
+            if (data.id) {
+                url = "/system/user/updateRole.json";
+            } else {
+                url = "/system/user/createRole.json";
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: function (resp) {
+                    $("#add-config").modal('hide');
+                    $("#cover").hide();
+                    $("#submit").show();
+                    if (resp.result == true) {
+                        layer.msg('保存成功');
+                        $("#table_list_1").trigger("reloadGrid");
+                    } else {
+                        layer.msg('保存失败');
+                    }
+                },
+                error: function (errMsg) {
+                    $("#add-config").modal('hide');
+                    layer.alert('<span style="color: red;">发生系统错误，保存失败</span>');
+                }
+            });
+        }
+    });
+
+    function formvalidate(form) {
+        $('#' + form).bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: [':disabled'],
+            fields: {
+                name: {
+                    message: '不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '不能为空'
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 15,
+                            message: '最多允许输入15位字符'
+                        },
+                        /*remote: {
+                            url: 'remote.php',
+                            message: 'The username is not available'
+                        },*/
+                        regexp: {
+                            regexp: /^[\u4e00-\u9fa5]+$/,
+                            message: '只能是中文'
+                        }
+                    }
+                },
+            }
+
+        });
+    }
+
+    //]]>
+</script>
+<style>
+    .level3 {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: inline;
+        line-height: 14px;
+        text-align: left;
+        outline: 0;
+    }
+</style>

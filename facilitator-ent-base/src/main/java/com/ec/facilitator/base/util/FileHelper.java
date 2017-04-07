@@ -8,9 +8,8 @@ import java.io.FileWriter;
 
 /**
  * 从Disk中读取或者写入文本
- * 
- * @author ryan
- * 
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:37:40
  */
 public class FileHelper {
 

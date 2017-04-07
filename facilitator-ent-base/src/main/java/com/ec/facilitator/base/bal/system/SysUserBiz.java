@@ -59,7 +59,6 @@ public class SysUserBiz {
 		if (StringUtil.isEmpty(loginName) || StringUtil.isEmpty(password)) {
 			throw new BizErrorException(BizErrorModel.LOGIN_ERROR, BizErrorItemModel.LOGIN_ERROR_100002, null);
 		}
-		
 		SysUserModel sysUserModel = sysUserDao.getSysUserByUserName(loginName);
 		String encodedPwd = BizHelper.encodeStr(BizHelper.ENCODING_MD5, password);
 		//用户是否存在
@@ -193,7 +192,7 @@ public class SysUserBiz {
 		if(user.getId()  > 0){
 			sysUserDao.updUser(user);
 		}else{
-			user.setPassword(BizHelper.encodeStr("MD5", user.getPassword().trim()));
+			user.setPassword(BizHelper.encodeStr(BizHelper.ENCODING_MD5, user.getPassword().trim()));
 			if(user.getStatus() == null){
 				user.setStatus((short) 0);	
 			}
@@ -219,7 +218,7 @@ public class SysUserBiz {
 	 */
 	public int updUserPwd(SysUserModel user) throws Exception{
 		if(user.getId() != null && StringUtils.hasText(user.getPassword())){
-			user.setPassword(BizHelper.encodeStr("MD5", user.getPassword().trim()));
+			user.setPassword(BizHelper.encodeStr(BizHelper.ENCODING_MD5, user.getPassword().trim()));
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("password", user.getPassword());
 			map.put("id", user.getId());

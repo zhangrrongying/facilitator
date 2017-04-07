@@ -32,10 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
- * 
  * 提供给Spring事务容器使用的BaseDao
- * 
- * @author ryan
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:44:04
  */
 public class SpringGuzzBaseDao {
 

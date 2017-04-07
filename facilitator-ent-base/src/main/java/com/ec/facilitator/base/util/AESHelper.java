@@ -5,9 +5,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 
-/**
- * Created by ryan on 14-3-30.
- */
 public class AESHelper {
 
     private static final String ALGO = "AES";

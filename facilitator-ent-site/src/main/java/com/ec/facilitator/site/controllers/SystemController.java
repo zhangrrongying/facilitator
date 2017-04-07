@@ -22,11 +22,6 @@ import com.ec.facilitator.base.util.AuthTag;
 import com.ec.facilitator.base.util.SSLTag;
 import com.ec.facilitator.site.ThymeleafHelper;
 
-/**
- * 
- * @author 张荣英
- * @date 2016年6月28日 上午10:09:31
- */
 @RestController
 @RequestMapping("/pages")
 public class SystemController {

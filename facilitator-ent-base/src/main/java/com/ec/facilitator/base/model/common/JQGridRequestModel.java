@@ -1,10 +1,9 @@
 package com.ec.facilitator.base.model.common;
 
-
 /**
  * JQGrid PostDate类
  * @author 张荣英
- * @date 2016年6月30日 上午11:53:56
+ * @date 2017年4月7日 下午9:57:37
  */
 public class JQGridRequestModel {
 	protected Boolean _search;  

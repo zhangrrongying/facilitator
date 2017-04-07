@@ -1,37 +1,32 @@
 package com.ec.facilitator.base.util;
 
 /**
- * @ClassName: IAuthTokenStorable
- * @Description: 授权码存储接口
- * @author ryan
- * @date 2015年1月19日 上午10:52:05
+ * 授权码存储接口
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:39:28
  */
 public interface IAuthTokenStorable {
 	
 	/**
-	 * @Title: getAuthToken
-	 * @Description: 从指定存储容器里面获取AuthToken字符串
+	 * 从指定存储容器里面获取AuthToken字符串
 	 * @param memberId
 	 * @return
 	 * @throws Exception
-	 * String
-	 * @author ryan
-	 * @date 2015年2月9日 下午4:30:31
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:39:14
 	 */
 	public String getAuthToken(String memberId) throws Exception;
 	
 	/**
-	 * @Title: setAuthToken
-	 * @Description: 设置授权数据到指定的存储容器里面
+	 * 设置授权数据到指定的存储容器里面
 	 * @param memberId
 	 * @param authData
 	 * @return
 	 * @throws Exception
-	 * String
-	 * @author ryan
-	 * @date 2015年2月9日 下午4:31:25
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:38:56
 	 */
 	public String setAuthToken(String memberId, AuthData authData) throws Exception;
 }

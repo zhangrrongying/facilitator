@@ -5,8 +5,8 @@ import org.apache.log4j.Logger;
 
 /**
  * 统一日志记录地方
- * @author ryan
- *
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:42:14
  */
 public class SLogger {
 	
@@ -37,11 +37,11 @@ public class SLogger {
 	
 	/**
 	 * 根据sendMail参数做不同的日志处理
-	 * @param message 日志消息
-	 * @param sendMail 是否发送邮件
+	 * @param message
+	 * @param sendMail
 	 * @return void
-	 * @author liuchun 
-	 * @date 2015年8月5日 上午10:28:47
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:42:37
 	 */
 	public static void trace(String message, boolean sendMail) {
 		if (sendMail) {

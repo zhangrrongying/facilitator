@@ -6,10 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @ClassName: AuthTag
- * @Description: 用于限制该Action只能人认证授权后才能访问
- * @author ryan
- * @date Sep 26, 2014 3:46:59 PM
+ * 用于限制该Action只能人认证授权后才能访问
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:23:01
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

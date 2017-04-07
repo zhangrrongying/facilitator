@@ -18,8 +18,9 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @author liuchun
- * @date 2015年12月25日 下午5:03:21
+ * 
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:39:46
  */
 public class HttpClientUtil {
 	

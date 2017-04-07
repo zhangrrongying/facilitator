@@ -7,11 +7,11 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import com.ec.facilitator.base.dal.system.SysUserDao;
 import com.ec.facilitator.base.model.system.SysUserModel;
+
 /**
- * @ClassName: AuthTokenStoreBiz
- * @Description: 实现authtoken的存储逻辑
- * @author ryan
- * @date 2015年2月9日 下午4:35:55
+ * 实现authtoken的存储逻辑
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:32:56
  */
 public class AuthTokenStoreBiz implements IAuthTokenStorable {
 	
@@ -59,13 +59,11 @@ public class AuthTokenStoreBiz implements IAuthTokenStorable {
 	}
 
 	/**
-	 * @Title: removeAuthTokenFromRedis
-	 * @Description: 删除autotoken从redis中
+	 * 删除autotoken从redis中
 	 * @param key
-	 * void
-	 * @author ryan
-	 * @date 2015年2月9日 下午4:32:45
-	 * @throws
+	 * @return void
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:33:25
 	 */
 	public void removeAuthTokenFromRedis(Integer key) {
 		try {

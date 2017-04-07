@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-
 /**
- * @ClassName: AuthManager
- * @Description: 用于对认证授权数据的操作管理类
- * @author ryan
- * @date Sep 26, 2014 3:39:16 PM
+ * 用于对认证授权数据的操作管理类
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:24:08
  */
 @Component
 public class AuthManager {
@@ -28,28 +26,13 @@ public class AuthManager {
 
 	private static AuthData s_authDataForTest = null;
 
-	/**
-	 * 该方法仅仅用于单元测试
-	 * 
-	 * @param memberId
-	 *            会员系统编号
-	 * @param name
-	 *            会员名称
-	 */
-	public static void setAuthTokenForTest(int memberId, String name) {
-		AuthData authData = new AuthData();
-		authData.setId(memberId);
-		authData.setUserName(name);
-		s_authDataForTest = authData;
-	}
 
 	/**
-	 * @Title: getCurrentAuthData
-	 * @Description: 获取当前登录用户的授权数据
+	 * 获取当前登录用户的授权数据
+	 * @return
 	 * @return AuthData
-	 * @author ryan
-	 * @date Sep 26, 2014 3:39:42 PM
-	 * @throws
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:26:02
 	 */
 	public static AuthData getCurrentAuthData() {
 		if (s_authDataForTest != null) {
@@ -66,11 +49,6 @@ public class AuthManager {
 	
 	/**
 	 * 检查是否有传入的Func的权限
-	 * @param funcKey
-	 * @return
-	 * @return boolean
-	 * @author ryan 
-	 * @date 2015年11月2日 上午10:25:42
 	 */
 	public static boolean hasFunc(String funcKey) {
 		AuthData authData = getCurrentAuthData();
@@ -80,19 +58,16 @@ public class AuthManager {
 			&& authData.getPermissionCode().contains(funcKey)) {
 			return true;
 		}
-		
 		return false;
 	}
 
 	/**
-	 * @Title: setAuthToken
-	 * @Description: 登录后设置AuthToken，用于回写到auth cookie到客户端
+	 * 登录后设置AuthToken，用于回写到auth cookie到客户端
 	 * @param authData
 	 * @param redirect
-	 *            登录后是否需要强行跳转 void
-	 * @author ryan
-	 * @date Sep 26, 2014 3:45:07 PM
-	 * @throws
+	 * @return void
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:29:16
 	 */
 	public static void setAuthToken(AuthData authData, Boolean redirect) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
@@ -102,24 +77,21 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: setAuthToken
-	 * @Description: 登录后设置AuthToken，用于回写到auth cookie到客户端
+	 * 登录后设置AuthToken，用于回写到auth cookie到客户端
 	 * @param authData
-	 *            void
-	 * @author ryan
-	 * @date Sep 26, 2014 3:46:11 PM
-	 * @throws
+	 * @return void
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:29:52
 	 */
 	public static void setAuthToken(AuthData authData) {
 		setAuthToken(authData, true);
 	}
 
 	/**
-	 * @Title: logout
-	 * @Description: 安全登出系统 void
-	 * @author ryan
-	 * @date Sep 26, 2014 3:44:09 PM
-	 * @throws
+	 * 安全登出系统 void
+	 * @return void
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:30:10
 	 */
 	public static void logout() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
@@ -128,15 +100,13 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: getAuthTokenSSL
-	 * @Description: 获取用于https下面的authToken
+	 * 获取用于https下面的authToken
 	 * @param authData
 	 * @return
 	 * @throws Exception
-	 *             String
-	 * @author ryan
-	 * @date Sep 26, 2014 3:44:22 PM
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:30:30
 	 */
 	public static String getAuthTokenSSL(AuthData authData) throws Exception {
 		if (authData != null) {
@@ -146,15 +116,13 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: getAuthToken
-	 * @Description: 获取用于http下面的authToken
+	 * 获取用于http下面的authToken
 	 * @param authData
 	 * @return
 	 * @throws Exception
-	 *             String
-	 * @author ryan
-	 * @date Sep 26, 2014 3:44:37 PM
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:31:17
 	 */
 	public static String getAuthToken(AuthData authData) throws Exception {
 		if (authData != null) {
@@ -164,15 +132,13 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: encryptTokenWithoutSSL
-	 * @Description: 用于SSL的authToken加密
+	 * 用于SSL的authToken加密
 	 * @param authData
 	 * @return
 	 * @throws Exception
-	 *             String
-	 * @author ryan
-	 * @date Sep 24, 2014 10:28:18 AM
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:31:30
 	 */
 	@SuppressWarnings("deprecation")
 	public static String encryptTokenSSL(AuthData authData) throws Exception {
@@ -193,15 +159,13 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: encryptTokenWithoutSSL
-	 * @Description: 用于非SSL的authToken加密
+	 * 用于非SSL的authToken加密
 	 * @param authData
 	 * @return
 	 * @throws Exception
-	 *             String
-	 * @author ryan
-	 * @date Sep 24, 2014 10:28:18 AM
-	 * @throws
+	 * @return String
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:31:46
 	 */
 	public static String encryptToken(AuthData authData) throws Exception {
 		StringBuilder sb = new StringBuilder();
@@ -221,14 +185,13 @@ public class AuthManager {
 	}
 
 	/**
-	 * @Title: decryptToken
-	 * @Description: 解密authToken，并返回AuthData;
+	 * 解密authToken，并返回AuthData;
 	 * @param ssl
 	 * @param token
-	 * @return String
-	 * @author ryan
-	 * @date Nov 10, 2014 2:07:18 PM
-	 * @throws
+	 * @return
+	 * @return AuthData
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:32:01
 	 */
 	public static AuthData decryptToken(boolean ssl, String token) {
 		if (token == null) {
@@ -240,7 +203,6 @@ public class AuthManager {
 		} catch (Exception e) {
 			return null;
 		}
-		// userId|userName|expirTime|permissionCode+mix_char
 		if (ssl) {
 			try {
 				clearToken = clearToken.substring(0, clearToken.length() - AuthManager.AUTH_TOKEN_MIX_CHAR.length());
@@ -278,14 +240,13 @@ public class AuthManager {
 	
 	
 	/**
-	 * @Title: decryptToken
-	 * @Description: 解密authToken，并返回AuthData;
+	 * 解密authToken，并返回AuthData;
 	 * @param ssl
 	 * @param token
-	 * @return String
-	 * @author ryan
-	 * @date Nov 10, 2014 2:07:18 PM
-	 * @throws
+	 * @return
+	 * @return AuthData
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:32:22
 	 */
 	public static AuthData decryptTokenOld(boolean ssl, String token) {
 		if (token == null) {

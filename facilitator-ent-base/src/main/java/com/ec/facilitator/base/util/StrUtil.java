@@ -7,8 +7,8 @@ import org.apache.commons.codec.binary.Base64;
 
 /**
  * 常用的字符串处理类
- * @author ryan
- * @date 2016年6月14日 上午11:28:02
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:46:36
  */
 public class StrUtil {
 	
@@ -23,8 +23,8 @@ public class StrUtil {
 	 * @return
 	 * @throws Exception
 	 * @return String
-	 * @author ryan 
-	 * @date 2016年6月14日 上午11:28:44
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:46:51
 	 */
 	public static String encodeStrWithBase64(String mode, String str) throws Exception {
 		MessageDigest messageDigest = MessageDigest.getInstance(mode);

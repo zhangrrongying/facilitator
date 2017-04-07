@@ -10,12 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-
 /**
- * @ClassName: BaseAuthInterceptor
- * @Description: 用于拦截认证授权的类
- * @author ryan
- * @date Sep 26, 2014 3:30:32 PM
+ * 用于拦截认证授权的类
+ * @author 张荣英
+ * @date 2017年4月7日 下午10:34:06
  */
 public abstract class BaseAuthInterceptor extends HandlerInterceptorAdapter {
 	
@@ -30,16 +28,14 @@ public abstract class BaseAuthInterceptor extends HandlerInterceptorAdapter {
 	public final static String AUTH_TOKEN_HEADER = "x-%s-authtoken";
 	
 	/**
-	 * @Title: validate
-	 * @Description: 验证当前请求是否合法
-	 * @param handler 
+	 * 验证当前请求是否合法
+	 * @param handler
 	 * @param request
 	 * @param token
 	 * @return
-	 * HttpStatus
-	 * @author ryan
-	 * @date Sep 26, 2014 3:29:42 PM
-	 * @throws
+	 * @return HttpStatus
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:34:22
 	 */
 	protected HttpStatus validate(Object handler, 
 							      HttpServletRequest request,
@@ -78,17 +74,15 @@ public abstract class BaseAuthInterceptor extends HandlerInterceptorAdapter {
 	}
 	
 	/**
-	 * @Title: parseAuthTokenToAuthData
-	 * @Description: 转换Token到程序内部能够识别的AuthData
-	 * @param request 当前请求类
-	 * @param token 认证授权Token
-	 * @param ssl 该token是否是ssl下用的
-	 * @param authValue Action上的授权数据
+	 * 转换Token到程序内部能够识别的AuthData
+	 * @param request
+	 * @param token
+	 * @param ssl
+	 * @param authValue
 	 * @return
-	 * HttpStatus
-	 * @author ryan
-	 * @date Sep 26, 2014 3:26:10 PM
-	 * @throws
+	 * @return HttpStatus
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:34:58
 	 */
 	protected HttpStatus parseAuthTokenToAuthData(HttpServletRequest request, 
 												  String token, 
@@ -224,13 +218,11 @@ public abstract class BaseAuthInterceptor extends HandlerInterceptorAdapter {
 	}
 	
 	/**
-	 * @Title: processUserAgent
-	 * @Description: 处理请求过来的UserAgent
-	 * @param request 当前请求
-	 * void
-	 * @author ryan
-	 * @date Sep 26, 2014 3:28:06 PM
-	 * @throws
+	 * 处理请求过来的UserAgent
+	 * @param request
+	 * @return void
+	 * @author 张荣英
+	 * @date 2017年4月7日 下午10:35:50
 	 */
 	protected void processUserAgent(HttpServletRequest request) {
 		String userAgent = request.getHeader(USER_AGENT_HEADER);
