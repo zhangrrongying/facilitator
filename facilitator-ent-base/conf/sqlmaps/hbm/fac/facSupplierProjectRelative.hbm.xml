@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ec.facilitator.base.model.fac.FacSupplierProjectRelativeModel" table="fac_supplier_project_relative">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="native" />
+        </id>
+        <property name="supplierId" type="java.lang.Integer">
+            <column name="Supplier_Id" not-null="true">
+                <comment>供应商Id</comment>
+            </column>
+        </property>
+        <property name="projectId" type="java.lang.Integer">
+            <column name="Project_Id" not-null="true">
+                <comment>项目ID</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

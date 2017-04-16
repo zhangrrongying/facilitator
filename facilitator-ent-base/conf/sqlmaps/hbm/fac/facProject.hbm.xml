@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ec.facilitator.base.model.fac.FacProjectModel" table="fac_project">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="Name" length="100" not-null="true">
+                <comment>项目名称</comment>
+            </column>
+        </property>
+        <property name="serialNum" type="java.lang.String">
+            <column name="Serial_Num" length="50">
+                <comment>编号</comment>
+            </column>
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="Description" length="255">
+                <comment>描述</comment>
+            </column>
+        </property>
+        <property name="createUser" type="java.lang.Integer">
+            <column name="Create_User" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="Create_Time" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

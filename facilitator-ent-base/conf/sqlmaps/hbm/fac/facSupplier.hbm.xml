@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ec.facilitator.base.model.fac.FacProjectModel" table="fac_supplier">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="Name" length="100" not-null="true">
+                <comment>供应商名称</comment>
+            </column>
+        </property>
+        <property name="serialNum" type="java.lang.String">
+            <column name="Serial_Num" length="50">
+                <comment>信用代码</comment>
+            </column>
+        </property>
+        <property name="linkName" type="java.lang.String">
+            <column name="Link_Name" length="50">
+                <comment>企业简称</comment>
+            </column>
+        </property>
+        <property name="corporation" type="java.lang.String">
+            <column name="Corporation" length="50" not-null="true">
+                <comment>企业法人</comment>
+            </column>
+        </property>
+        <property name="corporationPhone" type="java.lang.Integer">
+            <column name="Corporation_Phone" not-null="true">
+                <comment>企业法人电话</comment>
+            </column>
+        </property>
+        <property name="registerAddress" type="java.lang.String">
+            <column name="Register_Address" length="255" not-null="true">
+                <comment>注册地址</comment>
+            </column>
+        </property>
+        <property name="workAddress" type="java.lang.String">
+            <column name="Work_Address" length="255" not-null="true">
+                <comment>办公地址</comment>
+            </column>
+        </property>
+        <property name="registeredCapital" type="java.math.BigDecimal">
+            <column name="Registered_Capital" precision="18" scale="4" not-null="true">
+                <comment>注册资本</comment>
+            </column>
+        </property>
+        <property name="linkMan" type="java.lang.String">
+            <column name="Link_Man" length="50" not-null="true">
+                <comment>联系人</comment>
+            </column>
+        </property>
+        <property name="linkPhone" type="java.lang.Integer">
+            <column name="Link_Phone" not-null="true">
+                <comment>联系电话</comment>
+            </column>
+        </property>
+        <property name="deskPhone" type="java.lang.String">
+            <column name="Desk_Phone" length="50">
+                <comment>座机</comment>
+            </column>
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="Email" length="50" not-null="true">
+                <comment>邮箱</comment>
+            </column>
+        </property>
+        <property name="certificationName" type="java.lang.String">
+            <column name="Certification_Name" length="100" not-null="true">
+                <comment>资质证书名称</comment>
+            </column>
+        </property>
+        <property name="certificationLevel" type="java.lang.String">
+            <column name="Certification_Level" length="50" not-null="true">
+                <comment>资质证书等级</comment>
+            </column>
+        </property>
+        <property name="leader" type="java.lang.Integer">
+            <column name="Leader">
+                <comment>技术负责人</comment>
+            </column>
+        </property>
+        <property name="artisan" type="java.lang.String">
+            <column name="Artisan" length="50">
+                <comment>技术人员</comment>
+            </column>
+        </property>
+        <property name="licenseImgs" type="java.lang.String">
+            <column name="License_Imgs" length="500" not-null="true">
+                <comment>营业执照</comment>
+            </column>
+        </property>
+        <property name="certificateImgs" type="java.lang.String">
+            <column name="Certificate_Imgs" length="500" not-null="true">
+                <comment>资质证书Img</comment>
+            </column>
+        </property>
+        <property name="identityCardImgs" type="java.lang.String">
+            <column name="Identity_Card_Imgs" length="500" not-null="true">
+                <comment>身份证</comment>
+            </column>
+        </property>
+        <property name="Description" type="java.lang.String">
+            <column name="Description" length="1000">
+                <comment>企业简介</comment>
+            </column>
+        </property>
+        <property name="createUser" type="java.lang.Integer">
+            <column name="Create_User" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="Create_Time" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

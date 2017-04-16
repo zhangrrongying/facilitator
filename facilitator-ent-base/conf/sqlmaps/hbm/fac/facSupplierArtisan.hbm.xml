@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ec.facilitator.base.model.fac.FacSupplierArtisanModel" table="faac_supplier_artisan">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="Name" length="50" not-null="true">
+                <comment>技术人员名称</comment>
+            </column>
+        </property>
+        <property name="phone" type="java.lang.Integer">
+            <column name="Phone" not-null="true">
+                <comment>技术人员电话</comment>
+            </column>
+        </property>
+        <property name="certificateImgs" type="java.lang.String">
+            <column name="Certificate_Imgs" length="500">
+                <comment>资质证书</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
