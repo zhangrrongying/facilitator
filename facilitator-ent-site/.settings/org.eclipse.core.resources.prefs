@@ -2,6 +2,7 @@
 <<<<<<<=HEAD
 >>>>>>>=dev
 eclipse.preferences.version=1
+encoding//conf/localization/bizError.properties=UTF-8
 encoding//conf/templates/index.html=UTF-8
 encoding//conf/templates/pages/user.html=UTF-8
 encoding//conf/templates/pages/user_list.html=UTF-8
