@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE guzz-configs PUBLIC "-//GUZZ//DTD MAIN CONFIG//EN" "http://www.guzz.org/dtd/guzz.dtd">
+<guzz-configs>
+	<sqlMap dbgroup="facMysql">
+		
+		<select id="queryBkdSupplierSize" orm="facSupplier" templated="true">
+			<![CDATA[
+			SELECT COUNT(*) FROM fac_supplier a 
+			WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND a`Name` LIKE concat('%',:name,'%') 
+		    #end
+			]]>
+		</select>
+		
+		<select id="queryBkdSuppliers" orm="facSupplier" templated="true">
+			<![CDATA[
+			SELECT a.* FROM fac_supplier a 
+			WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND a`Name` LIKE concat('%',:name,'%') 
+		    #end
+			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
+			]]>
+		</select>
+  	</sqlMap>
+ </guzz-configs>

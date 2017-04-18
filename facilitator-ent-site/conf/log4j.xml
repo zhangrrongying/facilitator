@@ -20,13 +20,13 @@
     <appender name="MAIL" class="org.apache.log4j.net.SMTPAppender">
         <param name="threshold" value="ERROR" />
         <param name="BufferSize" value="512" />
-        <param name="To" value="zhangrongying@sunyuki.com" />
-        <param name="From" value="sysmonitor@sunyuki.com" />
+        <param name="To" value="397074223@qq.com" />
+        <param name="From" value="zhangrongying@sunyuki.com" />
         <param name="SMTPHost" value="smtp.exmail.qq.com" />
         <param name="Subject" value="[DEV]System ERROR" />
         <param name="SMTPPort" value="25" />
-        <param name="SMTPUsername" value="sysmonitor@sunyuki.com" />
-        <param name="SMTPPassword" value="sunyuki@234" />
+        <param name="SMTPUsername" value="zhangrongying@sunyuki.com" />
+        <param name="SMTPPassword" value="zhangry1233793" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss.SSS} [%p]-[%c] %m%n" />
         </layout>

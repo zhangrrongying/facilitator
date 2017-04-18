@@ -51,8 +51,11 @@ public class FacSupplierModel{
 	private String  identityCardImgs;
 	//企业简介
 	private String  Description;
+	//状态 0：启用1：禁用
+	private Short status;
 	private Integer createUser;
 	private Date createTime;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -190,5 +193,11 @@ public class FacSupplierModel{
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public Short getStatus() {
+		return status;
+	}
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 }

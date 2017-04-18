@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<head th:substituteby="/includes/header :: header" />
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="ibox ">
+        <div class="ibox-content">
+            <form id="addform" class="form-horizontal" role="form" data-toggle="validator" th:object="${obj}">
+                <input id="id" name="id" type="hidden" th:value="${obj==null}?'0':*{id}" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*企业名称</label>
+                    <div class="col-md-3">
+                        <input type="text" id="name" name="name" class="input-sm form-control" th:value="${obj==null}?'':*{name}" />
+                    </div>
+                    <label class="col-md-2 control-label">*信用代码</label>
+                    <div class="col-md-3">
+                        <input type="text" id="serialNum" name="serialNum" class="input-sm form-control" th:value="${obj==null}?'':*{serialNum}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*企业简称</label>
+                    <div class="col-md-3">
+                        <input type="text" id="linkName" name="linkName" class="input-sm form-control" th:value="${obj==null}?'':*{linkName}" />
+                    </div>
+                    <label class="col-md-2 control-label">*注册资本</label>
+                    <div class="col-md-3">
+                        <input type="text" id="registeredCapital" name="registeredCapital" class="input-sm form-control" th:value="${obj==null}?'':*{registeredCapital}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*企业法人</label>
+                    <div class="col-md-3">
+                        <input type="text" id="corporation" name="corporation" class="input-sm form-control" th:value="${obj==null}?'':*{corporation}" />
+                    </div>
+                    <label class="col-md-2 control-label">*企业法人电话</label>
+                    <div class="col-md-3">
+                        <input type="text" id="corporationPhone" name="corporationPhone" class="input-sm form-control" th:value="${obj==null}?'':*{corporationPhone}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*注册地址</label>
+                    <div class="col-md-8">
+                        <input type="text" id="registerAddress" name="registerAddress" class="input-sm form-control" th:value="${obj==null}?'':*{registerAddress}"/>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*办公地址</label>
+                    <div class="col-md-8">
+                        <input type="text" id="workAddress" name="workAddress" class="input-sm form-control" th:value="${obj==null}?'':*{workAddress}"/>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*联系人</label>
+                    <div class="col-md-3">
+                        <input type="text" id="linkMan" name="linkMan" class="input-sm form-control" th:value="${obj==null}?'':*{linkMan}" />
+                    </div>
+                    <label class="col-md-2 control-label">*联系电话</label>
+                    <div class="col-md-3">
+                        <input type="text" id="linkPhone" name="linkPhone" class="input-sm form-control" th:value="${obj==null}?'':*{linkPhone}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*座机</label>
+                    <div class="col-md-3">
+                        <input type="text" id="deskPhone" name="deskPhone" class="input-sm form-control" th:value="${obj==null}?'':*{deskPhone}" />
+                    </div>
+                    <label class="col-md-2 control-label">*邮箱</label>
+                    <div class="col-md-3">
+                        <input type="text" id="email" name="email" class="input-sm form-control" th:value="${obj==null}?'':*{email}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*资质证书名称</label>
+                    <div class="col-md-3">
+                        <input type="text" id="certificationName" name="certificationName" class="input-sm form-control" th:value="${obj==null}?'':*{certificationName}" />
+                    </div>
+                    <label class="col-md-2 control-label">*资质证书等级</label>
+                    <div class="col-md-3">
+                        <input type="text" id="certificationLevel" name="certificationLevel" class="input-sm form-control" th:value="${obj==null}?'':*{certificationLevel}" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">企业简介</label>
+                    <div class="col-md-8">
+                        <textarea id="description" name="description" class="form-control" rows="4" cols="3" th:text="${obj==null}?'':*{description}"></textarea>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*营业执照</label>
+                    <div class="col-md-8">
+                    		<div class="upload-btn">
+                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles();">上传</button>
+                            </div>
+                            <div id="fileName">
+                            </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-6">
+                        <div class="from-footer">
+                            <img id="cover" hidden="hidden" src="/images/loading1.gif" style="align-content:center;" />
+                            <button id="submit" type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="fileModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">上传图片</h4>
+            </div>
+            <div class="modal-body" style="height: auto; overflow:auto;">
+                <input id="file" name="file" type="file" multiple="multiple" class="file-loading" />
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+    var imageName = "";
+    $(function () {
+        var form = $("#addform");
+        $('.fancybox').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+        $('#file').fileinput({
+            language: 'zh',
+            uploadUrl: '/file/upload.json', //上传的地址
+            showCaption: false,
+            allowedFileExtensions: ['pdf','jpg'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 4,
+            showPreview: true,
+            uploadAsync: true,
+            previewClass: "",
+            initialPreview: [""],
+            maxFileSize: 10240,
+            showRemove: true
+        });
+        var $attach = $("<div class='attach'></div>");
+        $('#file').on("fileuploaded", function (event, data, previewId, index) {
+        	imageName = imageName + data.response.imageName + ",";
+            var url = encodeURI(data.response.url);
+
+            var a = $("<a class='fancybox' target='_blank'><img src='" + url + "'/></a>").prop("href", url);
+            $attach.append(a).append("&nbsp;<span class='glyphicon glyphicon-remove' style='position:relative;margin:-2px;'></span>").appendTo("#fileName");
+            $attach.find(".glyphicon-remove").click(function () {
+                var requestDate = {};
+                requestDate.filename = data.response.filename;
+                var thus = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '/file/delete.json',
+                    data: JSON.stringify(requestDate),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data1) {
+                        if (data1.result) {
+                            var imageStrs = new Array();
+                            imageStrs = imageName.substring(0, imageName.length - 1).split(",");
+                            imageName = "";
+                            for (j in imageStrs) {
+                                if (imageStrs[j].substring(0, imageStrs[j].lastIndexOf("-")) != data.response.filename.substring(0, data.response.filename.lastIndexOf("-"))) {
+                                    imageName = imageName + imageStrs[j] + ",";
+                                }
+                            }
+                            thus.closest(".attach").hide();
+                        } else {
+                            return;
+                        }
+                    },
+                    error: function (errMsg) {
+                        layer.alert("<spn style='color:red'>发生系统错误，删除失败</spn>");
+                    }
+                });
+
+            });
+            $('#fileModal').modal('hide');
+        });
+        syk.initEdit({
+            form: form, url: '/seed/save.json',
+            customValidate: function () {
+                var val = type.filter(":checked").val();
+                if (val === "1") {
+                    if ($("#seedName").val().length === 0) {
+                        layer.msg("请输入商品名");
+                        return false;
+                    }
+                    if ($("#brandName").val().length === 0) {
+                        layer.msg("请输入品牌");
+                        return false;
+                    }
+                    if ($("#specification").val().length === 0) {
+                        layer.msg("请输入规格");
+                        return false;
+                    }
+                } else {
+                    if ($("#seedFarmId").val().length === 0) {
+                        layer.msg("请选择留种农场");
+                        return false;
+                    }
+                    if ($("#seedAmount").val().length === 0) {
+                        layer.msg("请输入留种数量");
+                        return false;
+                    }
+                }
+                return true;
+            },
+            validate: {
+                fields: {
+                    productId: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择品种'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    function uploadFiles() {
+        $("#file").fileinput('refresh', {
+            uploadExtraData: {},
+            initialPreview: [
+                "",
+            ],
+        });
+        $('#fileModal').modal('show').css({ "margin-top": "-70px" });
+    }
+    //]]>
+</script>

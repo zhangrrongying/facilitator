@@ -23,7 +23,12 @@
     <business dbgroup="facMysql" name="sysRoleFunc" file="./conf/sqlmaps/hbm/system/sysRoleFunc.hbm.xml" />
     <business dbgroup="facMysql" name="sysRoleUser" file="./conf/sqlmaps/hbm/system/sysRoleUser.hbm.xml" />
     <business dbgroup="facMysql" name="sysUser" file="./conf/sqlmaps/hbm/system/sysUser.hbm.xml" />
+    <business dbgroup="facMysql" name="facProject" file="./conf/sqlmaps/hbm/fac/facProject.hbm.xml" />
+    <business dbgroup="facMysql" name="facSupplier" file="./conf/sqlmaps/hbm/fac/facSupplier.hbm.xml" />
+    <business dbgroup="facMysql" name="facSupplierArtisan" file="./conf/sqlmaps/hbm/fac/facSupplierArtisan.hbm.xml" />
+    <business dbgroup="facMysql" name="facSupplierProjectRelative" file="./conf/sqlmaps/hbm/fac/facSupplierProjectRelative.hbm.xml" />
     
     <import resource="sqlmaps/mybatis/system/sysUser.mybatis.xml"/>
     <import resource="sqlmaps/mybatis/system/sysRole.mybatis.xml"/>
+    <import resource="sqlmaps/mybatis/fac/facSupplier.mybatis.xml"/>
 </guzz-configs>

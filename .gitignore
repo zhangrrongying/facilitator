@@ -18,6 +18,7 @@ velocity.log
 /facilitator-ent-site/conf/guzz.xml
 /facilitator-ent-site/conf/log4j.xml
 /facilitator-ent-site/application.properties
+/facilitator-ent-site/static/upload
 
 # Package Files #
 *.jar

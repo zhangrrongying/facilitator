@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head th:substituteby="/includes/header :: header" />
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="ibox ">
+        <div class="ibox-content">
+            <form id="searchForm" class="form-inline list-search" role="form">
+                <div class="form-group">
+                    <label>
+                        供应商名 <input type="text" id="seedName" autofocus="autofocus" name="seedName" class="input-sm form-control" value="" />
+                    </label>
+                </div>
+            </form>
+            <div class="list-btn">
+                <button id="search" class="btn btn-primary btn-sm" >
+                    搜 索 <i class="fa fa-search"></i>
+                </button>
+                <button id="search-reset" class="btn btn-primary btn-sm" >
+                    显示所有
+                </button>
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
+                    新 增 <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="jqGrid_wrapper">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:inline="text">
+	//<![CDATA[
+        var jsonCondition = {};
+        $(function () {
+            syk.initList();
+             
+            window.setTimeout(function() {
+            	var dataGrid = new DataGrid({
+                	 url:'/supplier/list.json',
+                	 dataGridTable: $("#table_list_1"),
+                     pagerId : '#pager_list_1',
+                	 colNames : ['ID','供应商名称','信用代码','企业法人','企业法人电话','注册资本','状态','操作'],
+                     colModel : [
+                                {name:'id', index:'id', width:100,align:"center",sortable:false},
+                                {name:'name', index:'name', width:200,align:"center",sortable:false},
+                                {name:'serialNum', index:'serialNum',align:"center", width:200,sortable:false},
+                                {name:'corporation', index:'corporation', width:200,align:"center",sortable:false},
+                                {name:'corporationPhone', index:'corporationPhone', width:400,align:"center",sortable:false},
+                                {name:'registeredCapital', index:'registeredCapital',align:"center", width:100,sortable:false},
+                                {name:'status', index:'status',align:"center", width:100,formatter: formatStatus,sortable:false},
+                                {name:'operate', index:'operate', width:200,align:"center",formatter: formatMenu,sortable:false},
+                              ]
+                });
+    		},100);
+        });
+     
+        function formatMenu(cellvalue, options, rowObject) {
+        	var str = '';
+        	if([[${hasEditBtn}]] == true){
+        	    str = '<button id="search" class="btn btn-primary btn-sm" onclick="javascript:return navPage(\'/pages/seed/obj?id='+rowObject.id+'\',\'编辑\');">编辑 <i class="fa fa-edit"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;';
+        	}
+        	str += '<button id="search" class="btn btn-primary btn-sm" onclick="look('+rowObject.id+');">查看</button>';
+			return str;
+		}
+
+        function formatStatus(val, row){
+        	if(val == 1){
+     		   return '<a style="cursor:default;" data-id="'+val+'" tostatus="0" title="启用" class="data-status">'+
+     		   '<i class="fa fa-check-square"></i></a>';
+     	   }else{
+     		   return '<a style="cursor:default;" data-id="'+val+'" tostatus="1" title="禁用" class="data-status">'+
+     		   '<i class="fa fa-minus-square"></i></a>';
+     	   }
+        }
+    //]]>
+</script>

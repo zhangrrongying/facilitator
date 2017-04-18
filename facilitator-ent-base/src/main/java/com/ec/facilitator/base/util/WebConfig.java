@@ -7,6 +7,18 @@ import org.springframework.context.annotation.Configuration;
 public class WebConfig {
 	public final static String USER_AGENT_KEY = "user_agent";
 	
+	@Value("${ent.host.img.upload:}")
+	private String imgUploadHost;
+	
+	@Value("${ent.host.img:}")
+	private String imgHost;
+	
+	@Value("${ent.host.file.upload:}")
+	private String fileUploadHost;
+	
+	@Value("${ent.host.file:}")
+	private String fileHost;
+	
 	@Value("${secure.host:}")
 	private String secureHost;
 	
@@ -98,5 +110,25 @@ public class WebConfig {
 	
 	public String getSecureHost() {
 		return secureHost;
+	}
+	
+	//上传图片的host地址
+	public String getImgUploadHost() {
+		return this.imgUploadHost;
+	}
+	
+	//获取图片的host地址
+	public String getImgHost() {
+		return this.imgHost;
+	}
+	
+	//上传File的host地址
+	public String getFileUploadHost() {
+		return this.fileUploadHost;
+	}
+	
+	//获取File的host地址
+	public String getFileHost() {
+		return this.fileHost;
 	}
 }
