@@ -45,7 +45,7 @@
 
 .chosen-container-active.chosen-with-drop .chosen-single div b{background-position:-16px 2px;}
 .upload-btn{position:absolute;right:15px;}
-.attach{width:320px;margin-top:5px;}
+.attach{width:150px;margin-top:5px;}
 .file-preview .fileinput-remove{display:none;}
 
 .text-right{text-align:right;}

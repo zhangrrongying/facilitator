@@ -94,11 +94,19 @@
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">*营业执照</label>
-                    <div class="col-md-8">
+                    <div class="col-md-3">
                     		<div class="upload-btn">
-                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles();">上传</button>
+                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(1);">上传</button>
                             </div>
-                            <div id="fileName">
+                            <div id="fileName_1">
+                            </div>
+                    </div>
+                    <label class="col-md-2 control-label">*营业执照</label>
+                    <div class="col-md-3">
+                    		<div class="upload-btn">
+                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(2);">上传</button>
+                            </div>
+                            <div id="fileName_2">
                             </div>
                     </div>
                 </div>
@@ -133,6 +141,7 @@
 <script type="text/javascript" th:inline="text">
     //<![CDATA[
     var imageName = "";
+    var type = 1;
     $(function () {
         var form = $("#addform");
         $('.fancybox').fancybox({
@@ -154,13 +163,18 @@
             maxFileSize: 10240,
             showRemove: true
         });
-        var $attach = $("<div class='attach'></div>");
         $('#file').on("fileuploaded", function (event, data, previewId, index) {
         	imageName = imageName + data.response.imageName + ",";
             var url = encodeURI(data.response.url);
-
-            var a = $("<a class='fancybox' target='_blank'><img src='" + url + "'/></a>").prop("href", url);
-            $attach.append(a).append("&nbsp;<span class='glyphicon glyphicon-remove' style='position:relative;margin:-2px;'></span>").appendTo("#fileName");
+			var $attach = $("<div class='attach'></div>");
+            var a = $("<a class='fancybox' target='_blank'><img src='" + url + "' style='width:40px;height:40px;'/></a>").prop("href", url);
+            $attach.append(a).append("&nbsp;<span class='glyphicon glyphicon-remove' style='position:relative;margin:-2px;'></span>");
+            alert(type);
+            if(type == 1){
+         	   $attach.appendTo("#fileName_1");
+            }else if(type == 2){
+            	$attach.appendTo("#fileName_2");	
+            }
             $attach.find(".glyphicon-remove").click(function () {
                 var requestDate = {};
                 requestDate.filename = data.response.filename;
@@ -236,7 +250,9 @@
             }
         });
     });
-    function uploadFiles() {
+    function uploadFiles(a) {
+    alert(a);
+    	type = a;
         $("#file").fileinput('refresh', {
             uploadExtraData: {},
             initialPreview: [
