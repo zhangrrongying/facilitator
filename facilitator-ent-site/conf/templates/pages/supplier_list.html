@@ -6,7 +6,7 @@
             <form id="searchForm" class="form-inline list-search" role="form">
                 <div class="form-group">
                     <label>
-                        供应商名 <input type="text" id="seedName" autofocus="autofocus" name="seedName" class="input-sm form-control" value="" />
+                        供应商名 <input type="text" id="name" autofocus="autofocus" name="name" class="input-sm form-control" value="" />
                     </label>
                 </div>
             </form>
@@ -57,7 +57,7 @@
         function formatMenu(cellvalue, options, rowObject) {
         	var str = '';
         	if([[${hasEditBtn}]] == true){
-        	    str = '<button id="search" class="btn btn-primary btn-sm" onclick="javascript:return navPage(\'/pages/seed/obj?id='+rowObject.id+'\',\'编辑\');">编辑 <i class="fa fa-edit"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;';
+        	    str = '<button id="search" class="btn btn-primary btn-sm" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'\',\'编辑\');">编辑 <i class="fa fa-edit"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;';
         	}
         	str += '<button id="search" class="btn btn-primary btn-sm" onclick="look('+rowObject.id+');">查看</button>';
 			return str;

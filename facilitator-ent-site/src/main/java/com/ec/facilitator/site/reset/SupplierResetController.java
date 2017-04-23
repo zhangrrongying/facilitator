@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ec.facilitator.base.bal.fac.SupplierBiz;
+import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.JQGridSupplierModel;
+import com.ec.facilitator.base.util.AuthManager;
 import com.ec.facilitator.base.util.AuthTag;
 import com.ec.facilitator.base.util.SSLTag;
 
@@ -27,6 +29,13 @@ public class SupplierResetController {
 		@RequestMapping(value = "/list.json", method = RequestMethod.POST)
 		public @ResponseBody JQGridResponseModel<FacSupplierModel> userList(@RequestBody JQGridSupplierModel requestModel) throws Exception {
 			return supplierBiz.getSupplierList(requestModel);
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/save.json", method = RequestMethod.POST)
+		public BooleanResultModel saveSupplier(@RequestBody FacSupplierModel supplier) throws Exception {
+			return supplierBiz.saveSupplier(AuthManager.getCurrentAuthData().getId(),supplier);
 		}
 		
 }

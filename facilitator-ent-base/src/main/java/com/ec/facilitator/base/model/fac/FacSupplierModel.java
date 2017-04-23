@@ -1,7 +1,6 @@
 package com.ec.facilitator.base.model.fac;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * 供应商Nodel
@@ -20,17 +19,17 @@ public class FacSupplierModel{
 	//企业法人
 	private String corporation;
 	//企业法人电话
-	private Integer corporationPhone;
+	private String corporationPhone;
 	//注册地址
 	private String registerAddress;
 	//办公地址
 	private String  workAddress;
 	//注册资本
-	private BigDecimal registeredCapital;
+	private String registeredCapital;
 	//联系人
 	private String  linkMan;
 	//联系电话
-	private Integer  linkPhone;
+	private String  linkPhone;
 	//座机
 	private String  deskPhone;
 	//邮箱
@@ -50,7 +49,7 @@ public class FacSupplierModel{
 	//身份证
 	private String  identityCardImgs;
 	//企业简介
-	private String  Description;
+	private String  description;
 	//状态 0：启用1：禁用
 	private Short status;
 	private Integer createUser;
@@ -86,10 +85,10 @@ public class FacSupplierModel{
 	public void setCorporation(String corporation) {
 		this.corporation = corporation;
 	}
-	public Integer getCorporationPhone() {
+	public String getCorporationPhone() {
 		return corporationPhone;
 	}
-	public void setCorporationPhone(Integer corporationPhone) {
+	public void setCorporationPhone(String corporationPhone) {
 		this.corporationPhone = corporationPhone;
 	}
 	public String getRegisterAddress() {
@@ -104,10 +103,10 @@ public class FacSupplierModel{
 	public void setWorkAddress(String workAddress) {
 		this.workAddress = workAddress;
 	}
-	public BigDecimal getRegisteredCapital() {
+	public String getRegisteredCapital() {
 		return registeredCapital;
 	}
-	public void setRegisteredCapital(BigDecimal registeredCapital) {
+	public void setRegisteredCapital(String registeredCapital) {
 		this.registeredCapital = registeredCapital;
 	}
 	public String getLinkMan() {
@@ -116,10 +115,10 @@ public class FacSupplierModel{
 	public void setLinkMan(String linkMan) {
 		this.linkMan = linkMan;
 	}
-	public Integer getLinkPhone() {
+	public String getLinkPhone() {
 		return linkPhone;
 	}
-	public void setLinkPhone(Integer linkPhone) {
+	public void setLinkPhone(String linkPhone) {
 		this.linkPhone = linkPhone;
 	}
 	public String getDeskPhone() {
@@ -177,10 +176,10 @@ public class FacSupplierModel{
 		this.identityCardImgs = identityCardImgs;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 	public Integer getCreateUser() {
 		return createUser;

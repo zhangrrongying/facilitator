@@ -10,6 +10,36 @@
                     <div class="col-md-3">
                         <input type="text" id="name" name="name" class="input-sm form-control" th:value="${obj==null}?'':*{name}" />
                     </div>
+                    <div class="col-md-5">
+                            <input id="licenseImgs" name="licenseImgs" type="hidden" th:value="${obj==null}?'':*{licenseImgs}"/>
+                    		<div class="upload-btn">
+                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(1);">上传营业执照</button>
+                            </div>
+                            <div id="fileName_1">
+                            </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*企业法人</label>
+                    <div class="col-md-3">
+                        <input type="text" id="corporation" name="corporation" class="input-sm form-control" th:value="${obj==null}?'':*{corporation}" />
+                    </div>
+                    <div class="col-md-5">
+                    		<input id="identityCardImgs" name="identityCardImgs" type="hidden" th:value="${obj==null}?'':*{identityCardImgs}"/>
+                    		<div class="upload-btn">
+                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(2);">上传身份证</button>
+                            </div>
+                            <div id="fileName_2">
+                            </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                <label class="col-md-2 control-label">*企业法人电话</label>
+                    <div class="col-md-3">
+                        <input type="text" id="corporationPhone" name="corporationPhone" class="input-sm form-control" th:value="${obj==null}?'':*{corporationPhone}" />
+                    </div>
                     <label class="col-md-2 control-label">*信用代码</label>
                     <div class="col-md-3">
                         <input type="text" id="serialNum" name="serialNum" class="input-sm form-control" th:value="${obj==null}?'':*{serialNum}" />
@@ -24,17 +54,6 @@
                     <label class="col-md-2 control-label">*注册资本</label>
                     <div class="col-md-3">
                         <input type="text" id="registeredCapital" name="registeredCapital" class="input-sm form-control" th:value="${obj==null}?'':*{registeredCapital}" />
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">*企业法人</label>
-                    <div class="col-md-3">
-                        <input type="text" id="corporation" name="corporation" class="input-sm form-control" th:value="${obj==null}?'':*{corporation}" />
-                    </div>
-                    <label class="col-md-2 control-label">*企业法人电话</label>
-                    <div class="col-md-3">
-                        <input type="text" id="corporationPhone" name="corporationPhone" class="input-sm form-control" th:value="${obj==null}?'':*{corporationPhone}" />
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
@@ -76,9 +95,20 @@
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">*资质证书名称</label>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <input type="text" id="certificationName" name="certificationName" class="input-sm form-control" th:value="${obj==null}?'':*{certificationName}" />
                     </div>
+                    <div class="col-md-3">
+                   	 	<input id="certificateImgs" name="certificateImgs" type="hidden" th:value="${obj==null}?'':*{certificateImgs}"/>
+                		<div class="upload-btn">
+                            <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(3);">上传资质证书</button>
+                        </div>
+                        <div id="fileName_3">
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
                     <label class="col-md-2 control-label">*资质证书等级</label>
                     <div class="col-md-3">
                         <input type="text" id="certificationLevel" name="certificationLevel" class="input-sm form-control" th:value="${obj==null}?'':*{certificationLevel}" />
@@ -89,25 +119,6 @@
                     <label class="col-md-2 control-label">企业简介</label>
                     <div class="col-md-8">
                         <textarea id="description" name="description" class="form-control" rows="4" cols="3" th:text="${obj==null}?'':*{description}"></textarea>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">*营业执照</label>
-                    <div class="col-md-3">
-                    		<div class="upload-btn">
-                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(1);">上传</button>
-                            </div>
-                            <div id="fileName_1">
-                            </div>
-                    </div>
-                    <label class="col-md-2 control-label">*营业执照</label>
-                    <div class="col-md-3">
-                    		<div class="upload-btn">
-                                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="uploadFiles(2);">上传</button>
-                            </div>
-                            <div id="fileName_2">
-                            </div>
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
@@ -140,10 +151,27 @@
 </div>
 <script type="text/javascript" th:inline="text">
     //<![CDATA[
-    var imageName = "";
+    var licenseImgs = "";
+    var certificateImgs = "";
+    var identityCardImgs = "";
     var type = 1;
     $(function () {
         var form = $("#addform");
+        $.each($("#licenseImgs").val().split(','), function (index, obj) {
+        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+        	alert(name);
+            setImgs(obj,name,1);
+        });
+        $.each($("#certificateImgs").val().split(','), function (index, obj) {
+        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+        	alert(name);
+            setImgs(obj,name,3);
+        });
+        $.each($("#identityCardImgs").val().split(','), function (index, obj) {
+        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+        	alert(name);
+            setImgs(obj,name,2);
+        });
         $('.fancybox').fancybox({
             openEffect: 'none',
             closeEffect: 'none'
@@ -164,85 +192,59 @@
             showRemove: true
         });
         $('#file').on("fileuploaded", function (event, data, previewId, index) {
-        	imageName = imageName + data.response.imageName + ",";
-            var url = encodeURI(data.response.url);
-			var $attach = $("<div class='attach'></div>");
-            var a = $("<a class='fancybox' target='_blank'><img src='" + url + "' style='width:40px;height:40px;'/></a>").prop("href", url);
-            $attach.append(a).append("&nbsp;<span class='glyphicon glyphicon-remove' style='position:relative;margin:-2px;'></span>");
-            alert(type);
-            if(type == 1){
-         	   $attach.appendTo("#fileName_1");
-            }else if(type == 2){
-            	$attach.appendTo("#fileName_2");	
-            }
-            $attach.find(".glyphicon-remove").click(function () {
-                var requestDate = {};
-                requestDate.filename = data.response.filename;
-                var thus = $(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '/file/delete.json',
-                    data: JSON.stringify(requestDate),
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data1) {
-                        if (data1.result) {
-                            var imageStrs = new Array();
-                            imageStrs = imageName.substring(0, imageName.length - 1).split(",");
-                            imageName = "";
-                            for (j in imageStrs) {
-                                if (imageStrs[j].substring(0, imageStrs[j].lastIndexOf("-")) != data.response.filename.substring(0, data.response.filename.lastIndexOf("-"))) {
-                                    imageName = imageName + imageStrs[j] + ",";
-                                }
-                            }
-                            thus.closest(".attach").hide();
-                        } else {
-                            return;
-                        }
-                    },
-                    error: function (errMsg) {
-                        layer.alert("<spn style='color:red'>发生系统错误，删除失败</spn>");
-                    }
-                });
-
-            });
+            setImgs(data.response.url,data.response.imageName,type);
             $('#fileModal').modal('hide');
         });
         syk.initEdit({
-            form: form, url: '/seed/save.json',
+            form: form, url: '/supplier/save.json',
             customValidate: function () {
-                var val = type.filter(":checked").val();
-                if (val === "1") {
-                    if ($("#seedName").val().length === 0) {
-                        layer.msg("请输入商品名");
-                        return false;
-                    }
-                    if ($("#brandName").val().length === 0) {
-                        layer.msg("请输入品牌");
-                        return false;
-                    }
-                    if ($("#specification").val().length === 0) {
-                        layer.msg("请输入规格");
-                        return false;
-                    }
-                } else {
-                    if ($("#seedFarmId").val().length === 0) {
-                        layer.msg("请选择留种农场");
-                        return false;
-                    }
-                    if ($("#seedAmount").val().length === 0) {
-                        layer.msg("请输入留种数量");
-                        return false;
-                    }
-                }
+            	if(licenseImgs == ""){
+            		layer.alert("请上传营业执照");
+            		return false;
+            	}else{
+            		$("#licenseImgs").val(licenseImgs.substring(0, licenseImgs.length - 1));
+            	}
+            	if(identityCardImgs == ""){
+            		layer.alert("请上传身份证");
+            		return false;
+            	}else{
+            		$("#identityCardImgs").val(identityCardImgs.substring(0, licenseImgs.length - 1));
+            	}
+            	if(certificateImgs == ""){
+            		layer.alert("请上传资质证书副本");
+            		return false;
+            	}else{
+            		$("#certificateImgs").val(certificateImgs.substring(0, licenseImgs.length - 1));
+            	}
                 return true;
             },
             validate: {
                 fields: {
-                    productId: {
+                    name: {
                         validators: {
                             notEmpty: {
-                                message: '请选择品种'
+                                message: '供应商名称不能为空'
+                            }
+                        }
+                    },
+                    serialNum: {
+                        validators: {
+                            notEmpty: {
+                                message: '信用代码不能为空'
+                            }
+                        }
+                    },
+                    corporation: {
+                        validators: {
+                            notEmpty: {
+                                message: '企业法人不能为空'
+                            }
+                        }
+                    },
+                    corporationPhone: {
+                        validators: {
+                            notEmpty: {
+                                message: '企业法人电话不能为空'
                             }
                         }
                     }
@@ -251,7 +253,6 @@
         });
     });
     function uploadFiles(a) {
-    alert(a);
     	type = a;
         $("#file").fileinput('refresh', {
             uploadExtraData: {},
@@ -260,6 +261,76 @@
             ],
         });
         $('#fileModal').modal('show').css({ "margin-top": "-70px" });
+    }
+    function setImgs(url,imageName,type){
+    	alert(type);
+    	if(type == 1){
+    		licenseImgs = licenseImgs + imageName + ",";
+    	}else if(type == 2){
+    		identityCardImgs = identityCardImgs + imageName + ",";
+    	}else if(type == 3){
+    		certificateImgs = certificateImgs + imageName + ",";
+    	}
+    	var url = encodeURI(url);
+		var $attach = $("<div class='attach' type='"+type+"' imgName = '"+imageName+"'></div>");
+        var a = $("<a class='fancybox' target='_blank'><img src='" + url + "' style='width:40px;height:40px;'/></a>").prop("href", url);
+        $attach.append(a).append("&nbsp;<span class='glyphicon glyphicon-remove' style='position:relative;margin-left:2px;'></span>");
+        if(type == 1){
+     	   $attach.appendTo("#fileName_1");
+        }else if(type == 2){
+        	$attach.appendTo("#fileName_2");	
+        }else if(type == 3){
+        	$attach.appendTo("#fileName_3");
+        }
+        $attach.find(".glyphicon-remove").click(function () {
+            var requestDate = {};
+            var thus = $(this);
+            var type_new = thus.closest(".attach").attr("type");
+            var imgName_new = thus.closest(".attach").attr("imgName");
+            requestDate.filename = imgName_new;
+            alert(imgName_new);
+            $.ajax({
+                type: 'POST',
+                url: '/file/delete.json',
+                data: JSON.stringify(requestDate),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data1) {
+                    if (data1.result) {
+                        var imageStrs = new Array();
+                        if(type_new == 1){
+			         	   imageStrs = licenseImgs.substring(0, licenseImgs.length - 1).split(",");
+			         	   licenseImgs = "";
+			            }else if(type_new == 2){
+			            	imageStrs = identityCardImgs.substring(0, identityCardImgs.length - 1).split(",");
+			            	identityCardImgs = "";
+			            }else if(type_new == 3){
+			            	imageStrs = certificateImgs.substring(0, certificateImgs.length - 1).split(",");
+			            	certificateImgs = "";
+			            }
+                        
+                        for (j in imageStrs) {
+                            if (imageStrs[j] != imgName_new) {
+                                if(type_new == 1){
+					         	   licenseImgs = licenseImgs + imageStrs[j] + ",";
+					            }else if(type_new == 2){
+					            	identityCardImgs = identityCardImgs + imageStrs[j] + ",";
+					            }else if(type_new == 3){
+					            	certificateImgs = certificateImgs + imageStrs[j] + ",";
+					            }
+                            }
+                        }
+                        thus.closest(".attach").hide();
+                    } else {
+                        return;
+                    }
+                },
+                error: function (errMsg) {
+                    layer.alert("<spn style='color:red'>发生系统错误，删除失败</spn>");
+                }
+            });
+
+        });
     }
     //]]>
 </script>

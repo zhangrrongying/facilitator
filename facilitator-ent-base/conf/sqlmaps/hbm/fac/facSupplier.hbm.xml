@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.ec.facilitator.base.model.fac.FacProjectModel" table="fac_supplier">
+    <class name="com.ec.facilitator.base.model.fac.FacSupplierModel" table="fac_supplier">
         <id name="id" type="java.lang.Integer">
             <column name="Id" />
             <generator class="native" />
@@ -27,8 +27,8 @@
                 <comment>企业法人</comment>
             </column>
         </property>
-        <property name="corporationPhone" type="java.lang.Integer">
-            <column name="Corporation_Phone" not-null="true">
+        <property name="corporationPhone" type="java.lang.String">
+            <column name="Corporation_Phone" length="11" not-null="true">
                 <comment>企业法人电话</comment>
             </column>
         </property>
@@ -42,8 +42,8 @@
                 <comment>办公地址</comment>
             </column>
         </property>
-        <property name="registeredCapital" type="java.math.BigDecimal">
-            <column name="Registered_Capital" precision="18" scale="4" not-null="true">
+        <property name="registeredCapital" type="java.lang.String">
+            <column name="Registered_Capital" length="50" not-null="true">
                 <comment>注册资本</comment>
             </column>
         </property>
@@ -52,8 +52,8 @@
                 <comment>联系人</comment>
             </column>
         </property>
-        <property name="linkPhone" type="java.lang.Integer">
-            <column name="Link_Phone" not-null="true">
+        <property name="linkPhone" type="java.lang.String">
+            <column name="Link_Phone" length="11" not-null="true">
                 <comment>联系电话</comment>
             </column>
         </property>
@@ -102,7 +102,7 @@
                 <comment>身份证</comment>
             </column>
         </property>
-        <property name="Description" type="java.lang.String">
+        <property name="description" type="java.lang.String">
             <column name="Description" length="1000">
                 <comment>企业简介</comment>
             </column>

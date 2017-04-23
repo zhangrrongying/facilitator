@@ -45,7 +45,7 @@
 
 .chosen-container-active.chosen-with-drop .chosen-single div b{background-position:-16px 2px;}
 .upload-btn{position:absolute;right:15px;}
-.attach{width:150px;margin-top:5px;}
+.attach{width:150px;margin-top:5px;display:inline;}
 .file-preview .fileinput-remove{display:none;}
 
 .text-right{text-align:right;}
@@ -190,4 +190,5 @@
 .month-bg .one div{ background: #1ab394;}
 .month-bg .three div{ background: #1a7bb9;}
 .month-bg .two div{ background: #ed5565;}
+
 

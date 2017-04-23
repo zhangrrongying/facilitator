@@ -9,7 +9,7 @@
 			WHERE 1 = 1 
 		    
 		    #notEmpty($name)
-		      AND a`Name` LIKE concat('%',:name,'%') 
+		      AND a.`Name` LIKE concat('%',:name,'%') 
 		    #end
 			]]>
 		</select>
@@ -20,7 +20,7 @@
 			WHERE 1 = 1 
 		    
 		    #notEmpty($name)
-		      AND a`Name` LIKE concat('%',:name,'%') 
+		      AND a.`Name` LIKE concat('%',:name,'%') 
 		    #end
 			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
 			]]>
