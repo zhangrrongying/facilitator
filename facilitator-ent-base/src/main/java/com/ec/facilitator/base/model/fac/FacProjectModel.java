@@ -1,5 +1,6 @@
 package com.ec.facilitator.base.model.fac;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -11,7 +12,9 @@ public class FacProjectModel{
 	
 	private Integer id;
 	private String name;
+	private Integer projectTypeId;
 	private String serialNum;
+	private BigDecimal investment;
 	private String description;
 	private Integer createUser;
 	private Date createTime;
@@ -51,5 +54,17 @@ public class FacProjectModel{
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public Integer getProjectTypeId() {
+		return projectTypeId;
+	}
+	public void setProjectTypeId(Integer projectTypeId) {
+		this.projectTypeId = projectTypeId;
+	}
+	public BigDecimal getInvestment() {
+		return investment;
+	}
+	public void setInvestment(BigDecimal investment) {
+		this.investment = investment;
 	}
 }

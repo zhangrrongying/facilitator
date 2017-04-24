@@ -12,6 +12,16 @@
                 <comment>项目名称</comment>
             </column>
         </property>
+        <property name="projectTypeId" type="java.lang.Integer">
+            <column name="Project_Type_Id" not-null="true">
+            	<comment>项目类型</comment>
+            </column>
+        </property>
+        <property name="investment" type="java.math.BigDecimal">
+            <column name="Investment" precision="18" scale="4" not-null="true">
+                <comment>投资规模</comment>
+            </column>
+        </property>
         <property name="serialNum" type="java.lang.String">
             <column name="Serial_Num" length="50">
                 <comment>编号</comment>

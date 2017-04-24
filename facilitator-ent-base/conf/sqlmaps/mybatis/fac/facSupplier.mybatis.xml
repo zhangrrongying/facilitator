@@ -25,5 +25,36 @@
 			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
 			]]>
 		</select>
+		
+		<select id="queryBkdProjectSize" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT COUNT(*) FROM fac_project a 
+			WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND a.`Name` LIKE concat('%',:name,'%') 
+		    #end
+		    
+		    #notEmpty($projectTypeId)
+	          AND a.Project_Type_Id = :projectTypeId 
+	        #end
+			]]>
+		</select>
+		
+		<select id="queryBkdProjects" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT a.* FROM fac_project a 
+			WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND a.`Name` LIKE concat('%',:name,'%') 
+		    #end
+		    
+		    #notEmpty($projectTypeId)
+	          AND a.Project_Type_Id = :projectTypeId 
+	        #end
+			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
+			]]>
+		</select>
   	</sqlMap>
  </guzz-configs>

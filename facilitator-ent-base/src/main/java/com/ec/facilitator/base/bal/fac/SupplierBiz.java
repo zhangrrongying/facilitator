@@ -1,6 +1,7 @@
 package com.ec.facilitator.base.bal.fac;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Component;
 import com.ec.facilitator.base.dal.fac.SupplierDao;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
+import com.ec.facilitator.base.model.fac.FacProjectModel;
+import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
+import com.ec.facilitator.base.model.fac.JQGridProjectModel;
 import com.ec.facilitator.base.model.fac.JQGridSupplierModel;
 import com.ec.facilitator.base.util.WebConfig;
 
@@ -118,5 +122,28 @@ public class SupplierBiz {
 			return endImags;
 		}
 		return imgs;
+	}
+	
+	/**
+	 * 查询项目List
+	 * @param requestModel
+	 * @return
+	 * @return JQGridResponseModel<FacSupplierModel>
+	 * @author 张荣英
+	 * @date 2017年4月24日 下午10:13:28
+	 */
+	public JQGridResponseModel<FacProjectModel> getProjectList(JQGridProjectModel requestModel){
+		return supplierDao.getProjectList(requestModel.getName(),requestModel.getProjectTypeId(),requestModel.getPage(), requestModel.getRows());
+	}
+	
+	/**
+	 * 查询项目类型
+	 * @return
+	 * @return List<FacProjectTypeModel>
+	 * @author 张荣英
+	 * @date 2017年4月24日 下午9:56:05
+	 */
+	public List<FacProjectTypeModel> getProjectType(){
+		return supplierDao.getProjectType();
 	}
 }

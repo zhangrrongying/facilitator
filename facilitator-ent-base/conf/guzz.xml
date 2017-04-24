@@ -27,6 +27,7 @@
     <business dbgroup="facMysql" name="facSupplier" file="./conf/sqlmaps/hbm/fac/facSupplier.hbm.xml" />
     <business dbgroup="facMysql" name="facSupplierArtisan" file="./conf/sqlmaps/hbm/fac/facSupplierArtisan.hbm.xml" />
     <business dbgroup="facMysql" name="facSupplierProjectRelative" file="./conf/sqlmaps/hbm/fac/facSupplierProjectRelative.hbm.xml" />
+    <business dbgroup="facMysql" name="facProjectType" file="./conf/sqlmaps/hbm/fac/facProjectType.hbm.xml" />
     
     <import resource="sqlmaps/mybatis/system/sysUser.mybatis.xml"/>
     <import resource="sqlmaps/mybatis/system/sysRole.mybatis.xml"/>

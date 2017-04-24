@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS `fac_project`;
 CREATE TABLE `fac_project` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '项目表',
   `Name` varchar(100) NOT NULL COMMENT '项目名称',
+  `Project_Type_Id` int(11) NOT NULL COMMENT '项目类型',
+  `Investment` decimal(18,4) NOT NULL COMMENT '投资规模',
   `Serial_Num` varchar(50) DEFAULT NULL COMMENT '编号',
   `Description` varchar(255) DEFAULT NULL COMMENT '描述',
   `Create_User` int(11) DEFAULT NULL COMMENT '创建人',
@@ -149,3 +151,13 @@ CREATE TABLE `sys_user` (
   `Status` tinyint(1) NOT NULL COMMENT '状态1-启用 0- 禁用',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for fac_project_type
+-- ----------------------------
+DROP TABLE IF EXISTS `fac_project_type`;
+CREATE TABLE `fac_project_type` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL COMMENT '名称',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
