@@ -55,4 +55,11 @@ public class SupplierResetController {
 		public List<FacProjectTypeModel> getProjectType() throws Exception {
 			return supplierBiz.getProjectType();
 		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/save.json", method = RequestMethod.POST)
+		public BooleanResultModel saveProject(@RequestBody FacProjectModel project) throws Exception {
+			return supplierBiz.saveProject(AuthManager.getCurrentAuthData().getId(),project);
+		}
 }

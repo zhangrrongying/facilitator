@@ -1,0 +1,108 @@
+<form id="addform" class="form-horizontal" th:object="${obj}">
+	<input id="id" name="id" type="hidden" value="" th:value="${obj==null}?0:*{id}" />
+	<div class="form-group">
+        <label class="col-md-3 control-label">*项目类型</label>
+        <div class="col-md-8">
+            <select id="projectTypeId" name="projectTypeId" class="select-fixed" th:value="${obj==null}?'':*{projectTypeId}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">*项目名称</label>
+        <div class="col-md-8">
+            <input type="text" id="name" name="name" class="input-sm form-control" th:value="${obj==null}?'':*{name}" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">项目编码</label>
+        <div class="col-md-8">
+            <input type="text" id="serialNum" name="serialNum" class="input-sm form-control" th:value="${obj==null}?'':*{serialNum}" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">*投资规模</label>
+        <div class="col-md-8">
+            <input type="text" id="investment" name="investment" class="input-sm form-control" th:value="${obj==null || obj.investment == null}?'':*{#numbers.formatDecimal(investment, 1, 0)}"/>
+        </div>
+        <label class="control-label">万</label>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">项目简介</label>
+        <div class="col-md-8">
+            <textarea id="description" name="description" class="form-control" rows="4" cols="3" th:text="${obj==null}?'':*{description}"></textarea>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+   $(function () {
+	    var form = $("#addform");
+	    syk.get("/project/type.json", function (datas) {
+        	syk.initFixedChosen(datas, { selector: $("#projectTypeId") });
+        });
+	    sykModal.submit = {
+            url: '/project/save.json',
+            data: function () {
+                var bv = form.data('bootstrapValidator');
+                if (bv) { // 修复记忆的组件不验证
+                    bv.validate();
+                    if (!bv.isValid()) {
+                        layer.msg("验证未通过，请检查");
+                        return null;
+                    }
+                }
+                var params = {};
+                $($("#addform").serializeArray()).each(function () {
+                    params[this.name] = this.value;
+                });
+                if (params.plantWayId == "") {
+                    layer.msg("请选择项目类型");
+                    return null;
+                }
+                return params;
+            },
+            done: function (ret) {
+                if (!ret.result) {
+                    layer.alert("保存失败：{" + ret.msg + "}");
+                } else {
+                    sykModal.close();
+                    layer.msg("保存成功");
+                    index.callIframe({ fun: "saveRefresh" });
+                }
+            }
+        };
+
+        form.bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '项目不能为空'
+                        },
+                        callback: {
+
+                        }
+                    }
+                },
+                investment: {
+                    validators: {
+                        notEmpty: {
+                            message: '投资规模不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9\.]+$/,
+                            message: '投资规模只能是数字'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    //]]>
+</script>

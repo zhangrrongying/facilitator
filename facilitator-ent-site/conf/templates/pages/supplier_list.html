@@ -54,13 +54,14 @@
     		},100);
         });
      
-        function formatMenu(cellvalue, options, rowObject) {
-        	var str = '';
-        	if([[${hasEditBtn}]] == true){
-        	    str = '<button id="search" class="btn btn-primary btn-sm" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'\',\'编辑\');">编辑 <i class="fa fa-edit"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;';
-        	}
-        	str += '<button id="search" class="btn btn-primary btn-sm" onclick="look('+rowObject.id+');">查看</button>';
-			return str;
+		function formatMenu(cellvalue, options, rowObject) {
+        	var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
+      		'<ul class="dropdown-menu">';
+      		if ([[${hasEditBtn}]] == true) {
+	           btns = btns + '<li><a href="#" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'\',\'编辑\');">编辑<i class="fa fa-edit"></i></a></li>';
+	        }
+        	btns = btns + '<li><a href="#" onclick="look(' + rowObject.id + ');">查看</a></li>';
+			return btns + '</ul></div>';
 		}
 
         function formatStatus(val, row){

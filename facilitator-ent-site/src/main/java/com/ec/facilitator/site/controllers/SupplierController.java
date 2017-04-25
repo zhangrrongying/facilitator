@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ec.facilitator.base.bal.fac.SupplierBiz;
+import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.util.AuthManager;
 import com.ec.facilitator.base.util.AuthTag;
@@ -22,7 +23,7 @@ import com.ec.facilitator.base.util.SSLTag;
 import com.ec.facilitator.site.ThymeleafHelper;
 
 @RestController
-@RequestMapping("/pages/supplier")
+@RequestMapping("/pages")
 public class SupplierController {
 	
 	@Resource
@@ -33,7 +34,7 @@ public class SupplierController {
 	
 	@SSLTag
 	@AuthTag
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier/list", method = RequestMethod.GET)
 	public String userListPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
 		HashMap<String, Object> variables = new HashMap<String, Object>();
 		List<String> codes;
@@ -49,7 +50,7 @@ public class SupplierController {
 	
 	@SSLTag
 	@AuthTag
-	@RequestMapping(value = "/obj", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier/obj", method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
 		HashMap<String, Object> variables = new HashMap<String, Object>();
 		int id = Integer.valueOf(request.getParameter("id"));		 
@@ -58,5 +59,34 @@ public class SupplierController {
 			obj =supplierBiz.getModelById(id);
 		variables.put("obj", obj);
 		return thymeleafHelper.processHtml(variables,"pages/supplier", request, response, servletContext);
+	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/project/list", method = RequestMethod.GET)
+	public String projectListPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		HashMap<String, Object> variables = new HashMap<String, Object>();
+		List<String> codes;
+		if(AuthManager.getCurrentAuthData().getPermissionCode() != null){
+			codes = AuthManager.getCurrentAuthData().getPermissionCode();
+		}else{
+			codes = new ArrayList<String>();
+		}
+		variables.put("hasAddBtn", codes.contains("P15"));
+		variables.put("hasEditBtn", codes.contains("P16"));
+		return thymeleafHelper.processHtml(variables,"pages/project_list", request, response, servletContext);
+	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/project/obj", method = RequestMethod.GET)
+	public String projectPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		HashMap<String, Object> variables = new HashMap<String, Object>();
+		int id = Integer.valueOf(request.getParameter("id"));		 
+		FacProjectModel obj = null;
+		if(id > 0)
+			obj =supplierBiz.getProjectById(id);
+		variables.put("obj", obj);
+		return thymeleafHelper.processHtml(variables,"pages/project", request, response, servletContext);
 	} 
 }

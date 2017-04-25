@@ -63,6 +63,19 @@ public class SupplierBiz {
 	}
 	
 	/**
+	 * 根据ID查询项目
+	 * @param id
+	 * @return
+	 * @return FacProjectModel
+	 * @author 张荣英
+	 * @date 2017年4月25日 下午10:04:22
+	 */
+	public FacProjectModel getProjectById(int id){
+		FacProjectModel project = (FacProjectModel)supplierDao.findObjectByPK(FacProjectModel.class, id);
+		return project;
+	}
+	
+	/**
 	 * 保存供应商
 	 * @param userId
 	 * @param supplier
@@ -133,7 +146,7 @@ public class SupplierBiz {
 	 * @date 2017年4月24日 下午10:13:28
 	 */
 	public JQGridResponseModel<FacProjectModel> getProjectList(JQGridProjectModel requestModel){
-		return supplierDao.getProjectList(requestModel.getName(),requestModel.getProjectTypeId(),requestModel.getPage(), requestModel.getRows());
+		return supplierDao.getProjectList(requestModel.getName(),requestModel.getProjectTypeId()==null?0:requestModel.getProjectTypeId(),requestModel.getPage(), requestModel.getRows());
 	}
 	
 	/**
@@ -145,5 +158,30 @@ public class SupplierBiz {
 	 */
 	public List<FacProjectTypeModel> getProjectType(){
 		return supplierDao.getProjectType();
+	}
+	
+	/**
+	 * 保存项目
+	 * @param userId
+	 * @param project
+	 * @return
+	 * @return BooleanResultModel
+	 * @author 张荣英
+	 * @date 2017年4月25日 下午10:17:26
+	 */
+	public BooleanResultModel saveProject(int userId,FacProjectModel project){
+		BooleanResultModel result = new BooleanResultModel();
+		if(project.getId() == 0){
+			project.setCreateUser(userId);
+			project.setCreateTime(new Date());
+			supplierDao.insert(project);
+		}else{
+			FacProjectModel projectModel = (FacProjectModel)supplierDao.findObjectByPK(FacProjectModel.class, project.getId());
+			project.setCreateUser(projectModel.getCreateUser());
+			project.setCreateTime(projectModel.getCreateTime());
+			supplierDao.update(project);
+		}
+		result.setResult(true);
+		return result;
 	}
 }

@@ -35,7 +35,7 @@
 		      AND a.`Name` LIKE concat('%',:name,'%') 
 		    #end
 		    
-		    #notEmpty($projectTypeId)
+		    #if($projectTypeId > 0)
 	          AND a.Project_Type_Id = :projectTypeId 
 	        #end
 			]]>
@@ -43,14 +43,15 @@
 		
 		<select id="queryBkdProjects" orm="facProject" templated="true">
 			<![CDATA[
-			SELECT a.* FROM fac_project a 
+			SELECT a.*,b.`Name` AS projectTypeName,c.`Name` AS createUserName FROM fac_project a LEFT JOIN 
+			fac_project_type b ON a.Project_Type_Id = b.Id LEFT JOIN sys_user c ON a.Create_User = c.Id
 			WHERE 1 = 1 
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
 		    #end
 		    
-		    #notEmpty($projectTypeId)
+		    #if($projectTypeId > 0)
 	          AND a.Project_Type_Id = :projectTypeId 
 	        #end
 			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
