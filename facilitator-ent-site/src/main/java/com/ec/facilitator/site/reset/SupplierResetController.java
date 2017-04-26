@@ -62,4 +62,11 @@ public class SupplierResetController {
 		public BooleanResultModel saveProject(@RequestBody FacProjectModel project) throws Exception {
 			return supplierBiz.saveProject(AuthManager.getCurrentAuthData().getId(),project);
 		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/bid/list.json", method = RequestMethod.POST)
+		public @ResponseBody JQGridResponseModel<FacProjectModel> getProjectBidList(@RequestBody JQGridProjectModel requestModel) throws Exception {
+			return supplierBiz.getProjectBidList(requestModel);
+		}
 }

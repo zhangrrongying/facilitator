@@ -57,5 +57,45 @@
 			ORDER BY a.Create_Time DESC LIMIT :offset,:limit
 			]]>
 		</select>
+		
+		<select id="queryBkdProjectBidSize" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT COUNT(*) FROM fac_supplier_project_relative a LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id 
+			LEFT JOIN fac_project c ON a.Project_Id = c.Id  WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND c.`Name` LIKE concat('%',:name,'%') 
+		    #end
+		    
+		    #notEmpty($supplierName)
+		      AND b.`Name` LIKE concat('%',:supplierName,'%') 
+		    #end
+		    
+		    #if($projectTypeId > 0)
+	          AND c.Project_Type_Id = :projectTypeId 
+	        #end
+			]]>
+		</select>
+		
+		<select id="queryBkdProjectBids" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT a.Id,b.`Name` AS supplierName,c.`Name`,c.Investment,a.Bid_Time AS createTime,c.Status,d.`Name` AS projectTypeName 
+			FROM fac_supplier_project_relative a LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id LEFT JOIN 
+			fac_project c ON a.Project_Id = c.Id LEFT JOIN fac_project_type d ON c.Project_Type_Id = d.Id WHERE 1 = 1 
+		    
+		    #notEmpty($name)
+		      AND c.`Name` LIKE concat('%',:name,'%') 
+		    #end
+		    
+		    #notEmpty($supplierName)
+		      AND b.`Name` LIKE concat('%',:supplierName,'%') 
+		    #end
+		    
+		    #if($projectTypeId > 0)
+	          AND c.Project_Type_Id = :projectTypeId 
+	        #end
+	        ORDER BY a.Bid_Time DESC LIMIT :offset,:limit
+			]]>
+		</select>
   	</sqlMap>
  </guzz-configs>

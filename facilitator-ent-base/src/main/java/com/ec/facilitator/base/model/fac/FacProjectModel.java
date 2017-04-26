@@ -18,8 +18,10 @@ public class FacProjectModel{
 	private String description;
 	private Integer createUser;
 	private Date createTime;
+	private Short status;
 	private String projectTypeName;
 	private String createUserName;
+	private String supplierName;
 	
 	public Integer getId() {
 		return id;
@@ -80,5 +82,17 @@ public class FacProjectModel{
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+	public Short getStatus() {
+		return status;
+	}
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 }

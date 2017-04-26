@@ -184,4 +184,16 @@ public class SupplierBiz {
 		result.setResult(true);
 		return result;
 	}
+	
+	/**
+	 * 查询中标项目List
+	 * @param requestModel
+	 * @return
+	 * @return JQGridResponseModel<FacSupplierModel>
+	 * @author 张荣英
+	 * @date 2017年4月24日 下午10:13:28
+	 */
+	public JQGridResponseModel<FacProjectModel> getProjectBidList(JQGridProjectModel requestModel){
+		return supplierDao.getProjectBidList(requestModel.getName(),requestModel.getSupplierName(),requestModel.getProjectTypeId()==null?0:requestModel.getProjectTypeId(),requestModel.getPage(), requestModel.getRows());
+	}
 }

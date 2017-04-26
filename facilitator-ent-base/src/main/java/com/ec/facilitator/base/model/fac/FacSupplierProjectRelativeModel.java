@@ -1,5 +1,7 @@
 package com.ec.facilitator.base.model.fac;
 
+import java.util.Date;
+
 /**
  * 项目供应商中间表Model
  * @author 张荣英
@@ -10,6 +12,7 @@ public class FacSupplierProjectRelativeModel{
 	private Integer id;
 	private Integer supplierId;
 	private Integer projectId;
+	private Date bidTime;
 	
 	public Integer getId() {
 		return id;
@@ -28,5 +31,11 @@ public class FacSupplierProjectRelativeModel{
 	}
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
+	}
+	public Date getBidTime() {
+		return bidTime;
+	}
+	public void setBidTime(Date bidTime) {
+		this.bidTime = bidTime;
 	}
 }

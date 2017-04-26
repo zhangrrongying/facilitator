@@ -89,4 +89,20 @@ public class SupplierController {
 		variables.put("obj", obj);
 		return thymeleafHelper.processHtml(variables,"pages/project", request, response, servletContext);
 	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/project/bid/list", method = RequestMethod.GET)
+	public String projectBidListPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		HashMap<String, Object> variables = new HashMap<String, Object>();
+		List<String> codes;
+		if(AuthManager.getCurrentAuthData().getPermissionCode() != null){
+			codes = AuthManager.getCurrentAuthData().getPermissionCode();
+		}else{
+			codes = new ArrayList<String>();
+		}
+		variables.put("hasAddBtn", codes.contains("P19"));
+		variables.put("hasEditBtn", codes.contains("P20"));
+		return thymeleafHelper.processHtml(variables,"pages/project_bid_list", request, response, servletContext);
+	} 
 }

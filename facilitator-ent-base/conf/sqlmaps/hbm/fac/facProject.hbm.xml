@@ -38,5 +38,10 @@
         <property name="createTime" type="java.util.Date">
             <column name="Create_Time" length="19" />
         </property>
+        <property name="status" type="java.lang.Short">
+            <column name="Status" not-null="true">
+                <comment>状态 1：未中标2：已中标3：已完成</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

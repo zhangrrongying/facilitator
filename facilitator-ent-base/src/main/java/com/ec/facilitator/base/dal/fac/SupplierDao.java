@@ -92,4 +92,36 @@ public class SupplierDao extends SpringGuzzBaseDao {
 		result.setTotal(totalSize%limit==0?totalSize/limit:totalSize/limit+1);
 		return result;
 	} 
+	
+	/**
+	 * 查询中标项目
+	 * @param name
+	 * @param projectTypeId
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @return JQGridResponseModel<FacProjectModel>
+	 * @author 张荣英
+	 * @date 2017年4月26日 下午9:11:00
+	 */
+	@SuppressWarnings("unchecked")
+	public JQGridResponseModel<FacProjectModel> getProjectBidList(String name,String supplierName,int projectTypeId,int page,int limit){
+		JQGridResponseModel<FacProjectModel> result = new JQGridResponseModel<FacProjectModel>();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		if(page == 0){
+			page = page + 1;
+		}
+		params.put("offset", (page-1)*limit);
+		params.put("limit", limit);
+		params.put("name", name);
+		params.put("supplierName", supplierName);
+		params.put("projectTypeId", projectTypeId);
+		int totalSize = (int)this.findCell00("queryBkdProjectBidSize", params, "int");
+		List<FacProjectModel> supplierList = this.list("queryBkdProjectBids",params);
+		result.setRecords(totalSize);
+		result.setRows(supplierList);
+		result.setPage(page);
+		result.setTotal(totalSize%limit==0?totalSize/limit:totalSize/limit+1);
+		return result;
+	} 
 }

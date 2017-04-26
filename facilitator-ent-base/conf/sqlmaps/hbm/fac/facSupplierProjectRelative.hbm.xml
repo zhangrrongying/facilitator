@@ -17,5 +17,8 @@
                 <comment>项目ID</comment>
             </column>
         </property>
+        <property name="bidTime" type="java.util.Date">
+            <column name="Bid_Time" length="19" />
+        </property>
     </class>
 </hibernate-mapping>

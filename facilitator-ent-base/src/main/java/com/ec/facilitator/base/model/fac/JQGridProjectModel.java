@@ -5,6 +5,7 @@ import com.ec.facilitator.base.model.common.JQGridRequestModel;
 public class JQGridProjectModel extends JQGridRequestModel{
 	
 	private String name;
+	private String supplierName;
 	private Integer projectTypeId;
 
 	public String getName() {
@@ -21,5 +22,13 @@ public class JQGridProjectModel extends JQGridRequestModel{
 
 	public void setProjectTypeId(Integer projectTypeId) {
 		this.projectTypeId = projectTypeId;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 }
