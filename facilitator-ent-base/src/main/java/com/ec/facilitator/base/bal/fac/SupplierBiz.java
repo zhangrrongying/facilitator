@@ -196,4 +196,15 @@ public class SupplierBiz {
 	public JQGridResponseModel<FacProjectModel> getProjectBidList(JQGridProjectModel requestModel){
 		return supplierDao.getProjectBidList(requestModel.getName(),requestModel.getSupplierName(),requestModel.getProjectTypeId()==null?0:requestModel.getProjectTypeId(),requestModel.getPage(), requestModel.getRows());
 	}
+	
+	/**
+	 * 查询可招标的项目
+	 * @return
+	 * @return List<FacProjectModel>
+	 * @author 张荣英
+	 * @date 2017年5月2日 下午9:01:19
+	 */
+	public List<FacProjectModel> getProjectBids(){
+		return supplierDao.getProjectBids();
+	}
 }

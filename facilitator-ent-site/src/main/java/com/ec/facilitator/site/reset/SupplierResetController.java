@@ -69,4 +69,11 @@ public class SupplierResetController {
 		public @ResponseBody JQGridResponseModel<FacProjectModel> getProjectBidList(@RequestBody JQGridProjectModel requestModel) throws Exception {
 			return supplierBiz.getProjectBidList(requestModel);
 		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/bid.json", method = RequestMethod.GET)
+		public List<FacProjectModel> getBidProjects() throws Exception {
+			return supplierBiz.getProjectBids();
+		}
 }

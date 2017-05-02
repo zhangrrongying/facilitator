@@ -138,11 +138,11 @@
         var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
         '<ul class="dropdown-menu">';
         if (edit) {
-            btns = btns + '<li><a href="#" onclick="editRole(' + rowObject.id + ');" >编辑角色 <i class="fa fa-edit"/></a></li>';
+            btns = btns + '<li><a onclick="editRole(' + rowObject.id + ');" >编辑角色 <i class="fa fa-edit"/></a></li>';
 
         }
         if (power) {
-            btns = btns + '<li><a href="#" onclick="editPower(' + rowObject.id + ');">修改权限 <i class="fa fa-edit"/></a></li>';
+            btns = btns + '<li><a onclick="editPower(' + rowObject.id + ');">修改权限 <i class="fa fa-edit"/></a></li>';
         }
         return btns + '</ul></div>';
     }

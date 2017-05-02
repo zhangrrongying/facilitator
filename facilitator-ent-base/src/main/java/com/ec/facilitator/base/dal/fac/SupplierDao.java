@@ -124,4 +124,17 @@ public class SupplierDao extends SpringGuzzBaseDao {
 		result.setTotal(totalSize%limit==0?totalSize/limit:totalSize/limit+1);
 		return result;
 	} 
+	
+	/**
+	 * 查询可招标的项目
+	 * @return
+	 * @return List<FacProjectModel>
+	 * @author 张荣英
+	 * @date 2017年5月2日 下午9:00:17
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FacProjectModel> getProjectBids(){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		return this.list("getProjectBids",params);
+	}
 }

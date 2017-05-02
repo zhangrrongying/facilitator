@@ -105,4 +105,11 @@ public class SupplierController {
 		variables.put("hasEditBtn", codes.contains("P20"));
 		return thymeleafHelper.processHtml(variables,"pages/project_bid_list", request, response, servletContext);
 	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/project/bid", method = RequestMethod.GET)
+	public String projectBidPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		return thymeleafHelper.processHtml("pages/project_bid", request, response, servletContext);
+	} 
 }

@@ -1,0 +1,87 @@
+<form id="bidform" class="form-horizontal" role="form" data-toggle="validator">
+	<div class="form-group">
+        <label class="col-md-2 control-label">项目名称</label>
+        <div class="col-md-4">
+            <select id="projectId" name="projectId" class="select-fixed"></select>
+        </div>
+        <label class="col-md-2 control-label">招标方式</label>
+        <div class="col-md-4">
+            <select id="bidType" name="bidType" class="select-fixed"></select>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+   $("#bidform").parents(".modal").css("overflow","visible");
+   $("#bidform").parents(".layui-layer-content").css("overflow","visible");
+   $(function () {
+	    var form = $("#bidform");
+	    syk.get("/project/bid.json", function (datas) {
+        	syk.initFixedChosen(datas, { selector: $("#projectId") });
+        });
+        var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];
+        syk.initFixedChosen(data, { selector: $("#bidType") });
+	    sykModal.submit = {
+            url: '/project/save.json',
+            data: function () {
+                var params = {};
+                $($("#addform").serializeArray()).each(function () {
+                    params[this.name] = this.value;
+                });
+                if (params.projectId == "") {
+                    layer.msg("请选择项目");
+                    return null;
+                }
+                
+                if (params.bidType == "") {
+                    layer.msg("请选择项目");
+                    return null;
+                }
+                return params;
+            },
+            done: function (ret) {
+                if (!ret.result) {
+                    layer.alert("保存失败：{" + ret.msg + "}");
+                } else {
+                    sykModal.close();
+                    layer.msg("保存成功");
+                    index.callIframe({ fun: "saveRefresh" });
+                }
+            }
+        };
+
+        form.bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            excluded: ':disabled',
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '项目不能为空'
+                        },
+                        callback: {
+
+                        }
+                    }
+                },
+                investment: {
+                    validators: {
+                        notEmpty: {
+                            message: '投资规模不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9\.]+$/,
+                            message: '投资规模只能是数字'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    //]]>
+</script>

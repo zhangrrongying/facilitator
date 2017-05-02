@@ -97,5 +97,12 @@
 	        ORDER BY a.Bid_Time DESC LIMIT :offset,:limit
 			]]>
 		</select>
+		
+		<select id="getProjectBids" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT a.* FROM fac_project a WHERE NOT EXISTS (SELECT b.Project_Id FROM fac_supplier_project_relative b 
+			WHERE a.Id = b.Project_Id)
+			]]>
+		</select>
   	</sqlMap>
  </guzz-configs>

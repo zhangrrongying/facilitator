@@ -28,7 +28,7 @@
                 <button id="search-reset" class="btn btn-primary btn-sm" >
                     显示所有
                 </button>
-                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="add()">
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="bid()">
                     招标<i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -91,12 +91,8 @@
 	        });
 	    }
 	    
-	    function add() {
-	        syk.parent.sykModal.open({ url: "/pages/project/obj?id=0", title: "新增" + syk.getTitle(), top: '10%', ftitle: '', size: 500 });
-	    }
-	    
-	    function edit(id) {
-	        syk.parent.sykModal.open({ url: "/pages/project/obj?id="+id, title: "编辑" + syk.getTitle(), top: '10%', ftitle: '', size: 500 });
+	    function bid() {
+	        syk.parent.sykModal.open({ url: "/pages/project/bid", title: "项目招标", top: '10%', ftitle: '', size: 500 });
 	    }
     //]]>
 </script>
