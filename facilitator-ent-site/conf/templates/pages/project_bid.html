@@ -22,10 +22,10 @@
         var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];
         syk.initFixedChosen(data, { selector: $("#bidType") });
 	    sykModal.submit = {
-            url: '/project/save.json',
+            url: '/project/bid.json',
             data: function () {
                 var params = {};
-                $($("#addform").serializeArray()).each(function () {
+                $($("#bidform").serializeArray()).each(function () {
                     params[this.name] = this.value;
                 });
                 if (params.projectId == "") {
@@ -44,7 +44,7 @@
                     layer.alert("保存失败：{" + ret.msg + "}");
                 } else {
                     sykModal.close();
-                    layer.msg("保存成功");
+                    layer.msg(ret.msg+"招标成功");
                     index.callIframe({ fun: "saveRefresh" });
                 }
             }

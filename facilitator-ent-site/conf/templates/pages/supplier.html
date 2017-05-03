@@ -157,21 +157,27 @@
     var type = 1;
     $(function () {
         var form = $("#addform");
-        $.each($("#licenseImgs").val().split(','), function (index, obj) {
-        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
-        	alert(name);
-            setImgs(obj,name,1);
-        });
-        $.each($("#certificateImgs").val().split(','), function (index, obj) {
-        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
-        	alert(name);
-            setImgs(obj,name,3);
-        });
-        $.each($("#identityCardImgs").val().split(','), function (index, obj) {
-        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
-        	alert(name);
-            setImgs(obj,name,2);
-        });
+        if($("#licenseImgs").val() != null && $("#licenseImgs").val() != ""){
+        	$.each($("#licenseImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,1);
+	        });
+        }
+        
+        if($("#certificateImgs").val() != null && $("#certificateImgs").val() != ""){
+	        $.each($("#certificateImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,3);
+	        });
+        }
+        
+        if($("#identityCardImgs").val() != null && $("#identityCardImgs").val() != ""){
+        	$.each($("#identityCardImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,2);
+	        });
+        }
+        
         $('.fancybox').fancybox({
             openEffect: 'none',
             closeEffect: 'none'

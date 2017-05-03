@@ -149,7 +149,6 @@ public class SupplierDao extends SpringGuzzBaseDao {
 	@SuppressWarnings("unchecked")
 	public List<FacSupplierModel> getSupplierst(){
 		SearchExpression se = SearchExpression.forLoadAll(FacSupplierModel.class);
-		se.and(Terms.eq("status", 0));
 		return this.list(se);
 	}
 }

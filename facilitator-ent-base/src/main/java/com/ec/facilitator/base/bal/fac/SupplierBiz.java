@@ -229,13 +229,16 @@ public class SupplierBiz {
 			newSuppliers = createRandomList(suppliers, 1);
 			
 		}else if(bidType == 2){
-			newSuppliers = createRandomList(createRandomList(suppliers, 10), 1);
+			newSuppliers = createRandomList(createRandomList(suppliers, 2), 1);
 		}
 		FacSupplierProjectRelativeModel a = new FacSupplierProjectRelativeModel();
 		a.setBidTime(new Date());
 		a.setProjectId(projectId);
 		a.setSupplierId(newSuppliers.get(0).getId());
 		supplierDao.insert(a);
+		FacProjectModel project = (FacProjectModel)supplierDao.findObjectByPK(FacProjectModel.class, projectId);
+		project.setStatus((short) 2);
+		supplierDao.update(project);
 		result.setResult(true);
 		result.setMsg(newSuppliers.get(0).getName());
 		return result;
