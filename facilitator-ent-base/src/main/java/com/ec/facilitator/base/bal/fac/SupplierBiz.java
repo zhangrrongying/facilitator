@@ -1,7 +1,10 @@
 package com.ec.facilitator.base.bal.fac;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +16,7 @@ import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
+import com.ec.facilitator.base.model.fac.FacSupplierProjectRelativeModel;
 import com.ec.facilitator.base.model.fac.JQGridProjectModel;
 import com.ec.facilitator.base.model.fac.JQGridSupplierModel;
 import com.ec.facilitator.base.util.WebConfig;
@@ -207,4 +211,61 @@ public class SupplierBiz {
 	public List<FacProjectModel> getProjectBids(){
 		return supplierDao.getProjectBids();
 	}
+	
+	/**
+	 * 招标
+	 * @param projectId
+	 * @param bidType
+	 * @return
+	 * @return BooleanResultModel
+	 * @author 张荣英
+	 * @date 2017年5月3日 下午1:41:05
+	 */
+	public BooleanResultModel projectBid(int projectId,int bidType){
+		BooleanResultModel result = new BooleanResultModel();
+		List<FacSupplierModel> suppliers = supplierDao.getSupplierst();
+		List<FacSupplierModel> newSuppliers = new ArrayList<FacSupplierModel>();
+		if(bidType == 1){
+			newSuppliers = createRandomList(suppliers, 1);
+			
+		}else if(bidType == 2){
+			newSuppliers = createRandomList(createRandomList(suppliers, 10), 1);
+		}
+		FacSupplierProjectRelativeModel a = new FacSupplierProjectRelativeModel();
+		a.setBidTime(new Date());
+		a.setProjectId(projectId);
+		a.setSupplierId(newSuppliers.get(0).getId());
+		supplierDao.insert(a);
+		result.setResult(true);
+		result.setMsg(newSuppliers.get(0).getName());
+		return result;
+	}
+	
+	/**
+	 * 从list中随机抽取元素 
+	 * @param list
+	 * @param n
+	 * @return
+	 * @return List<FacSupplierModel>
+	 * @author 张荣英
+	 * @date 2017年5月3日 下午1:37:29
+	 */
+	@SuppressWarnings("unused")
+	private List<FacSupplierModel> createRandomList(List<FacSupplierModel> list, int n) {  
+        // TODO Auto-generated method stub  
+        Map<Integer, Object> map = new HashMap<Integer, Object>();  
+        List<FacSupplierModel> listNew = new ArrayList<FacSupplierModel>();  
+        if(list.size()<=n){  
+            return list;  
+        }else{  
+            while(map.size()<n){  
+                int random = (int) (Math.random() * list.size());  
+                if (!map.containsKey(random)) {  
+                    map.put(random, "");  
+                    listNew.add(list.get(random));  
+                }  
+            }  
+            return listNew;  
+        }  
+    }
 }

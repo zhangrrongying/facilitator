@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,5 +76,12 @@ public class SupplierResetController {
 		@RequestMapping(value = "/project/bid.json", method = RequestMethod.GET)
 		public List<FacProjectModel> getBidProjects() throws Exception {
 			return supplierBiz.getProjectBids();
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/bid.json", method = RequestMethod.POST)
+		public BooleanResultModel bidProjects(@RequestParam("projectId") int projectId,@RequestParam("bidType") int bidType) throws Exception {
+			return supplierBiz.projectBid(projectId,bidType);
 		}
 }

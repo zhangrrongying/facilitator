@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.guzz.orm.se.SearchExpression;
+import org.guzz.orm.se.Terms;
 import org.springframework.stereotype.Component;
 
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
@@ -136,5 +137,19 @@ public class SupplierDao extends SpringGuzzBaseDao {
 	public List<FacProjectModel> getProjectBids(){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		return this.list("getProjectBids",params);
+	}
+	
+	/**
+	 * 查询供应商
+	 * @return
+	 * @return List<FacSupplierModel>
+	 * @author 张荣英
+	 * @date 2017年5月3日 下午1:35:35
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FacSupplierModel> getSupplierst(){
+		SearchExpression se = SearchExpression.forLoadAll(FacSupplierModel.class);
+		se.and(Terms.eq("status", 0));
+		return this.list(se);
 	}
 }
