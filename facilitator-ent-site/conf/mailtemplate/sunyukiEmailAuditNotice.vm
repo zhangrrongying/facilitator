@@ -1,0 +1,16 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+    <div style="color: sandybrown">
+	    亲：
+    </div>
+    <div style="margin-top: 10px">
+	    <b style="color: #0000ff">${applicant}</b>提交了<b style="color: darkgreen">${sheetName}</b>(<span style="color:#ad810c;">${sheetSerialNumber}</span>)，需要您审核！链接地址为：<a href="${href}">${href}</a>
+    </div>
+    <div style="margin-top: 50px;color: red">
+	系统邮件，请务回复！
+    </div>
+</body>
+</html>

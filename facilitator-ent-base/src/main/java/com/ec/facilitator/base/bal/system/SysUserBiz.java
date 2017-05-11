@@ -17,6 +17,8 @@ import com.ec.facilitator.base.bal.common.BizErrorException;
 import com.ec.facilitator.base.bal.common.BizErrorItemModel;
 import com.ec.facilitator.base.bal.common.BizErrorModel;
 import com.ec.facilitator.base.dal.system.SysUserDao;
+import com.ec.facilitator.base.mail.ContentFormat;
+import com.ec.facilitator.base.mail.IMailSendable;
 import com.ec.facilitator.base.model.common.AuthMenuModel;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
@@ -41,6 +43,9 @@ public class SysUserBiz {
 	
 	@Autowired
 	private ApplicationContext springContext;
+	
+	@Autowired
+	private IMailSendable mailSender;
 	
 	@Autowired
 	private WebConfig webConfig;
@@ -201,6 +206,13 @@ public class SysUserBiz {
 			role.setUserId(user.getId());
 			role.setRoleId(user.getRoleId());
 			sysUserDao.insert(role);
+			//发送邮件
+			Map<String,Object> velocityModel = new HashMap<>();
+			velocityModel.put("createUser", user.getName());
+			velocityModel.put("href", webConfig.getSecureHost()+"/index");
+			List<String> mails = new ArrayList<>();
+			mails.add(user.getEmail());
+			mailSender.sendMailAsync(mails, "注册成功",velocityModel, "sunyukiEmailAuditNotice.vm", ContentFormat.Html);
 		}
 		br.setResult(true);
 		return br;
