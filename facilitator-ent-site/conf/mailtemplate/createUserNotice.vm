@@ -1,0 +1,2 @@
+<div>用户【${createUser}】已创建成功</div>
+<div>链接地址：<a href="${href}">${href}</a></div>

@@ -22,6 +22,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.apache.velocity.exception.VelocityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
@@ -34,6 +35,7 @@ import com.ec.facilitator.base.util.SLogger;
  * @author 张荣英
  * @date 2017年5月11日 下午4:08:53
  */
+@Component
 public class DefaultMailSendImpl implements IMailSendable{
 
 	//mail配置文件

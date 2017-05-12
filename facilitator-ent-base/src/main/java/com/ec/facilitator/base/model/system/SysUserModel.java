@@ -18,6 +18,7 @@ public class SysUserModel extends JQGridRequestModel{
 	private String roleName;
 	private Integer roleId;
 	private Short status;
+	private Integer loginNum;
 	
 	public Integer getId() {
 		return id;
@@ -72,5 +73,11 @@ public class SysUserModel extends JQGridRequestModel{
 	}
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+	public Integer getLoginNum() {
+		return loginNum;
+	}
+	public void setLoginNum(Integer loginNum) {
+		this.loginNum = loginNum;
 	}
 }

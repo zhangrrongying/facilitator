@@ -3,11 +3,14 @@ package com.ec.facilitator.base.mail;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 /**
  * 邮件发送接口 
  * @author 张荣英
  * @date 2017年5月11日 下午4:22:36
  */
+@Component
 public interface IMailSendable {
 
 	/**

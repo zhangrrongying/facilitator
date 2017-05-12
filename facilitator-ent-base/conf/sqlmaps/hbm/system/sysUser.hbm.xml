@@ -36,5 +36,10 @@
         <property name="status" type="java.lang.Short">
             <column name="Status"/>
         </property>
+        <property name="loginNum" type="java.lang.Integer">
+            <column name="LoginNum" not-null="true">
+                <comment>登录次数</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

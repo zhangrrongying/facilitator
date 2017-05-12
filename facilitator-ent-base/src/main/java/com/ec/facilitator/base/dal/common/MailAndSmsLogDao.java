@@ -2,10 +2,12 @@ package com.ec.facilitator.base.dal.common;
 
 import org.guzz.orm.se.SearchExpression;
 import org.guzz.orm.se.Terms;
+import org.springframework.stereotype.Component;
 
 import com.ec.facilitator.base.model.common.MailAndSmsLogModel;
 import com.ec.facilitator.base.util.SpringGuzzBaseDao;
 
+@Component
 public class MailAndSmsLogDao extends SpringGuzzBaseDao {
 	
 	public String insertLog(MailAndSmsLogModel model){

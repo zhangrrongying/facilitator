@@ -1,2 +1,0 @@
-<div>【${createUser}】提交了商品[${item}]的上架信息，请评审</div>
-<div>链接地址：<a href="${href}">${href}</a></div>

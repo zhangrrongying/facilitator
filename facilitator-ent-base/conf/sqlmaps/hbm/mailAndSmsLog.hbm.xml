@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.ec.facilitator.base.model.common.MailAndSmsLogModel" table="mail_sms_log">
+      <id name="logId" type="string" column="LOG_ID">
+      	<generator class="assigned">
+        </generator>
+      </id>
+      <property name="phoneOrMail" type="String" column="PHONE_OR_MAIL" />
+      <property name="subject" type="String" column="SUBJECT" />
+      <property name="content" type="String" column="CONTENT" />
+      <property name="isSuccess" type="int" column="IS_SUCCESS" />
+      <property name="sendDate" type="datetime" column="SEND_DATE" />
+      <property name="type" type="int" column="TYPE" />
+  </class>
+</hibernate-mapping>

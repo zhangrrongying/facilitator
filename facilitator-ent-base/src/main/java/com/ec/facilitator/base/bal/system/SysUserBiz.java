@@ -1,6 +1,7 @@
 package com.ec.facilitator.base.bal.system;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysRoleUserModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
+import com.ec.facilitator.base.model.system.loginLogModel;
 import com.ec.facilitator.base.util.AuthData;
 import com.ec.facilitator.base.util.BizHelper;
 import com.ec.facilitator.base.util.WebConfig;
@@ -87,6 +89,12 @@ public class SysUserBiz {
 			}
 			authData.setPermissionCode(permissionCodes);
 		}
+		sysUserModel.setLoginNum(sysUserModel.getLoginNum()+1);
+		sysUserDao.update(sysUserModel);
+		loginLogModel log = new loginLogModel();
+		log.setUserId(sysUserModel.getId());
+		log.setLoginTime(new Date());
+		sysUserDao.insert(log);
 		return authData;
 	}
 	
@@ -201,6 +209,7 @@ public class SysUserBiz {
 			if(user.getStatus() == null){
 				user.setStatus((short) 0);	
 			}
+			user.setLoginNum(0);
 			sysUserDao.insert(user);
 			SysRoleUserModel role = new SysRoleUserModel();
 			role.setUserId(user.getId());
@@ -208,11 +217,12 @@ public class SysUserBiz {
 			sysUserDao.insert(role);
 			//发送邮件
 			Map<String,Object> velocityModel = new HashMap<>();
-			velocityModel.put("createUser", user.getName());
+//			velocityModel.put("createUser", user.getName());
+			velocityModel.put("createUser", "张荣英");
 			velocityModel.put("href", webConfig.getSecureHost()+"/index");
 			List<String> mails = new ArrayList<>();
 			mails.add(user.getEmail());
-			mailSender.sendMailAsync(mails, "注册成功",velocityModel, "sunyukiEmailAuditNotice.vm", ContentFormat.Html);
+			mailSender.sendMailAsync(mails, "注册成功",velocityModel, "createUserNotice.vm", ContentFormat.Html);
 		}
 		br.setResult(true);
 		return br;
