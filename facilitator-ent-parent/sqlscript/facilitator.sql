@@ -149,6 +149,7 @@ CREATE TABLE `sys_user` (
   `Phone` varchar(20) DEFAULT NULL COMMENT '电话',
   `Password` varchar(50) NOT NULL,
   `Status` tinyint(1) NOT NULL COMMENT '状态1-启用 0- 禁用',
+  `LoginNum` int(11) NOT NULL DEFAULT '0' COMMENT '登录次数',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -161,3 +162,64 @@ CREATE TABLE `fac_project_type` (
   `Name` varchar(50) NOT NULL COMMENT '名称',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `fac_project_score`
+-- ----------------------------
+DROP TABLE IF EXISTS `fac_project_score`;
+CREATE TABLE `fac_project_score` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评价指标',
+  `Name` varchar(100) NOT NULL COMMENT '评价指标',
+  `Description` varchar(255) NOT NULL COMMENT '评价内容',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fac_project_score
+-- ----------------------------
+INSERT INTO `fac_project_score` VALUES ('1', '合同履约情况', '依法规范签订合同');
+INSERT INTO `fac_project_score` VALUES ('2', '合同履约情况', '合同双方权利义务明确');
+INSERT INTO `fac_project_score` VALUES ('3', '合同履约情况', '按时保质完成委托任务');
+INSERT INTO `fac_project_score` VALUES ('4', '合同履约情况', '履约中，提出并实施了科学的、技术的措施');
+INSERT INTO `fac_project_score` VALUES ('5', '合同履约情况', '保证了合同的有效实施');
+INSERT INTO `fac_project_score` VALUES ('6', '成果文件质量', '成果文件清晰、完整、合法，无任何技术差错');
+INSERT INTO `fac_project_score` VALUES ('7', '成果文件质量', '按时保质保量提交委托人，后期无返工');
+INSERT INTO `fac_project_score` VALUES ('8', '规范管理及服务质量和业务水平', '项目人员配置齐全，职责明确');
+INSERT INTO `fac_project_score` VALUES ('9', '规范管理及服务质量和业务水平', '有专职的负责人');
+INSERT INTO `fac_project_score` VALUES ('10', '规范管理及服务质量和业务水平', '全过程服务细致、耐心，服务态度端正');
+INSERT INTO `fac_project_score` VALUES ('11', '规范管理及服务质量和业务水平', '从业人员因为无水平高，运作程序规范');
+INSERT INTO `fac_project_score` VALUES ('12', '职业道德及企业信誉', '严格遵守执业行为准则、职业道德准则');
+INSERT INTO `fac_project_score` VALUES ('13', '职业道德及企业信誉', '以服务质量、企业信誉参与市场竞争');
+INSERT INTO `fac_project_score` VALUES ('14', '职业道德及企业信誉', '坚持实事求是，维护委托人合法权益');
+INSERT INTO `fac_project_score` VALUES ('15', '职业道德及企业信誉', '严格保守执业过程中的技术和商业机密');
+INSERT INTO `fac_project_score` VALUES ('16', '职业道德及企业信誉', '同业互助，共同维护和促进本行业的职业道德和信誉');
+INSERT INTO `fac_project_score` VALUES ('17', '使用过程其它方面的综合评价', '服务的各方面周到、细致、无疏漏');
+INSERT INTO `fac_project_score` VALUES ('18', '使用过程其它方面的综合评价', '组织协调工作到位，实施过程中无不良影响或造成损失');
+INSERT INTO `fac_project_score` VALUES ('19', '使用过程其它方面的综合评价', '无违法违规行为，能提出管理意见');
+
+-- ----------------------------
+-- Table structure for `login_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `login_log`;
+CREATE TABLE `login_log` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志',
+  `User_Id` int(11) NOT NULL COMMENT '登录人',
+  `Login_Time` datetime NOT NULL COMMENT '登录时间',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `mail_sms_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `mail_sms_log`;
+CREATE TABLE `mail_sms_log` (
+  `LOG_ID` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '件邮、短信发送记录表',
+  `PHONE_OR_MAIL` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `SUBJECT` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `CONTENT` mediumtext COLLATE utf8mb4_unicode_ci,
+  `IS_SUCCESS` bit(1) NOT NULL,
+  `SEND_DATE` datetime NOT NULL,
+  `TYPE` bit(1) NOT NULL,
+  PRIMARY KEY (`LOG_ID`),
+  UNIQUE KEY `INDEX_LOG_ID` (`LOG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
