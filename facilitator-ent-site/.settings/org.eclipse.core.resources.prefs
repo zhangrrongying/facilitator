@@ -3,6 +3,8 @@
 >>>>>>>=dev
 eclipse.preferences.version=1
 encoding//conf/templates/index.html=UTF-8
+encoding//conf/templates/pages/project_bid.html=UTF-8
+encoding//conf/templates/pages/project_score.html=UTF-8
 encoding//conf/templates/pages/supplier.html=UTF-8
 encoding//conf/templates/pages/supplier_list.html=UTF-8
 encoding//conf/templates/pages/user.html=UTF-8

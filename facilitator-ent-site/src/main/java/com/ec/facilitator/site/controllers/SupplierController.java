@@ -112,4 +112,11 @@ public class SupplierController {
 	public String projectBidPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
 		return thymeleafHelper.processHtml("pages/project_bid", request, response, servletContext);
 	} 
+	
+	@SSLTag
+	@AuthTag
+	@RequestMapping(value = "/project/score", method = RequestMethod.GET)
+	public String projectScorePage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
+		return thymeleafHelper.processHtml("pages/project_score", request, response, servletContext);
+	} 
 }

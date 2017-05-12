@@ -142,7 +142,7 @@
 			                    </div>
 			                    <div class="ibox-content">
 			                            <div class="alert alert-success">
-			                                How quickly daft jumping zebras vex. <a class="alert-link" href="#">Alert Link</a>.
+			                                How quickly daft jumping zebras vex. <a class="alert-link" onclick="projectScore()">Alert Link</a>.
 			                            </div>
 			                            <div class="alert alert-info">
 			                                How quickly daft jumping zebras vex. <a class="alert-link" href="#">Alert Link</a>.
@@ -333,6 +333,9 @@
 
         function updpwd(id) {
             sykModal.open({ url: "/system/pwd?id=" + id, title: "编辑" + syk.getTitle(), top: '10%' });
+        }
+        function projectScore() {
+            syk.parent.sykModal.open({ url: "/pages//project/score", title: "项目评价", top: '10%', ftitle: '', size: 800 });
         }
         //]]>
     </script>

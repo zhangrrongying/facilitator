@@ -15,6 +15,7 @@ import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectBidRequestModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
+import com.ec.facilitator.base.model.fac.FacProjectScoreModel;
 import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.JQGridProjectModel;
@@ -83,5 +84,12 @@ public class SupplierResetController {
 		@RequestMapping(value = "/project/bid.json", method = RequestMethod.POST)
 		public BooleanResultModel bidProjects(@RequestBody FacProjectBidRequestModel requestModel) throws Exception {
 			return supplierBiz.projectBid(requestModel.getProjectId(),requestModel.getBidType());
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/score.json", method = RequestMethod.GET)
+		public List<FacProjectScoreModel> getProjectScore() throws Exception {
+			return supplierBiz.getProjectScore();
 		}
 }

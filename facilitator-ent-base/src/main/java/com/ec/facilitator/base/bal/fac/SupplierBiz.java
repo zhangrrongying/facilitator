@@ -14,6 +14,7 @@ import com.ec.facilitator.base.dal.fac.SupplierDao;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
+import com.ec.facilitator.base.model.fac.FacProjectScoreModel;
 import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.FacSupplierProjectRelativeModel;
@@ -213,6 +214,17 @@ public class SupplierBiz {
 	}
 	
 	/**
+	 * 查询项目评分指标
+	 * @return
+	 * @return List<FacProjectScoreModel>
+	 * @author 张荣英
+	 * @date 2017年5月12日 下午3:41:31
+	 */
+	public List<FacProjectScoreModel> getProjectScore(){
+		return supplierDao.getProjectScore();
+	}
+	
+	/**
 	 * 招标
 	 * @param projectId
 	 * @param bidType
@@ -253,7 +265,6 @@ public class SupplierBiz {
 	 * @author 张荣英
 	 * @date 2017年5月3日 下午1:37:29
 	 */
-	@SuppressWarnings("unused")
 	private List<FacSupplierModel> createRandomList(List<FacSupplierModel> list, int n) {  
         // TODO Auto-generated method stub  
         Map<Integer, Object> map = new HashMap<Integer, Object>();  
