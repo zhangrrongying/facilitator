@@ -179,6 +179,7 @@ public class SupplierBiz {
 		if(project.getId() == 0){
 			project.setCreateUser(userId);
 			project.setCreateTime(new Date());
+			project.setStatus((short) 1);
 			supplierDao.insert(project);
 		}else{
 			FacProjectModel projectModel = (FacProjectModel)supplierDao.findObjectByPK(FacProjectModel.class, project.getId());

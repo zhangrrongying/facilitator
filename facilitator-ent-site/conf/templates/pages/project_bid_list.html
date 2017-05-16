@@ -39,6 +39,40 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">项目招标</h4>
+            </div>
+            <div class="modal-body ">
+                <form id="bidform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group">
+				        <label class="col-md-2 control-label">项目名称</label>
+				        <div class="col-md-9">
+				            <select id="projectId" name="projectId" class="chosen-select"></select>
+				        </div>
+				    </div>
+				    <div class="form-group">
+				        <label class="col-md-2 control-label">招标方式</label>
+				        <div class="col-md-9">
+				            <select id="bidType" name="bidType" class="chosen-select"></select>
+				        </div>
+				    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover1" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit1" type="button" class="btn btn-primary">招标</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" th:inline="text">
 	//<![CDATA[
         var jsonCondition = {};
@@ -50,7 +84,7 @@
                 	 url:'/project/bid/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','项目名称','项目类型','投资规模','中标供应商','状态','创建时间','操作'],
+                	 colNames : ['ID','项目名称','项目类型','投资规模','中标供应商','状态','中标时间','操作'],
                      colModel : [
                                 {name:'id', index:'id', width:100,align:"center",sortable:false},
                                 {name:'name', index:'name', width:250,align:"center",sortable:false,classes:'text'},
@@ -63,8 +97,21 @@
                               ]
                 });
     		},100);
+    		loadProject();
+	        loadBidType();
         });
      
+    	function loadProject(){
+        	syk.get("/project/bid.json", function (datas) {
+	        	syk.initFixedChosen(datas, { selector: $("#projectId") });
+	        });
+        }
+        
+        function loadBidType(){
+        	var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];
+	        syk.initFixedChosen(data, { selector: $("#bidType") });
+        }
+        
         function formatMenu(cellvalue, options, rowObject) {
         	var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
       		'<ul class="dropdown-menu">';
@@ -91,8 +138,14 @@
 	        });
 	    }
 	    
+	    //function bid() {
+	        //syk.parent.sykModal.open({ url: "/pages/project/bid", title: "项目招标", top: '10%', ftitle: '', size: 500 });
+	    //}
 	    function bid() {
-	        syk.parent.sykModal.open({ url: "/pages/project/bid", title: "项目招标", top: '10%', ftitle: '', size: 500 });
+	   		$("#bidform")[0].reset();
+	   		loadProject();
+	        loadBidType();
+	        $('#bidModal').modal('show').css({ "margin-top": "-70px" });
 	    }
     //]]>
 </script>

@@ -33,6 +33,74 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="project_view" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">项目详情</h4>
+            </div>
+            <div class="modal-body" style="height: auto; overflow:auto;">
+                <div class="form-group row">
+                    <div class="col-md-3 text-right"><label>项目名称：</label></div>
+      				<div class="col-md-8" id="name_1"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3 text-right"><label>项目类型：</label></div>
+        			<div class="col-md-8" id="projectTypeName"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3 text-right"><label>项目编码：</label></div>
+                    <div class="col-md-3" id="serialNum"></div>
+                    <div class="col-md-3 text-right"><label>投资规模：</label></div>
+                    <div class="col-md-3" id="investment"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3 text-right"><label>项目简介：</label></div>
+                    <div class="col-md-9" id="description"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">项目招标</h4>
+            </div>
+            <div class="modal-body ">
+                <form id="bidform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group">
+				        <label class="col-md-2 control-label">项目名称</label>
+				        <div class="col-md-9">
+				        	<input id="projectId" name="projectId" type="hidden" />
+				            <input readonly="readonly" type="text" autocomplete="off" id="projectName" name="projectName" data-bv-notempty="false" class="input-sm form-control"/>
+				        </div>
+				    </div>
+				    <div class="form-group">
+				        <label class="col-md-2 control-label">招标方式</label>
+				        <div class="col-md-9">
+				            <select id="bidType" name="bidType" class="chosen-select"></select>
+				        </div>
+				    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover1" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit" type="button" class="btn btn-primary" onclick="saveBid()">招标</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" th:inline="text">
 	//<![CDATA[
         var jsonCondition = {};
@@ -44,10 +112,11 @@
                 	 url:'/project/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','项目名称','项目类型','投资规模','简介','创建人','创建时间','操作'],
+                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','简介','创建人','创建时间','操作'],
                      colModel : [
                                 {name:'id', index:'id', width:100,align:"center",sortable:false},
-                                {name:'name', index:'name', width:150,align:"center",sortable:false},
+                                {name:'name', index:'name', width:150,align:"center",sortable:false,classes:'text'},
+                                {name:'serialNum', index:'serialNum', width:150,align:"center",sortable:false, hidden: true },
                                 {name:'projectTypeName', index:'projectTypeName',align:"center", width:250,sortable:false,classes:'text'},
                                 {name:'investment', index:'investment', width:150,align:"center",sortable:false},
                                 {name:'description', index:'description', width:400,align:"center",sortable:false,classes:'text'},
@@ -57,13 +126,28 @@
                               ]
                 });
     		},100);
+	        loadBidType();
         });
+        
+        function loadProject(){
+        	syk.get("/project/bid.json", function (datas) {
+	        	syk.initFixedChosen(datas, { selector: $("#projectId") });
+	        });
+        }
+        
+        function loadBidType(){
+        	var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];
+	        syk.initFixedChosen(data, { selector: $("#bidType") });
+        }
      
         function formatMenu(cellvalue, options, rowObject) {
         	var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
       		'<ul class="dropdown-menu">';
       		if ([[${hasEditBtn}]] == true) {
 	           btns = btns + '<li><a href="#" onclick="edit(' + rowObject.id + ');">编辑</a></li>';
+	        }
+	        if ([[${hasEditBtn}]] == true && rowObject.status == 1) {
+	           btns = btns + '<li><a href="#" onclick="bid(' + rowObject.id + ');">招标</a></li>';
 	        }
         	btns = btns + '<li><a href="#" onclick="look(' + rowObject.id + ');">查看</a></li>';
 			return btns + '</ul></div>';
@@ -81,6 +165,66 @@
 	    
 	    function edit(id) {
 	        syk.parent.sykModal.open({ url: "/pages/project/obj?id="+id, title: "编辑" + syk.getTitle(), top: '10%', ftitle: '', size: 500 });
+	    }
+	    
+	    function look(id) {
+	    	var rowObject = $("#table_list_1").jqGrid('getRowData', id);
+	        $("#name_1").html(rowObject.name);
+	        $("#projectTypeName").html(rowObject.projectTypeName);
+	        $("#serialNum").html(rowObject.serialNum);
+	        $("#investment").html(rowObject.investment+"万");
+	        $("#description").html(rowObject.description);
+	        $('#project_view').modal('show').css({ "margin-top": "-70px" });
+	    }
+	    
+	    function bid(id) {
+	   		$("#bidform")[0].reset();
+	        loadBidType();
+	        var rowObject = $("#table_list_1").jqGrid('getRowData', id);
+	        $('#projectId').val(id);
+	        $('#projectName').val(rowObject.name);
+	        $('#bidModal').modal('show').css({ "margin-top": "-70px" });
+	    }
+	    
+	    function saveBid() {
+	    	var id = $('#projectId').val();
+	    	alert(id);
+	    	var type  = $("#bidType").val();
+	    	if(type == ""){
+	    		layer.msg("请选择招标类型");
+	    		return;
+	    	}
+	    	var params = {};
+	    	params.projectId = id;
+	    	params.bidType = type;
+	    	alert(JSON.stringify(params));
+	    	$.ajax({
+	            type: 'POST',
+	            contentType: 'application/json',
+	            url: '/project/bid.json',
+	            data: JSON.stringify(params),
+	            dataType: 'json',
+	            beforeSend: function () {
+	                $("#submit").hide();
+	                $("#cover").show();
+	            },
+	            success: function (data) {
+	                if (data.result) {
+	                    $("#bidModal").modal("hide");
+	                    layer.msg(data.msg+"招标成功");
+	                    saveRefresh();
+	                } else {
+	                    syk.alertError(data.msg);
+	                }
+	            },
+	            error: function (errMsg) {
+	                syk.alertSysError();
+	            },
+	            complete: function () {
+	                $("#submit").show();
+	                $("#cover").hide();
+	            }
+	        });
 	    }
     //]]>
 </script>
