@@ -248,4 +248,17 @@ public class SysUserBiz {
 		}
 		return 0;
 	}
+	
+	/**
+	 * 查询登录信息
+	 * @param requestModel
+	 * @return
+	 * @return JQGridResponseModel<loginLogModel>
+	 * @author 张荣英
+	 * @date 2017年5月17日 下午9:55:45
+	 */
+	public JQGridResponseModel<loginLogModel> getUserLoginLogList(loginLogModel requestModel) throws Exception{
+		JQGridResponseModel<loginLogModel> jQModel = sysUserDao.getUserLoginLogList(requestModel);
+		return jQModel;
+	}
 }

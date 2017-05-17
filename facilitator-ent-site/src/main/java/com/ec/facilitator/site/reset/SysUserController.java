@@ -18,6 +18,7 @@ import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
+import com.ec.facilitator.base.model.system.loginLogModel;
 import com.ec.facilitator.base.util.AuthTag;
 import com.ec.facilitator.base.util.SSLTag;
 
@@ -111,5 +112,11 @@ public class SysUserController {
 			br.setResult(sysUserBiz.updUserPwd(user)>0?true:false);
 			return br;
 		}
-
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/login/log.json", method = RequestMethod.POST)
+		public @ResponseBody JQGridResponseModel<loginLogModel> userloginList(@RequestBody loginLogModel requestModel) throws Exception {
+			return sysUserBiz.getUserLoginLogList(requestModel);
+		}
 }

@@ -12,7 +12,7 @@
 		
 		<select orm="sysUser" id="findUserList"  templated="true">
 		<![CDATA[
-			SELECT a.id,a.userName,a.name,a.Email,a.Phone,a.status, e.Role_Id roleId,f.`Name` AS roleName FROM sys_user a 
+			SELECT a.id,a.userName,a.name,a.Email,a.Phone,a.status, e.Role_Id roleId,f.`Name` AS roleName,a.LoginNum FROM sys_user a 
 			LEFT JOIN sys_role_user e ON a.Id = e.User_Id LEFT JOIN sys_role f ON e.Role_Id = f.Id  where 1=1  
 	        #notEmpty($name)
 	           AND a.name like '%$name%'
@@ -61,6 +61,16 @@
 			update sys_user set Password = :password where id = :id 
 			]]>
 		</update>
+		<select orm="loginLog" id="findLoginLogList"  templated="true">
+		<![CDATA[
+			SELECT * FROM login_log WHERE User_Id = :userId limit :start,:end
+			]]>
+		</select>
+		<select orm="jqresp" id="getLoginLogCount" templated="true">
+			<![CDATA[
+				SELECT COUNT(1) records FROM login_log WHERE User_Id = :userId
+			]]>
+		</select>
 		<orm class="com.ec.facilitator.base.model.common.JQGridResponseModel" id="jqresp">
 			<result column="records" property="records"/>
 		</orm>

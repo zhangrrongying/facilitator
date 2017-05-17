@@ -16,6 +16,7 @@ import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysRoleUserModel;
 import com.ec.facilitator.base.model.system.SysUserModel;
+import com.ec.facilitator.base.model.system.loginLogModel;
 import com.ec.facilitator.base.util.SpringGuzzBaseDao;
 
 /**
@@ -176,5 +177,30 @@ public class SysUserDao extends SpringGuzzBaseDao {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("id", id);
 		return (SysUserModel)this.findObject("getSysUserById", params);
+	}
+	
+	/**
+	 * 查询登录信息
+	 * @param requestModel
+	 * @return
+	 * @return JQGridResponseModel<loginLogModel>
+	 * @author 张荣英
+	 * @date 2017年5月17日 下午9:55:45
+	 */
+	@SuppressWarnings("unchecked")
+	public JQGridResponseModel<loginLogModel> getUserLoginLogList(loginLogModel requestModel){
+		JQGridResponseModel<loginLogModel> userList = new JQGridResponseModel<loginLogModel>();
+		int page = requestModel.getPage()<1?1:requestModel.getPage();
+		int rows = requestModel.getRows();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("userId", requestModel.getUserId());
+		userList = (JQGridResponseModel<loginLogModel>) this.findObject("getLoginLogCount", map);
+		map.put("start", (page-1)*rows);
+		map.put("end", rows);
+		userList.setRows(this.list("findLoginLogList", map));
+		userList.setTotal((userList.getRecords()-1)/rows+1);
+		userList.setRecords(userList.getRecords());
+		userList.setPage(page);
+		return userList;
 	}
 }
