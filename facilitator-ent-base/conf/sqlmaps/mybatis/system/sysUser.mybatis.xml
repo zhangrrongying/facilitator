@@ -71,6 +71,11 @@
 				SELECT COUNT(1) records FROM login_log WHERE User_Id = :userId
 			]]>
 		</select>
+		<select orm="sysRole" id="getRoleByUserId" templated="true">
+			<![CDATA[
+				SELECT a.* FROM sys_role a LEFT JOIN sys_role_user b ON a.Id = b.Role_Id WHERE b.User_Id = :userId
+			]]>
+		</select>
 		<orm class="com.ec.facilitator.base.model.common.JQGridResponseModel" id="jqresp">
 			<result column="records" property="records"/>
 		</orm>

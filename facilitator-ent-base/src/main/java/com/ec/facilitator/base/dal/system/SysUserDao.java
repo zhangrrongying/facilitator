@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
+import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysRoleUserModel;
@@ -202,5 +203,47 @@ public class SysUserDao extends SpringGuzzBaseDao {
 		userList.setRecords(userList.getRecords());
 		userList.setPage(page);
 		return userList;
+	}
+	
+	/**
+	 * 根据用户ID查询角色
+	 * @param userId
+	 * @return
+	 * @return SysRoleModel
+	 * @author 张荣英
+	 * @date 2017年5月18日 下午8:52:18
+	 */
+	public SysRoleModel getRoleByUserId(int userId){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		return (SysRoleModel)this.findObject("getRoleByUserId", params);
+	}
+	
+	/**
+	 * 查询可评分的项目
+	 * @return
+	 * @return List<FacProjectModel>
+	 * @author 张荣英
+	 * @date 2017年5月18日 下午9:14:31
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FacProjectModel> getScoreProjectList(int status){
+		SearchExpression se = SearchExpression.forLoadAll(FacProjectModel.class);
+		se.and(Terms.eq("status", status));
+		return 	this.list(se);
+	}
+	
+	/**
+	 * 查询可评分的项目
+	 * @return
+	 * @return List<FacProjectModel>
+	 * @author 张荣英
+	 * @date 2017年5月18日 下午9:14:31
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FacProjectModel> getBidProjectList(int userId){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		return this.list("getBidProjectListByUserId", params);
 	}
 }

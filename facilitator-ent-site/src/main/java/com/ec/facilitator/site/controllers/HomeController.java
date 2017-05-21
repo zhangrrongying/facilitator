@@ -1,5 +1,7 @@
 package com.ec.facilitator.site.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ec.facilitator.base.bal.common.BizErrorException;
 import com.ec.facilitator.base.bal.system.SysUserBiz;
 import com.ec.facilitator.base.model.common.AuthMenuModel;
+import com.ec.facilitator.base.model.fac.FacProjectModel;
+import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.util.AuthData;
 import com.ec.facilitator.base.util.AuthManager;
 import com.ec.facilitator.base.util.AuthTag;
@@ -69,6 +73,17 @@ public class HomeController {
 		AuthData authData = AuthManager.getCurrentAuthData();
 
 		AuthMenuModel rootMenu = systemUserBiz.getMenusByPCodes(authData.getId());
+		SysRoleModel role = systemUserBiz.getRoleByUserId(authData.getId());
+		List<FacProjectModel> projectList = new ArrayList<FacProjectModel>();
+		if(role.getId() == 3){
+			projectList = systemUserBiz.getScoreProjectList(4);
+		}else if(role.getId() == 4){
+			projectList = systemUserBiz.getBidProjectList(authData.getId());
+		}else if(role.getId() == 2){
+			projectList = systemUserBiz.getScoreProjectList(1);
+		}
+		model.addAttribute("roleId", role.getId());
+		model.addAttribute("projectList", projectList);
 		model.addAttribute("menus", rootMenu);
 		model.addAttribute("userName", authData.getUserName());
 

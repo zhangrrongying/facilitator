@@ -23,6 +23,7 @@ import com.ec.facilitator.base.mail.IMailSendable;
 import com.ec.facilitator.base.model.common.AuthMenuModel;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
+import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.system.SysAuthFuncModel;
 import com.ec.facilitator.base.model.system.SysRoleModel;
 import com.ec.facilitator.base.model.system.SysRoleUserModel;
@@ -260,5 +261,25 @@ public class SysUserBiz {
 	public JQGridResponseModel<loginLogModel> getUserLoginLogList(loginLogModel requestModel) throws Exception{
 		JQGridResponseModel<loginLogModel> jQModel = sysUserDao.getUserLoginLogList(requestModel);
 		return jQModel;
+	}
+	
+	/**
+	 * 根据用户ID查询角色
+	 * @param userId
+	 * @return
+	 * @return SysRoleModel
+	 * @author 张荣英
+	 * @date 2017年5月18日 下午8:52:18
+	 */
+	public SysRoleModel getRoleByUserId(int userId){
+		return sysUserDao.getRoleByUserId(userId);
+	}
+	
+	public List<FacProjectModel> getScoreProjectList(int status){
+		return sysUserDao.getScoreProjectList(status);
+	}
+	
+	public List<FacProjectModel> getBidProjectList(int userId){
+		return sysUserDao.getBidProjectList(userId);
 	}
 }

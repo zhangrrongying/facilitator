@@ -129,11 +129,13 @@
             </div>
             <div id="pageContainer" class="row">
                 <div class="wrapper wrapper-content animated fadeIn tabs-content" id="home-page">
-		            <div class="row" align="center">
+		            <div class="row" align="center" th:if="${roleId != 1}">
 		                <div class="col-lg-8">
 			                <div class="ibox float-e-margins">
 			                    <div class="ibox-title">
-			                        <h5>评分信息</h5>
+			                    	<h5 th:if="${roleId == 2}">招标信息</h5>
+			                        <h5 th:if="${roleId == 3}">评分信息</h5>
+			                        <h5 th:if="${roleId == 4}">中标信息</h5>
 			                        <div class="ibox-tools">
 			                            <a class="collapse-link">
 			                                <i class="fa fa-chevron-up"></i>
@@ -141,21 +143,40 @@
 			                        </div>
 			                    </div>
 			                    <div class="ibox-content">
-			                            <div class="alert alert-success">
-			                                How quickly daft jumping zebras vex. <a class="alert-link" onclick="projectScore()">Alert Link</a>.
+				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 2} ">
+			                                <a class="alert-link" href="#" th:inline="text">[[${project.name}]]</a>.
 			                            </div>
-			                            <div class="alert alert-info">
-			                                How quickly daft jumping zebras vex. <a class="alert-link" href="#">Alert Link</a>.
+			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 2}">
+			                                <h2><span class="text-navy" style="line-height: 32px;">
+										                           没有可招标的项目
+					                        </span></h2>
 			                            </div>
-			                            <div class="alert alert-warning">
-			                                How quickly daft jumping zebras vex. <a class="alert-link" href="#">Alert Link</a>.
+				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 3}">
+			                                <a class="alert-link" href="#" th:inline="text">[[${project.name}]]</a>.
 			                            </div>
-			                            <div class="alert alert-danger">
-			                                How quickly daft jumping zebras vex. <a class="alert-link" href="#">Alert Link</a>.
+			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 3}">
+			                                <h2><span class="text-navy" style="line-height: 32px;">
+										                           没有可评分的项目
+					                        </span></h2>
+			                            </div>
+				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 4}">
+			                                <a class="alert-link" href="#" th:inline="text">[[${project.name}]]</a>.
+			                            </div>
+			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 4}">
+			                                <h2><span class="text-navy" style="line-height: 32px;">
+										                           没有招标的项目
+					                        </span></h2>
 			                            </div>
 			                    </div>
 			                </div>
 		           		</div>
+		            </div>
+		            <div class="text-center m-t-lg tabs-content" th:if="${roleId == 1}">
+			            <h2>
+	                        <span class="text-navy" style="line-height: 32px;">
+	                           	 欢迎使用<br /> 农商帮
+	                        </span>
+	                    </h2>
 		            </div>
             	</div>
             </div>
@@ -198,6 +219,8 @@
     <script type="text/javascript" th:inline="text">
         //<![CDATA[
         var index = {};
+        var roleId = [[${roleId}]];
+        alert(roleId);
         $(function () {
             var isIe = /msie/.test(navigator.userAgent.toLowerCase());
             if (isIe) {
