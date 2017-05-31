@@ -164,4 +164,10 @@ public class SupplierDao extends SpringGuzzBaseDao {
 		SearchExpression se = SearchExpression.forLoadAll(FacProjectScoreModel.class);
 		return this.list(se);
 	}
+	
+	public FacProjectModel getProjectById(int id){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		return (FacProjectModel)this.findObject("getProjectById",params);
+	}
 }

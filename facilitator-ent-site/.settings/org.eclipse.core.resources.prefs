@@ -3,7 +3,10 @@
 >>>>>>>=dev
 eclipse.preferences.version=1
 encoding//conf/templates/index.html=UTF-8
+encoding//conf/templates/pages/project.html=UTF-8
 encoding//conf/templates/pages/project_bid.html=UTF-8
+encoding//conf/templates/pages/project_bid_list.html=UTF-8
+encoding//conf/templates/pages/project_list.html=UTF-8
 encoding//conf/templates/pages/project_score.html=UTF-8
 encoding//conf/templates/pages/supplier.html=UTF-8
 encoding//conf/templates/pages/supplier_list.html=UTF-8
@@ -12,6 +15,5 @@ encoding//conf/templates/pages/user_list.html=UTF-8
 encoding//src/main/java=UTF-8
 encoding//static/js/zh.js=UTF-8
 encoding/<project>=UTF-8
-encoding/application.properties=UTF-8
 encoding/conf=UTF-8
 encoding/static=UTF-8

@@ -20,6 +20,9 @@
                 <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
                     新 增 <i class="fa fa-plus"></i>
                 </button>
+                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
+                   设置中标<i class="fa fa-plus"></i>
+                </button>
             </div>
             <div class="jqGrid_wrapper">
                 <table id="table_list_1"></table>

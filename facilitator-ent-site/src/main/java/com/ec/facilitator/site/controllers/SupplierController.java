@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ec.facilitator.base.bal.fac.SupplierBiz;
+import com.ec.facilitator.base.dal.fac.SupplierDao;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.util.AuthManager;
@@ -28,6 +29,9 @@ public class SupplierController {
 	
 	@Resource
 	SupplierBiz supplierBiz;
+	
+	@Autowired
+	SupplierDao supplierDao;
 
 	@Autowired
 	ThymeleafHelper thymeleafHelper;
@@ -117,6 +121,10 @@ public class SupplierController {
 	@AuthTag
 	@RequestMapping(value = "/project/score", method = RequestMethod.GET)
 	public String projectScorePage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
-		return thymeleafHelper.processHtml("pages/project_score", request, response, servletContext);
+		HashMap<String, Object> variables = new HashMap<String, Object>();
+		int id = Integer.valueOf(request.getParameter("id"));
+		FacProjectModel project = supplierDao.getProjectById(id);
+		variables.put("project", project);
+		return thymeleafHelper.processHtml(variables,"pages/project_score", request, response, servletContext);
 	} 
 }

@@ -71,6 +71,7 @@
                         <li>
                             <span class="m-r-sm text-muted welcome-message">欢迎进入企业服务商管理系统</span>
                         </li>
+                        <!--  
                         <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
@@ -106,13 +107,14 @@
                         <li>
                             <div class="text-center link-block">
                                 <a href="/index">
-                                    <strong>See All Alerts</strong>
+                                    <strong>查看全部</strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </div>
                         </li>
                     </ul>
                 </li>
+                -->
                         <li>
                             <a href="#" class="no-goto" onclick="loginOut();">
                                 <i class="fa fa-sign-out"></i>注销
@@ -144,7 +146,7 @@
 			                    </div>
 			                    <div class="ibox-content">
 				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 2} ">
-			                                <a class="alert-link" href="#" th:inline="text">[[${project.name}]]</a>.
+			                                <a class="alert-link" href="#" th:inline="text" onclick="bid(${project.id},'${project.name}')">[[${project.name}]]</a>.
 			                            </div>
 			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 2}">
 			                                <h2><span class="text-navy" style="line-height: 32px;">
@@ -152,7 +154,7 @@
 					                        </span></h2>
 			                            </div>
 				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 3}">
-			                                <a class="alert-link" href="#" th:inline="text">[[${project.name}]]</a>.
+			                                <a class="alert-link" href="#" th:inline="text" onclick="projectScore(${project.id})">[[${project.name}]]</a>.
 			                            </div>
 			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 3}">
 			                                <h2><span class="text-navy" style="line-height: 32px;">
@@ -192,7 +194,41 @@
             &copy; 绵阳市教育投资发展有限责任公司 保留所有权利.
         </div>
     </div>
-
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">项目招标</h4>
+            </div>
+            <div class="modal-body ">
+                <form id="bidform" class="form-horizontal">
+                    <input name="id" style="display: none;" />
+                    <div class="form-group">
+				        <label class="col-md-2 control-label">项目名称</label>
+				        <div class="col-md-9">
+				        	<input id="projectId" name="projectId" type="hidden" />
+				            <input readonly="readonly" type="text" autocomplete="off" id="projectName" name="projectName" data-bv-notempty="false" class="input-sm form-control"/>
+				        </div>
+				    </div>
+				    <div class="form-group">
+				        <label class="col-md-2 control-label">招标方式</label>
+				        <div class="col-md-9">
+				            <select id="bidType" name="bidType" class="chosen-select"></select>
+				        </div>
+				    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <img id="cover1" src="/images/loading1.gif" style="align-content:center;display: none;" />
+                    <button id="submit" type="button" class="btn btn-primary" onclick="saveBid()">招标</button>
+                    <button type="button" class="btn btn-white btn-close" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <script id="modalTmpl" type="text/x-jquery-tmpl">
         <div>
             <div class="modal inmodal fade in" style="display: block;">
@@ -357,9 +393,61 @@
         function updpwd(id) {
             sykModal.open({ url: "/system/pwd?id=" + id, title: "编辑" + syk.getTitle(), top: '10%' });
         }
-        function projectScore() {
-            syk.parent.sykModal.open({ url: "/pages//project/score", title: "项目评价", top: '10%', ftitle: '', size: 800 });
+        function projectScore(id) {
+        	alert(id);
+            syk.parent.sykModal.open({ url: "/pages/project/score?id="+id, title: "项目评价", top: '10%', ftitle: '', size: 800 });
         }
+        function loadBidType(){
+        	var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];
+	        syk.initFixedChosen(data, { selector: $("#bidType") });
+        }
+        function bid(id,name) {
+	   		$("#bidform")[0].reset();
+	        loadBidType();
+	        $('#projectId').val(id);
+	        $('#projectName').val(name);
+	        $('#bidModal').modal('show').css({ "margin-top": "-70px" });
+	    }
+        function saveBid() {
+	    	var id = $('#projectId').val();
+	    	alert(id);
+	    	var type  = $("#bidType").val();
+	    	if(type == ""){
+	    		layer.msg("请选择招标类型");
+	    		return;
+	    	}
+	    	var params = {};
+	    	params.projectId = id;
+	    	params.bidType = type;
+	    	alert(JSON.stringify(params));
+	    	$.ajax({
+	            type: 'POST',
+	            contentType: 'application/json',
+	            url: '/project/bid.json',
+	            data: JSON.stringify(params),
+	            dataType: 'json',
+	            beforeSend: function () {
+	                $("#submit").hide();
+	                $("#cover").show();
+	            },
+	            success: function (data) {
+	                if (data.result) {
+	                    $("#bidModal").modal("hide");
+	                    layer.msg(data.msg+"招标成功");
+	                    saveRefresh();
+	                } else {
+	                    syk.alertError(data.msg);
+	                }
+	            },
+	            error: function (errMsg) {
+	                syk.alertSysError();
+	            },
+	            complete: function () {
+	                $("#submit").show();
+	                $("#cover").hide();
+	            }
+	        });
+	    }
         //]]>
     </script>
 </body>

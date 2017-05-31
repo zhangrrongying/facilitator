@@ -1,14 +1,14 @@
 <form id="exportform" class="form-horizontal" role="form" data-toggle="validator">
     <div class="form-group row">
-        <div class="col-md-3 text-right"><label>供应商：</label></div>
+        <div class="col-md-3 text-right" th:inline="text"><label>供应商：[[${project.supplierName}]]</label></div>
         <div class="col-md-8" id="farmName"></div>
     </div>
     <div class="form-group row">
-        <div class="col-md-3 text-right"><label>中标项目：</label></div>
+        <div class="col-md-3 text-right" th:inline="text"><label>中标项目：[[${project.name}]]</label></div>
         <div class="col-md-8" id="farmName"></div>
     </div>
     <div class="form-group row">
-        <div class="col-md-3 text-right"><label>项目简介：</label></div>
+        <div class="col-md-3 text-right" th:inline="text"><label>项目简介：[[${project.description}]]</label></div>
         <div class="col-md-8" id="description_1"></div>
     </div>
 </form>

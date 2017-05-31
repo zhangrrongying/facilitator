@@ -111,5 +111,12 @@
 			LEFT JOIN fac_supplier c ON a.Supplier_Id = c.Id WHERE c.Create_User = :userId
 			]]>
 		</select>
+		
+		<select id="getProjectById" orm="facProject" templated="true">
+			<![CDATA[
+			SELECT c.*,b.Name AS supplierName FROM fac_project c LEFT JOIN fac_supplier_project_relative a ON a.Project_Id = c.Id 
+			LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id WHERE c.Id = :id
+			]]>
+		</select>
   	</sqlMap>
  </guzz-configs>
