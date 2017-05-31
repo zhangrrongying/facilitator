@@ -2,6 +2,12 @@
 <!DOCTYPE guzz-configs PUBLIC "-//GUZZ//DTD MAIN CONFIG//EN" "http://www.guzz.org/dtd/guzz.dtd">
 <guzz-configs>
 	<sqlMap dbgroup="facMysql">
+	
+	   <update id="delProject"  orm="facProject" templated="true">  
+	        <![CDATA[
+	       UPDATE fac_project SET Is_Del = 1 WHERE Id IN ($projectIds) 
+	       ]]>
+	    </update>
 		
 		<select id="queryBkdSupplierSize" orm="facSupplier" templated="true">
 			<![CDATA[
@@ -29,7 +35,7 @@
 		<select id="queryBkdProjectSize" orm="facProject" templated="true">
 			<![CDATA[
 			SELECT COUNT(*) FROM fac_project a 
-			WHERE 1 = 1 
+			WHERE a.Is_Del = 0 
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
@@ -45,7 +51,7 @@
 			<![CDATA[
 			SELECT a.*,b.`Name` AS projectTypeName,c.`Name` AS createUserName FROM fac_project a LEFT JOIN 
 			fac_project_type b ON a.Project_Type_Id = b.Id LEFT JOIN sys_user c ON a.Create_User = c.Id
-			WHERE 1 = 1 
+			WHERE a.Is_Del = 0
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
@@ -61,7 +67,7 @@
 		<select id="queryBkdProjectBidSize" orm="facProject" templated="true">
 			<![CDATA[
 			SELECT COUNT(*) FROM fac_supplier_project_relative a LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id 
-			LEFT JOIN fac_project c ON a.Project_Id = c.Id  WHERE 1 = 1 
+			LEFT JOIN fac_project c ON a.Project_Id = c.Id  WHERE c.Is_Del = 0  
 		    
 		    #notEmpty($name)
 		      AND c.`Name` LIKE concat('%',:name,'%') 
@@ -81,7 +87,7 @@
 			<![CDATA[
 			SELECT a.Id,b.`Name` AS supplierName,c.`Name`,c.Investment,a.Bid_Time AS createTime,c.Status,d.`Name` AS projectTypeName 
 			FROM fac_supplier_project_relative a LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id LEFT JOIN 
-			fac_project c ON a.Project_Id = c.Id LEFT JOIN fac_project_type d ON c.Project_Type_Id = d.Id WHERE 1 = 1 
+			fac_project c ON a.Project_Id = c.Id LEFT JOIN fac_project_type d ON c.Project_Type_Id = d.Id WHERE c.Is_Del = 0
 		    
 		    #notEmpty($name)
 		      AND c.`Name` LIKE concat('%',:name,'%') 
@@ -114,7 +120,7 @@
 		
 		<select id="getProjectById" orm="facProject" templated="true">
 			<![CDATA[
-			SELECT c.*,b.Name AS supplierName FROM fac_project c LEFT JOIN fac_supplier_project_relative a ON a.Project_Id = c.Id 
+			SELECT c.*,b.Name AS supplierName,b.Id AS supplierId FROM fac_project c LEFT JOIN fac_supplier_project_relative a ON a.Project_Id = c.Id 
 			LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id WHERE c.Id = :id
 			]]>
 		</select>

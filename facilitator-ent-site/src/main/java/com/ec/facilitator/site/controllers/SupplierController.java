@@ -78,6 +78,9 @@ public class SupplierController {
 		}
 		variables.put("hasAddBtn", codes.contains("P15"));
 		variables.put("hasEditBtn", codes.contains("P16"));
+		variables.put("hasBidBtn", codes.contains("P19"));
+		variables.put("hasScoreBtn", codes.contains("P20"));
+		variables.put("hasDelBtn", codes.contains("P21"));
 		return thymeleafHelper.processHtml(variables,"pages/project_list", request, response, servletContext);
 	} 
 	
@@ -125,6 +128,7 @@ public class SupplierController {
 		int id = Integer.valueOf(request.getParameter("id"));
 		FacProjectModel project = supplierDao.getProjectById(id);
 		variables.put("project", project);
+		variables.put("projectId", id);
 		return thymeleafHelper.processHtml(variables,"pages/project_score", request, response, servletContext);
 	} 
 }

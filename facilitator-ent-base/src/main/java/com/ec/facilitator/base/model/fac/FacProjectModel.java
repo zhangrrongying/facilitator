@@ -19,8 +19,10 @@ public class FacProjectModel{
 	private Integer createUser;
 	private Date createTime;
 	private Short status;
+	private Short isDel;
 	private String projectTypeName;
 	private String createUserName;
+	private Integer supplierId;
 	private String supplierName;
 	
 	public Integer getId() {
@@ -94,5 +96,17 @@ public class FacProjectModel{
 	}
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+	public Integer getSupplierId() {
+		return supplierId;
+	}
+	public void setSupplierId(Integer supplierId) {
+		this.supplierId = supplierId;
+	}
+	public Short getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(Short isDel) {
+		this.isDel = isDel;
 	}
 }

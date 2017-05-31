@@ -269,7 +269,6 @@
         $('#fileModal').modal('show').css({ "margin-top": "-70px" });
     }
     function setImgs(url,imageName,type){
-    	alert(type);
     	if(type == 1){
     		licenseImgs = licenseImgs + imageName + ",";
     	}else if(type == 2){
@@ -294,7 +293,6 @@
             var type_new = thus.closest(".attach").attr("type");
             var imgName_new = thus.closest(".attach").attr("imgName");
             requestDate.filename = imgName_new;
-            alert(imgName_new);
             $.ajax({
                 type: 'POST',
                 url: '/file/delete.json',

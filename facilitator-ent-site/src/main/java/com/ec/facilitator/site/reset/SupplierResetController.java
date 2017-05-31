@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectBidRequestModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.fac.FacProjectScoreModel;
+import com.ec.facilitator.base.model.fac.FacProjectScoreRelativeModel;
 import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.JQGridProjectModel;
@@ -91,5 +93,22 @@ public class SupplierResetController {
 		@RequestMapping(value = "/project/score.json", method = RequestMethod.GET)
 		public List<FacProjectScoreModel> getProjectScore() throws Exception {
 			return supplierBiz.getProjectScore();
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/project/score/save.json", method = RequestMethod.POST)
+		public BooleanResultModel saveProjectScore(@RequestBody List<FacProjectScoreRelativeModel> scoreList) throws Exception {
+			return supplierBiz.saveProjectScore(scoreList);
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value="/project/del.json",method=RequestMethod.POST)
+		public BooleanResultModel saveBatch(@RequestParam("projectIds") String projectIds){
+			BooleanResultModel br = new BooleanResultModel();
+			br.setResult( supplierBiz.delProject(projectIds));
+			return br;
+			
 		}
 }

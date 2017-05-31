@@ -1,5 +1,6 @@
 package com.ec.facilitator.base.model.fac;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -54,6 +55,7 @@ public class FacSupplierModel{
 	private Short status;
 	private Integer createUser;
 	private Date createTime;
+	private BigDecimal scoreLevel;
 	
 	public Integer getId() {
 		return id;
@@ -198,5 +200,11 @@ public class FacSupplierModel{
 	}
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+	public BigDecimal getScoreLevel() {
+		return scoreLevel;
+	}
+	public void setScoreLevel(BigDecimal scoreLevel) {
+		this.scoreLevel = scoreLevel;
 	}
 }

@@ -1,5 +1,6 @@
 package com.ec.facilitator.base.bal.fac;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
 import com.ec.facilitator.base.model.fac.FacProjectScoreModel;
+import com.ec.facilitator.base.model.fac.FacProjectScoreRelativeModel;
 import com.ec.facilitator.base.model.fac.FacProjectTypeModel;
 import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.FacSupplierProjectRelativeModel;
@@ -283,4 +285,42 @@ public class SupplierBiz {
             return listNew;  
         }  
     }
+	
+	/**
+	 * 保存评分
+	 * @param scoreList
+	 * @return
+	 * @return BooleanResultModel
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午10:12:06
+	 */
+	public BooleanResultModel saveProjectScore(List<FacProjectScoreRelativeModel> scoreList){
+		BigDecimal scoreSum = new BigDecimal(0);
+		FacProjectModel project = supplierDao.getProjectById(scoreList.get(0).getProjectId());
+		for(FacProjectScoreRelativeModel score : scoreList){
+			scoreSum = scoreSum.add(score.getScore());
+			supplierDao.insert(score);
+		}
+		
+		project.setStatus((short) 5);
+		supplierDao.update(project);
+		FacSupplierModel supplier = (FacSupplierModel)supplierDao.findObjectByPK(FacSupplierModel.class, project.getSupplierId());
+		supplier.setScoreLevel(scoreSum.divide(new BigDecimal(scoreList.size()), 2, BigDecimal.ROUND_HALF_UP));
+		supplierDao.update(supplier);
+		BooleanResultModel result = new BooleanResultModel();
+		result.setResult(true);
+		return result;
+	}
+	
+	/**
+	 * 删除项目
+	 * @param projectIds
+	 * @return
+	 * @return Boolean
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午11:43:02
+	 */
+	public Boolean delProject(String projectIds){
+		return supplierDao.delProject(projectIds);
+	}
 }

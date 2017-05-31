@@ -25,6 +25,9 @@
                 <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="add()">
                     新 增 <i class="fa fa-plus"></i>
                 </button>
+                <button th:if="${hasDelBtn} == true" id="delete1" class="btn btn-danger btn-sm" onclick="delProject()">
+                    删除 <i class="fa fa-trash"></i>
+                </button>
             </div>
             <div class="jqGrid_wrapper">
                 <table id="table_list_1"></table>
@@ -109,10 +112,11 @@
             loadProjectType(); 
             window.setTimeout(function() {
             	var dataGrid = new DataGrid({
+            		multiselect: true,
                 	 url:'/project/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','简介','创建人','创建时间','操作'],
+                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','简介','创建人','创建时间','状态','操作'],
                      colModel : [
                                 {name:'id', index:'id', width:100,align:"center",sortable:false},
                                 {name:'name', index:'name', width:150,align:"center",sortable:false,classes:'text'},
@@ -122,12 +126,27 @@
                                 {name:'description', index:'description', width:400,align:"center",sortable:false,classes:'text'},
                                 {name:'createUserName', index:'createUserName',align:"center", width:150,sortable:false},
                                 {name:'createTime', index:'createTime',align:"center", width:150,formatter: syk.formatTime,sortable:false,classes:'text'},
+                                {name:'status', index:'status',align:"center", width:150,formatter: formatStatus,sortable:false},
                                 {name:'operate', index:'operate', width:150,align:"center",formatter: formatMenu,sortable:false},
                               ]
                 });
     		},100);
 	        loadBidType();
         });
+        
+        function formatStatus(cellvalue, options, rowObject) {
+			if(cellvalue == 1){
+        		return '招标中';
+        	}else if(cellvalue == 2){
+        		return '招标完成';
+        	}else if(cellvalue == 3){
+        		return '服务中';
+        	}else if(cellvalue == 4){
+        		return '服务完成';
+        	}else if(cellvalue == 5){
+        		return '评分完成';
+        	}
+		}
         
         function loadProject(){
         	syk.get("/project/bid.json", function (datas) {
@@ -146,7 +165,7 @@
       		if ([[${hasEditBtn}]] == true) {
 	           btns = btns + '<li><a href="#" onclick="edit(' + rowObject.id + ');">编辑</a></li>';
 	        }
-	        if ([[${hasEditBtn}]] == true && rowObject.status == 1) {
+	        if ([[${hasBidBtn}]] == true && rowObject.status == 1) {
 	           btns = btns + '<li><a href="#" onclick="bid(' + rowObject.id + ');">招标</a></li>';
 	        }
         	btns = btns + '<li><a href="#" onclick="look(' + rowObject.id + ');">查看</a></li>';
@@ -224,6 +243,34 @@
 	                $("#submit").show();
 	                $("#cover").hide();
 	            }
+	        });
+	    }
+	    function delProject() {
+	        var rowIds = jQuery("#table_list_1").jqGrid('getGridParam', 'selarrrow');
+	        if (rowIds == null || rowIds == '') {
+	            layer.msg("请选择要删除的数据！");
+	            return;
+	        }
+	        var projectIds = "";
+	        for(var i in rowIds){
+	        	projectIds = projectIds + rowIds[i] + ",";
+	        }
+	        projectIds = projectIds.substring(0,projectIds.length-1)
+	        syk.confirm("确认要删除选择的数据吗？", function () {
+	            $.ajax({
+	                type: "post",
+	                url: "/project/del.json?projectIds="+projectIds,
+	                contentType: "application/json; charset=utf-8",
+	                success: function (data) {
+	                    if (data.result) {
+	                        layer.msg('删除成功');
+	                        $("#table_list_1").trigger("reloadGrid");
+	                    }
+	                },
+	                error: function (errMsg) {
+	                    syk.alertSysError();
+	                }
+	            });
 	        });
 	    }
     //]]>

@@ -31,6 +31,7 @@
     <business dbgroup="facMysql" name="facProjectType" file="./conf/sqlmaps/hbm/fac/facProjectType.hbm.xml" />
     <business dbgroup="facMysql" name="loginLog" file="./conf/sqlmaps/hbm/system/loginLog.hbm.xml" />
     <business dbgroup="facMysql" name="facProjectScore" file="./conf/sqlmaps/hbm/fac/facProjectScore.hbm.xml" />
+    <business dbgroup="facMysql" name="facProjectScoreRelative" file="./conf/sqlmaps/hbm/fac/facProjectScoreRelative.hbm.xml" />
      
     <import resource="sqlmaps/mybatis/system/sysUser.mybatis.xml"/>
     <import resource="sqlmaps/mybatis/system/sysRole.mybatis.xml"/>

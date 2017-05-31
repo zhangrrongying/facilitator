@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.ec.facilitator.base.model.fac.FacProjectScoreRelativeModel" table="fac_project_score_relative">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="native" />
+        </id>
+        <property name="projectId" type="java.lang.Integer">
+            <column name="Project_Id" not-null="true">
+                <comment>项目ID</comment>
+            </column>
+        </property>
+        <property name="projectScoreId" type="java.lang.Integer">
+            <column name="Project_Score_Id" not-null="true">
+                <comment>项目评价ID</comment>
+            </column>
+        </property>
+        <property name="score" type="java.math.BigDecimal">
+            <column name="Score" precision="18" scale="2">
+                <comment>分数</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -170,4 +170,18 @@ public class SupplierDao extends SpringGuzzBaseDao {
 		params.put("id", id);
 		return (FacProjectModel)this.findObject("getProjectById",params);
 	}
+	
+	/**
+	 * 删除项目
+	 * @param projectIds
+	 * @return
+	 * @return Boolean
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午11:43:02
+	 */
+	public Boolean delProject(String projectIds){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("projectIds", projectIds);
+		return this.executeUpdate("delProject",params) > 0;
+	}
 }

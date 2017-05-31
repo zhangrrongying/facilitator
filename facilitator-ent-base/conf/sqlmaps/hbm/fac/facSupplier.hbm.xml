@@ -113,5 +113,10 @@
         <property name="createTime" type="java.util.Date">
             <column name="Create_Time" length="19" />
         </property>
+        <property name="scoreLevel" type="java.math.BigDecimal">
+            <column name="Score_Level" precision="18" scale="2">
+                <comment>评分等级</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

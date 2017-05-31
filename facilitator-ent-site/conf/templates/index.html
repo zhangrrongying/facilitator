@@ -146,7 +146,7 @@
 			                    </div>
 			                    <div class="ibox-content">
 				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 2} ">
-			                                <a class="alert-link" href="#" th:inline="text" onclick="bid(${project.id},'${project.name}')">[[${project.name}]]</a>.
+			                                <a class="alert-link" th:attr="onclick='bid('+${project.id}+',\''+${project.name}+'\')'" th:inline="text">[[${project.name}]]</a>.
 			                            </div>
 			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 2}">
 			                                <h2><span class="text-navy" style="line-height: 32px;">
@@ -154,7 +154,7 @@
 					                        </span></h2>
 			                            </div>
 				                    	<div class="alert alert-info" th:each="project : ${projectList}" th:if="${!#lists.isEmpty(projectList) and roleId == 3}">
-			                                <a class="alert-link" href="#" th:inline="text" onclick="projectScore(${project.id})">[[${project.name}]]</a>.
+			                                <a class="alert-link" th:attr="onclick='projectScore('+${project.id}+')'" th:inline="text">[[${project.name}]]</a>
 			                            </div>
 			                            <div th:if="${#lists.isEmpty(projectList) and roleId == 3}">
 			                                <h2><span class="text-navy" style="line-height: 32px;">
@@ -393,7 +393,6 @@
             sykModal.open({ url: "/system/pwd?id=" + id, title: "编辑" + syk.getTitle(), top: '10%' });
         }
         function projectScore(id) {
-        	alert(id);
             syk.parent.sykModal.open({ url: "/pages/project/score?id="+id, title: "项目评价", top: '10%', ftitle: '', size: 800 });
         }
         function loadBidType(){

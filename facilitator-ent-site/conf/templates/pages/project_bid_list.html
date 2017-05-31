@@ -123,12 +123,16 @@
 		}
 		
 		function formatStatus(cellvalue, options, rowObject) {
-        	if(cellvalue == 2){
-        		return '中标';
+			if(cellvalue == 1){
+        		return '招标中';
+        	}else if(cellvalue == 2){
+        		return '招标完成';
         	}else if(cellvalue == 3){
-        		return '完成';
+        		return '服务中';
         	}else if(cellvalue == 4){
-        		return '已评分';
+        		return '服务完成';
+        	}else if(cellvalue == 5){
+        		return '评分完成';
         	}
 		}
 

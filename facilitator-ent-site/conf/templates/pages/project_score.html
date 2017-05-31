@@ -1,15 +1,15 @@
 <form id="exportform" class="form-horizontal" role="form" data-toggle="validator">
     <div class="form-group row">
-        <div class="col-md-3 text-right" th:inline="text"><label>供应商：[[${project.supplierName}]]</label></div>
-        <div class="col-md-8" id="farmName"></div>
+        <div class="col-md-3 text-right"><label>供应商：</label></div>
+        <div class="col-md-8" id="farmName" th:inline="text">[[${project.supplierName}]]</div>
     </div>
     <div class="form-group row">
-        <div class="col-md-3 text-right" th:inline="text"><label>中标项目：[[${project.name}]]</label></div>
-        <div class="col-md-8" id="farmName"></div>
+        <div class="col-md-3 text-right"><label>中标项目：</label></div>
+        <div class="col-md-8" th:inline="text">[[${project.name}]]</div>
     </div>
     <div class="form-group row">
-        <div class="col-md-3 text-right" th:inline="text"><label>项目简介：[[${project.description}]]</label></div>
-        <div class="col-md-8" id="description_1"></div>
+        <div class="col-md-3 text-right"><label>项目简介：</label></div>
+        <div class="col-md-8" id="description_1" th:inline="text">[[${project.description}]]</div>
     </div>
 </form>
 <div class="jqGrid_wrapper" style="height:250px; overflow:auto">
@@ -18,42 +18,20 @@
 <script type="text/javascript" th:inline="text">
     //<![CDATA[
    var projectScores = new Array();
+   var projectId = [[${projectId}]];
    $(function () {
 	   var form = $("#exportform");
 	   loadFarmlist();
 	   sykModal.submit = {
-	            url: '/plan/production/hasExport',
+	            url: '/project/score/save.json',
 	            data: function () {
-	            	var startTime = $("#startMonth").val();
-                    var endTime = $("#endMonth").val();
-                    var farmIds = $("#table_list_2").jqGrid('getGridParam', 'selarrrow');
-                    if(startTime == null || startTime == ""){
-                        layer.msg("请选择开始月份");
-                        return;
-                    }
-                    if(endTime == null || endTime == ""){
-                        layer.msg("请选择结束月份");
-                        return;
-                    }
-                    if(parseInt(startTime.replace(/[\-]/g, '')) >= parseInt(endTime.replace(/[\-]/g, ''))){
-                		layer.msg("结束月份不能小于开始月份");
-                        return;
-                	}
-                    if(farmIds == null || farmIds == ""){
-                    	layer.msg("请勾选要导出的农场");
-                        return;
-                    }
-	                var params = {};
-	                return params;
+	                return projectScores;
 	            },
 	            done: function (ret) {
 	                if (!ret.result) {
 	                    layer.alert("导出失败：{" + ret.msg + "}");
 	                } else {
-	                	var startMonth = $("#startMonth").val();
-	                    var endMonth = $("#endMonth").val();
-	                    var farmIds = $("#table_list_2").jqGrid('getGridParam', 'selarrrow');
-	                    $("<form method='get' action='/plan/production/batch/export/"+startMonth+"/"+endMonth+"/"+farmIds+"'>").submit();
+	                syk.refresh();
 	                    sykModal.close();
 	                }
 	            }
@@ -131,7 +109,8 @@
 						}
         		   }
         		   var projectScore = {};
-        		   projectScore.id = id;
+        		   projectScore.projectId = projectId;
+        		   projectScore.projectScoreId = id;
         		   projectScore.score = score;
         		   projectScores.push(projectScore);
         		  }

@@ -43,5 +43,10 @@
                 <comment>状态 1：未中标2：已中标3：已完成</comment>
             </column>
         </property>
+        <property name="isDel" type="java.lang.Short">
+            <column name="Is_Del" not-null="true">
+                <comment>是否删除0:否1：是</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>
