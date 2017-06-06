@@ -323,4 +323,16 @@ public class SupplierBiz {
 	public Boolean delProject(String projectIds){
 		return supplierDao.delProject(projectIds);
 	}
+	
+	/**
+	 * 删除供应商
+	 * @param projectIds
+	 * @return
+	 * @return Boolean
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午11:43:02
+	 */
+	public Boolean delSupplier(String supplierIds){
+		return supplierDao.delSupplier(supplierIds);
+	}
 }

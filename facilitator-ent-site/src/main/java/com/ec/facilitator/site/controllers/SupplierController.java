@@ -49,6 +49,7 @@ public class SupplierController {
 		}
 		variables.put("hasAddBtn", codes.contains("P12"));
 		variables.put("hasEditBtn", codes.contains("P13"));
+		variables.put("hasDelBtn", codes.contains("P22"));
 		return thymeleafHelper.processHtml(variables,"pages/supplier_list", request, response, servletContext);
 	} 
 	

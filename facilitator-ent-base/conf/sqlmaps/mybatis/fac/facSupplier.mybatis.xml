@@ -8,11 +8,17 @@
 	       UPDATE fac_project SET Is_Del = 1 WHERE Id IN ($projectIds) 
 	       ]]>
 	    </update>
+	    
+	    <update id="delSupplier"  orm="facSupplier" templated="true">  
+	        <![CDATA[
+	       UPDATE fac_supplier SET Is_Del = 1 WHERE Id IN ($supplierIds) 
+	       ]]>
+	    </update>
 		
 		<select id="queryBkdSupplierSize" orm="facSupplier" templated="true">
 			<![CDATA[
 			SELECT COUNT(*) FROM fac_supplier a 
-			WHERE 1 = 1 
+			WHERE a.Is_Del = 0 
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
@@ -23,7 +29,7 @@
 		<select id="queryBkdSuppliers" orm="facSupplier" templated="true">
 			<![CDATA[
 			SELECT a.* FROM fac_supplier a 
-			WHERE 1 = 1 
+			WHERE a.Is_Del = 0 
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
@@ -107,7 +113,7 @@
 		<select id="getProjectBids" orm="facProject" templated="true">
 			<![CDATA[
 			SELECT a.* FROM fac_project a WHERE NOT EXISTS (SELECT b.Project_Id FROM fac_supplier_project_relative b 
-			WHERE a.Id = b.Project_Id)
+			WHERE a.Id = b.Project_Id) AND a.Is_Del=0
 			]]>
 		</select>
 		

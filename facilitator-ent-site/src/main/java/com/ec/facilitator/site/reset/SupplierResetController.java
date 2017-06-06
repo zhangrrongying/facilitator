@@ -105,9 +105,18 @@ public class SupplierResetController {
 		@AuthTag
 		@SSLTag
 		@RequestMapping(value="/project/del.json",method=RequestMethod.POST)
-		public BooleanResultModel saveBatch(@RequestParam("projectIds") String projectIds){
+		public BooleanResultModel delProject(@RequestParam("projectIds") String projectIds){
 			BooleanResultModel br = new BooleanResultModel();
 			br.setResult( supplierBiz.delProject(projectIds));
+			return br;
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value="/supplier/del.json",method=RequestMethod.POST)
+		public BooleanResultModel delSupplier(@RequestParam("supplierIds") String supplierIds){
+			BooleanResultModel br = new BooleanResultModel();
+			br.setResult( supplierBiz.delSupplier(supplierIds));
 			return br;
 			
 		}

@@ -172,6 +172,20 @@ public class SupplierDao extends SpringGuzzBaseDao {
 	}
 	
 	/**
+	 * 删除供应商
+	 * @param projectIds
+	 * @return
+	 * @return Boolean
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午11:43:02
+	 */
+	public Boolean delSupplier(String supplierIds){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("supplierIds", supplierIds);
+		return this.executeUpdate("delSupplier",params) > 0;
+	}
+	
+	/**
 	 * 删除项目
 	 * @param projectIds
 	 * @return

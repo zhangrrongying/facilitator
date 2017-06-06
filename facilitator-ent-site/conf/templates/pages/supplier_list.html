@@ -20,6 +20,9 @@
                 <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
                     新 增 <i class="fa fa-plus"></i>
                 </button>
+                <button th:if="${hasDelBtn} == true" id="delete1" class="btn btn-danger btn-sm" onclick="delSupplier()">
+                    删除 <i class="fa fa-trash"></i>
+                </button>
                 <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
                    设置中标<i class="fa fa-plus"></i>
                 </button>
@@ -39,10 +42,11 @@
              
             window.setTimeout(function() {
             	var dataGrid = new DataGrid({
+            		 multiselect: true, 
                 	 url:'/supplier/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','供应商名称','信用代码','企业法人','企业法人电话','注册资本','状态','操作'],
+                	 colNames : ['ID','供应商名称','信用代码','企业法人','企业法人电话','注册资本','操作'],
                      colModel : [
                                 {name:'id', index:'id', width:100,align:"center",sortable:false},
                                 {name:'name', index:'name', width:200,align:"center",sortable:false},
@@ -50,7 +54,6 @@
                                 {name:'corporation', index:'corporation', width:200,align:"center",sortable:false},
                                 {name:'corporationPhone', index:'corporationPhone', width:400,align:"center",sortable:false},
                                 {name:'registeredCapital', index:'registeredCapital',align:"center", width:100,sortable:false},
-                                {name:'status', index:'status',align:"center", width:100,formatter: formatStatus,sortable:false},
                                 {name:'operate', index:'operate', width:200,align:"center",formatter: formatMenu,sortable:false},
                               ]
                 });
@@ -76,5 +79,33 @@
      		   '<i class="fa fa-minus-square"></i></a>';
      	   }
         }
+        function delSupplier() {
+	        var rowIds = jQuery("#table_list_1").jqGrid('getGridParam', 'selarrrow');
+	        if (rowIds == null || rowIds == '') {
+	            layer.msg("请选择要删除的数据！");
+	            return;
+	        }
+	        var supplierIds = "";
+	        for(var i in rowIds){
+	        	supplierIds = supplierIds + rowIds[i] + ",";
+	        }
+	        supplierIds = supplierIds.substring(0,supplierIds.length-1)
+	        syk.confirm("确认要删除选择的数据吗？", function () {
+	            $.ajax({
+	                type: "post",
+	                url: "/supplier/del.json?supplierIds="+supplierIds,
+	                contentType: "application/json; charset=utf-8",
+	                success: function (data) {
+	                    if (data.result) {
+	                        layer.msg('删除成功');
+	                        $("#table_list_1").trigger("reloadGrid");
+	                    }
+	                },
+	                error: function (errMsg) {
+	                    syk.alertSysError();
+	                }
+	            });
+	        });
+	    }
     //]]>
 </script>

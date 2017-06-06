@@ -56,6 +56,7 @@ public class FacSupplierModel{
 	private Integer createUser;
 	private Date createTime;
 	private BigDecimal scoreLevel;
+	private Short isDel;
 	
 	public Integer getId() {
 		return id;
@@ -206,5 +207,11 @@ public class FacSupplierModel{
 	}
 	public void setScoreLevel(BigDecimal scoreLevel) {
 		this.scoreLevel = scoreLevel;
+	}
+	public Short getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(Short isDel) {
+		this.isDel = isDel;
 	}
 }
