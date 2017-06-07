@@ -90,6 +90,7 @@ public class SupplierController {
 		variables.put("hasBidBtn", codes.contains("P19"));
 		variables.put("hasScoreBtn", codes.contains("P20"));
 		variables.put("hasDelBtn", codes.contains("P21"));
+		variables.put("hasSetBtn", codes.contains("P23"));
 		return thymeleafHelper.processHtml(variables,"pages/project_list", request, response, servletContext);
 	} 
 	

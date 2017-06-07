@@ -102,11 +102,13 @@ public class SupplierBiz {
 		if(supplier.getId() == 0){
 			supplier.setCreateUser(userId);
 			supplier.setCreateTime(new Date());
+			supplier.setScoreLevel(new BigDecimal(0));
 			supplierDao.insert(supplier);
 		}else{
 			FacSupplierModel facSupplierModel = (FacSupplierModel)supplierDao.findObjectByPK(FacSupplierModel.class, supplier.getId());
 			supplier.setCreateUser(facSupplierModel.getCreateUser());
 			supplier.setCreateTime(facSupplierModel.getCreateTime());
+			supplier.setScoreLevel(facSupplierModel.getScoreLevel());
 			supplierDao.update(supplier);
 		}
 		result.setResult(true);
@@ -311,7 +313,14 @@ public class SupplierBiz {
 		project.setStatus((short) 5);
 		supplierDao.update(project);
 		FacSupplierModel supplier = (FacSupplierModel)supplierDao.findObjectByPK(FacSupplierModel.class, project.getSupplierId());
-		supplier.setScoreLevel(scoreSum.divide(new BigDecimal(scoreList.size()), 2, BigDecimal.ROUND_HALF_UP));
+		BigDecimal score = scoreSum.divide(new BigDecimal(scoreList.size()), 2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal avgScore = new BigDecimal(0);
+		if(supplier.getScoreLevel().compareTo(new BigDecimal(0)) == 0){
+			avgScore = score;
+		}else{
+			avgScore = (score.add(supplier.getScoreLevel())).divide(new BigDecimal(2), 2, BigDecimal.ROUND_HALF_UP);
+		}
+		supplier.setScoreLevel(avgScore);
 		supplierDao.update(supplier);
 		BooleanResultModel result = new BooleanResultModel();
 		result.setResult(true);

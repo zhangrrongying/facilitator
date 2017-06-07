@@ -29,10 +29,10 @@
 	            },
 	            done: function (ret) {
 	                if (!ret.result) {
-	                    layer.alert("导出失败：{" + ret.msg + "}");
+	                    layer.alert(ret.msg);
 	                } else {
-	                syk.refresh();
-	                    sykModal.close();
+	                	sykModal.close();
+	                	index.callIframe({ fun: "saveRefresh" });
 	                }
 	            }
 	        };

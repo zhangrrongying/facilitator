@@ -159,7 +159,7 @@
 		}
         
         function formatSupplierName(cellvalue, options, rowObject) {
-        	if(cellvalue == ""){
+        	if(cellvalue == null){
         		return '';
         	}else{
         		return '<a onclick="supplierView(' + rowObject.supplierId + ');">'+cellvalue+'</a>';
@@ -188,15 +188,22 @@
 	           btns = btns + '<li><a onclick="edit(' + rowObject.id + ');">编辑</a></li>';
 	        }
 	        if ([[${hasBidBtn}]] == true && rowObject.status == 1) {
-	           btns = btns + '<li><a onclick="bid(' + rowObject.id + ');">招标</a></li>';
+	           btns = btns + '<li><a onclick="bid(' + rowObject.id + ',\''+rowObject.name+'\');">招标</a></li>';
 	        }
-	        if ([[${hasBidBtn}]] == true && rowObject.status == 2) {
-		           btns = btns + '<li><a onclick="updateProject(' + rowObject.id + ');">项目完成</a></li>';
-		        }
+	        if ([[${hasSetBtn}]] == true && rowObject.status == 2) {
+	           btns = btns + '<li><a onclick="updateProject(' + rowObject.id + ');">项目完成</a></li>';
+	        }
+	        if ([[${hasScoreBtn}]] == true && rowObject.status == 4) {
+	           btns = btns + '<li><a onclick="projectScore(' + rowObject.id + ');">评分</a></li>';
+	        }
         	btns = btns + '<li><a onclick="look(' + rowObject.id + ',\''+rowObject.name+'\');">查看</a></li>';
 			return btns + '</ul></div>';
 		}
 
+        function projectScore(id) {
+            syk.parent.sykModal.open({ url: "/pages/project/score?id="+id, title: "项目评价", top: '10%', ftitle: '', size: 800 });
+        }
+        
         function loadProjectType() {
 	    	syk.get("/project/type.json", function (datas) {
 	        	syk.initFixedChosen(datas, { selector: $("#projectTypeId") });
@@ -222,12 +229,11 @@
 	        $('#project_view').modal('show').css({ "margin-top": "-70px" });
 	    }
 	    
-	    function bid(id) {
+	    function bid(id,name) {
 	   		$("#bidform")[0].reset();
 	        loadBidType();
-	        var rowObject = $("#table_list_1").jqGrid('getRowData', id);
 	        $('#projectId').val(id);
-	        $('#projectName').val(rowObject.name);
+	        $('#projectName').val(name);
 	        $('#bidModal').modal('show').css({ "margin-top": "-70px" });
 	    }
 	    
