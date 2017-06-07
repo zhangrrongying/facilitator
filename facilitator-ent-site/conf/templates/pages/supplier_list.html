@@ -23,9 +23,6 @@
                 <button th:if="${hasDelBtn} == true" id="delete1" class="btn btn-danger btn-sm" onclick="delSupplier()">
                     删除 <i class="fa fa-trash"></i>
                 </button>
-                <button th:if="${hasAddBtn} == true" id="add" class="btn btn-danger btn-sm" onclick="javascript:navPage('/pages/supplier/obj?id=0','新增');">
-                   设置中标
-                </button>
             </div>
             <div class="jqGrid_wrapper">
                 <table id="table_list_1"></table>
@@ -67,6 +64,9 @@
       		if ([[${hasEditBtn}]] == true) {
 	           btns = btns + '<li><a href="#" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'&isView=0\',\'编辑\');">编辑<i class="fa fa-edit"></i></a></li>';
 	        }
+      		if ([[${hasSetBtn}]] == true) {
+ 	           btns = btns + '<li><a href="#" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'&isView=0\',\'编辑\');">设置中标</a></li>';
+ 	        }
         	btns = btns + '<li><a href="#" onclick="supplierView(' + rowObject.id + ');">查看</a></li>';
 			return btns + '</ul></div>';
 		}

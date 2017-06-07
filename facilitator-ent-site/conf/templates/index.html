@@ -393,7 +393,7 @@
             sykModal.open({ url: "/system/pwd?id=" + id, title: "编辑" + syk.getTitle(), top: '10%' });
         }
         function projectScore(id) {
-            syk.parent.sykModal.open({ url: "/pages/project/score?id="+id, title: "项目评价", top: '10%', ftitle: '', size: 800 });
+            syk.parent.sykModal.open({ url: "/pages/project/score?id="+id+"&type=1", title: "项目评价", top: '10%', ftitle: '', size: 800 });
         }
         function loadBidType(){
         	var data = [{"id":"1","name":"随机选择"},{"id":"2","name":"限定选择"},{"id":"3","name":"条件选择"}];

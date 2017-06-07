@@ -19,6 +19,7 @@
     //<![CDATA[
    var projectScores = new Array();
    var projectId = [[${projectId}]];
+   var type = [[${type}]];
    $(function () {
 	   var form = $("#exportform");
 	   loadFarmlist();
@@ -32,7 +33,11 @@
 	                    layer.alert(ret.msg);
 	                } else {
 	                	sykModal.close();
-	                	index.callIframe({ fun: "saveRefresh" });
+	                	if(type == 1){
+	                		syk.refresh();
+	                	}else{
+	                		index.callIframe({ fun: "saveRefresh" });
+	                	}
 	                }
 	            }
 	        };

@@ -136,9 +136,11 @@ public class SupplierController {
 	public String projectScorePage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
 		HashMap<String, Object> variables = new HashMap<String, Object>();
 		int id = Integer.valueOf(request.getParameter("id"));
+		int type = Integer.valueOf(request.getParameter("type"));
 		FacProjectModel project = supplierDao.getProjectById(id);
 		variables.put("project", project);
 		variables.put("projectId", id);
+		variables.put("type", type);
 		return thymeleafHelper.processHtml(variables,"pages/project_score", request, response, servletContext);
 	} 
 }

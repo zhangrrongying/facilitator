@@ -230,6 +230,7 @@ public class SysUserDao extends SpringGuzzBaseDao {
 	public List<FacProjectModel> getScoreProjectList(int status){
 		SearchExpression se = SearchExpression.forLoadAll(FacProjectModel.class);
 		se.and(Terms.eq("status", status));
+		se.and(Terms.eq("isDel", 0));
 		return 	this.list(se);
 	}
 	
