@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -118,5 +119,15 @@ public class SysUserController {
 		@RequestMapping(value = "/login/log.json", method = RequestMethod.POST)
 		public @ResponseBody JQGridResponseModel<loginLogModel> userloginList(@RequestBody loginLogModel requestModel) throws Exception {
 			return sysUserBiz.getUserLoginLogList(requestModel);
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value ="/del.json",method = RequestMethod.POST)
+		public BooleanResultModel roleList(@RequestParam("userIds") String userIds){
+			BooleanResultModel br = new BooleanResultModel();
+			br.setResult(sysUserBiz.delUser(userIds));
+			return br;
+			
 		}
 }

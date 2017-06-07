@@ -282,4 +282,16 @@ public class SysUserBiz {
 	public List<FacProjectModel> getBidProjectList(int userId){
 		return sysUserDao.getBidProjectList(userId);
 	}
+	
+	/**
+	 * 删除用户
+	 * @param projectIds
+	 * @return
+	 * @return Boolean
+	 * @author 张荣英
+	 * @date 2017年5月31日 下午11:43:02
+	 */
+	public Boolean delUser(String userIds){
+		return sysUserDao.delUser(userIds);
+	}
 }

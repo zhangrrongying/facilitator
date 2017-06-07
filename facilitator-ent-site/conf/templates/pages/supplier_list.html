@@ -46,15 +46,16 @@
                 	 url:'/supplier/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','供应商名称','信用代码','企业法人','企业法人电话','注册资本','操作'],
+                	 colNames : ['ID','供应商名称','信用代码','企业法人','企业法人电话','注册资本','评分等级','操作'],
                      colModel : [
-                                {name:'id', index:'id', width:100,align:"center",sortable:false},
-                                {name:'name', index:'name', width:200,align:"center",sortable:false},
+                                {name:'id', index:'id', width:50,align:"center",sortable:false},
+                                {name:'name', index:'name', width:350,align:"center",sortable:false},
                                 {name:'serialNum', index:'serialNum',align:"center", width:200,sortable:false},
-                                {name:'corporation', index:'corporation', width:200,align:"center",sortable:false},
-                                {name:'corporationPhone', index:'corporationPhone', width:400,align:"center",sortable:false},
-                                {name:'registeredCapital', index:'registeredCapital',align:"center", width:100,sortable:false},
-                                {name:'operate', index:'operate', width:200,align:"center",formatter: formatMenu,sortable:false},
+                                {name:'corporation', index:'corporation', width:150,align:"center",sortable:false},
+                                {name:'corporationPhone', index:'corporationPhone', width:150,align:"center",sortable:false},
+                                {name:'registeredCapital', index:'registeredCapital',align:"center", width:150,sortable:false},
+                                {name:'scoreLevel', index:'scoreLevel',align:"center", width:100,sortable:false},
+                                {name:'operate', index:'operate', width:150,align:"center",formatter: formatMenu,sortable:false},
                               ]
                 });
     		},100);

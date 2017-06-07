@@ -155,7 +155,7 @@
 		}
         
         function formatName(cellvalue, options, rowObject) {
-       		return '<a onclick="look(' + rowObject.id + ',\''+cellvalue+'\');">'+cellvalue+'</a>';
+       		return '<a onclick="look(' + rowObject.id + ',\''+cellvalue+'\',\''+rowObject.supplierName+'\');">'+cellvalue+'</a>';
 		}
         
         function formatSupplierName(cellvalue, options, rowObject) {
@@ -185,13 +185,13 @@
         	var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
       		'<ul class="dropdown-menu">';
       		if ([[${hasEditBtn}]] == true) {
-	           btns = btns + '<li><a href="#" onclick="edit(' + rowObject.id + ');">编辑</a></li>';
+	           btns = btns + '<li><a onclick="edit(' + rowObject.id + ');">编辑</a></li>';
 	        }
 	        if ([[${hasBidBtn}]] == true && rowObject.status == 1) {
-	           btns = btns + '<li><a href="#" onclick="bid(' + rowObject.id + ');">招标</a></li>';
+	           btns = btns + '<li><a onclick="bid(' + rowObject.id + ');">招标</a></li>';
 	        }
 	        if ([[${hasBidBtn}]] == true && rowObject.status == 2) {
-		           btns = btns + '<li><a href="#" onclick="updateProject(' + rowObject.id + ');">项目完成</a></li>';
+		           btns = btns + '<li><a onclick="updateProject(' + rowObject.id + ');">项目完成</a></li>';
 		        }
         	btns = btns + '<li><a onclick="look(' + rowObject.id + ',\''+rowObject.name+'\');">查看</a></li>';
 			return btns + '</ul></div>';
@@ -208,17 +208,17 @@
 	    }
 	    
 	    function edit(id) {
-	        syk.parent.sykModal.open({ url: "/pages/project/obj?id="+id, title: "编辑" + syk.getTitle(), top: '10%', ftitle: '', size: 500 });
+	        syk.parent.sykModal.open({ url: "/pages/project/obj?id="+id, title: "编辑" + syk.getTitle(), top: '20%', ftitle: '', size: 500 });
 	    }
 	    
-	    function look(id,name) {
+	    function look(id,name,supplierName) {
 	    	var rowObject = $("#table_list_1").jqGrid('getRowData', id);
 	        $("#name_1").html(name);
 	        $("#projectTypeName").html(rowObject.projectTypeName);
 	        $("#serialNum").html(rowObject.serialNum);
 	        $("#investment").html(rowObject.investment+"万");
 	        $("#description").html(rowObject.description);
-	        $("#supplierName").html(rowObject.supplierName);
+	        $("#supplierName").html(supplierName);
 	        $('#project_view').modal('show').css({ "margin-top": "-70px" });
 	    }
 	    

@@ -81,7 +81,7 @@
       				<div class="col-md-3 text-right"><label>登录次数：</label></div>
       				<div class="col-md-3" id="loginNum"></div>
                 </div>
-                <div class="jqGrid_wrapper" style="height:250px; overflow:auto">
+                <div class="jqGrid_wrapper" style="height:275px; overflow:auto">
 					<table id="table_list_2"></table>
 					<div id="pager_list_2"></div>
 				</div>
@@ -118,7 +118,7 @@
 
     function loadlist() {
         var dataGrid = new DataGrid({
-            multiselect: false,
+            multiselect: true,
             url: '/system/user/userList.json',
             dataGridTable: $("#table_list_1"),
             pagerId: '#pager_list_1',
@@ -315,6 +315,34 @@
                     }
                 },
             }
+        });
+    }
+    function delUser() {
+        var rowIds = jQuery("#table_list_1").jqGrid('getGridParam', 'selarrrow');
+        if (rowIds == null || rowIds == '') {
+            layer.msg("请选择要删除的数据！");
+            return;
+        }
+        var userIds = "";
+        for(var i in rowIds){
+        	userIds = userIds + rowIds[i] + ",";
+        }
+        userIds = userIds.substring(0,userIds.length-1)
+        syk.confirm("确认要删除选择的数据吗？", function () {
+            $.ajax({
+                type: "post",
+                url: "/system/user/del.json?userIds="+userIds,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.result) {
+                        layer.msg('删除成功');
+                        $("#table_list_1").trigger("reloadGrid");
+                    }
+                },
+                error: function (errMsg) {
+                    syk.alertSysError();
+                }
+            });
         });
     }
     //]]>
