@@ -120,7 +120,7 @@
                 	 url:'/project/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','创建人','创建时间','供应商','状态','简介','操作'],
+                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','创建人','创建时间','供应商ID','供应商','状态','简介','操作'],
                      colModel : [
                                 {name:'id', index:'id', width:50,align:"center",sortable:false},
                                 {name:'name', index:'name', width:150,align:"center",sortable:false,formatter: formatName,classes:'text'},
@@ -129,7 +129,8 @@
                                 {name:'investment', index:'investment', width:150,align:"center",sortable:false},
                                 {name:'createUserName', index:'createUserName',align:"center", width:150,sortable:false},
                                 {name:'createTime', index:'createTime',align:"center", width:200,formatter: syk.formatTime,sortable:false,classes:'text'},
-                                {name:'supplierName', index:'supplierName',align:"center", width:250,sortable:false},
+                                {name:'supplierId', index:'supplierId',align:"center", width:250,sortable:false, hidden: true},
+                                {name:'supplierName', index:'supplierName',align:"center", width:250,sortable:false,formatter:formatSupplierName},
                                 {name:'status', index:'status',align:"center", width:100,formatter: formatStatus,sortable:false},
                                 {name:'description', index:'description', width:300,align:"center",sortable:false, hidden: true },
                                 {name:'operate', index:'operate', width:100,align:"center",formatter: formatMenu,sortable:false},
@@ -156,6 +157,18 @@
         function formatName(cellvalue, options, rowObject) {
        		return '<a onclick="look(' + rowObject.id + ',\''+cellvalue+'\');">'+cellvalue+'</a>';
 		}
+        
+        function formatSupplierName(cellvalue, options, rowObject) {
+        	if(cellvalue == ""){
+        		return '';
+        	}else{
+        		return '<a onclick="supplierView(' + rowObject.supplierId + ');">'+cellvalue+'</a>';
+        	}
+		}
+        
+        function supplierView(id) {
+            syk.parent.sykModal.open({ url: "/pages/supplier/obj?id="+id+"&isView=1", title: "供应商详情", top: '10%', ftitle: '', size: 600 , isSubmit: false});
+        }
         
         function loadProject(){
         	syk.get("/project/bid.json", function (datas) {
