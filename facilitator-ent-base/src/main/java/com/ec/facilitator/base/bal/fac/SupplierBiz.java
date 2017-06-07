@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.ec.facilitator.base.dal.fac.SupplierDao;
+import com.ec.facilitator.base.mail.ContentFormat;
+import com.ec.facilitator.base.mail.IMailSendable;
 import com.ec.facilitator.base.model.common.BooleanResultModel;
 import com.ec.facilitator.base.model.common.JQGridResponseModel;
 import com.ec.facilitator.base.model.fac.FacProjectModel;
@@ -22,6 +24,7 @@ import com.ec.facilitator.base.model.fac.FacSupplierModel;
 import com.ec.facilitator.base.model.fac.FacSupplierProjectRelativeModel;
 import com.ec.facilitator.base.model.fac.JQGridProjectModel;
 import com.ec.facilitator.base.model.fac.JQGridSupplierModel;
+import com.ec.facilitator.base.model.system.SysUserModel;
 import com.ec.facilitator.base.util.WebConfig;
 
 /**
@@ -40,6 +43,9 @@ public class SupplierBiz {
 	
 	@Autowired
 	private WebConfig webConfig;
+	
+	@Autowired
+	private IMailSendable mailSender;
 	
 	/**
 	 * 查询供应商列表
@@ -334,5 +340,35 @@ public class SupplierBiz {
 	 */
 	public Boolean delSupplier(String supplierIds){
 		return supplierDao.delSupplier(supplierIds);
+	}
+	
+	/**
+	 * 设置项目完成并发邮件给业主
+	 * @param userId
+	 * @param id
+	 * @return
+	 * @return BooleanResultModel
+	 * @author zhangry
+	 * @date 2017年6月7日 上午10:37:50
+	 */
+	public BooleanResultModel updateProject(int userId,int id){
+		BooleanResultModel result = new BooleanResultModel();
+		FacProjectModel projectModel = (FacProjectModel)supplierDao.findObjectByPK(FacProjectModel.class, id);
+		projectModel.setStatus((short) 4);
+		supplierDao.update(projectModel);
+		List<SysUserModel> users = supplierDao.getProprietors();
+		//发送邮件
+		Map<String,Object> velocityModel = new HashMap<>();
+		velocityModel.put("projectName", projectModel.getName());
+		velocityModel.put("href", webConfig.getSecureHost()+"/index");
+		List<String> mails = new ArrayList<>();
+		if(users!=null && users.size() > 0){
+			for(SysUserModel user : users){
+				mails.add(user.getEmail());
+			}
+		}
+		mailSender.sendMailAsync(mails, "项目评分",velocityModel, "scoreNotice.vm", ContentFormat.Html);
+		result.setResult(true);
+		return result;
 	}
 }

@@ -49,6 +49,10 @@
       				<div class="col-md-8" id="name_1"></div>
                 </div>
                 <div class="form-group row">
+                    <div class="col-md-3 text-right"><label>中标供应商：</label></div>
+      				<div class="col-md-8" id="supplierName"></div>
+                </div>
+                <div class="form-group row">
                     <div class="col-md-3 text-right"><label>项目类型：</label></div>
         			<div class="col-md-8" id="projectTypeName"></div>
                 </div>
@@ -116,18 +120,19 @@
                 	 url:'/project/list.json',
                 	 dataGridTable: $("#table_list_1"),
                      pagerId : '#pager_list_1',
-                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','简介','创建人','创建时间','状态','操作'],
+                	 colNames : ['ID','项目名称','项目编码','项目类型','投资规模（万）','创建人','创建时间','供应商','状态','简介','操作'],
                      colModel : [
-                                {name:'id', index:'id', width:100,align:"center",sortable:false},
-                                {name:'name', index:'name', width:150,align:"center",sortable:false,classes:'text'},
-                                {name:'serialNum', index:'serialNum', width:150,align:"center",sortable:false, hidden: true },
-                                {name:'projectTypeName', index:'projectTypeName',align:"center", width:250,sortable:false,classes:'text'},
+                                {name:'id', index:'id', width:50,align:"center",sortable:false},
+                                {name:'name', index:'name', width:150,align:"center",sortable:false,formatter: formatName,classes:'text'},
+                                {name:'serialNum', index:'serialNum', width:300,align:"center",sortable:false, hidden: true },
+                                {name:'projectTypeName', index:'projectTypeName',align:"center", width:100,sortable:false,classes:'text'},
                                 {name:'investment', index:'investment', width:150,align:"center",sortable:false},
-                                {name:'description', index:'description', width:400,align:"center",sortable:false,classes:'text'},
                                 {name:'createUserName', index:'createUserName',align:"center", width:150,sortable:false},
-                                {name:'createTime', index:'createTime',align:"center", width:150,formatter: syk.formatTime,sortable:false,classes:'text'},
-                                {name:'status', index:'status',align:"center", width:150,formatter: formatStatus,sortable:false},
-                                {name:'operate', index:'operate', width:150,align:"center",formatter: formatMenu,sortable:false},
+                                {name:'createTime', index:'createTime',align:"center", width:200,formatter: syk.formatTime,sortable:false,classes:'text'},
+                                {name:'supplierName', index:'supplierName',align:"center", width:250,sortable:false},
+                                {name:'status', index:'status',align:"center", width:100,formatter: formatStatus,sortable:false},
+                                {name:'description', index:'description', width:300,align:"center",sortable:false, hidden: true },
+                                {name:'operate', index:'operate', width:100,align:"center",formatter: formatMenu,sortable:false},
                               ]
                 });
     		},100);
@@ -146,6 +151,10 @@
         	}else if(cellvalue == 5){
         		return '评分完成';
         	}
+		}
+        
+        function formatName(cellvalue, options, rowObject) {
+       		return '<a onclick="look(' + rowObject.id + ',\''+cellvalue+'\');">'+cellvalue+'</a>';
 		}
         
         function loadProject(){
@@ -168,7 +177,10 @@
 	        if ([[${hasBidBtn}]] == true && rowObject.status == 1) {
 	           btns = btns + '<li><a href="#" onclick="bid(' + rowObject.id + ');">招标</a></li>';
 	        }
-        	btns = btns + '<li><a href="#" onclick="look(' + rowObject.id + ');">查看</a></li>';
+	        if ([[${hasBidBtn}]] == true && rowObject.status == 2) {
+		           btns = btns + '<li><a href="#" onclick="updateProject(' + rowObject.id + ');">项目完成</a></li>';
+		        }
+        	btns = btns + '<li><a onclick="look(' + rowObject.id + ',\''+rowObject.name+'\');">查看</a></li>';
 			return btns + '</ul></div>';
 		}
 
@@ -186,13 +198,14 @@
 	        syk.parent.sykModal.open({ url: "/pages/project/obj?id="+id, title: "编辑" + syk.getTitle(), top: '10%', ftitle: '', size: 500 });
 	    }
 	    
-	    function look(id) {
+	    function look(id,name) {
 	    	var rowObject = $("#table_list_1").jqGrid('getRowData', id);
-	        $("#name_1").html(rowObject.name);
+	        $("#name_1").html(name);
 	        $("#projectTypeName").html(rowObject.projectTypeName);
 	        $("#serialNum").html(rowObject.serialNum);
 	        $("#investment").html(rowObject.investment+"万");
 	        $("#description").html(rowObject.description);
+	        $("#supplierName").html(rowObject.supplierName);
 	        $('#project_view').modal('show').css({ "margin-top": "-70px" });
 	    }
 	    
@@ -207,7 +220,6 @@
 	    
 	    function saveBid() {
 	    	var id = $('#projectId').val();
-	    	alert(id);
 	    	var type  = $("#bidType").val();
 	    	if(type == ""){
 	    		layer.msg("请选择招标类型");
@@ -216,7 +228,6 @@
 	    	var params = {};
 	    	params.projectId = id;
 	    	params.bidType = type;
-	    	alert(JSON.stringify(params));
 	    	$.ajax({
 	            type: 'POST',
 	            contentType: 'application/json',
@@ -272,6 +283,23 @@
 	                }
 	            });
 	        });
+	    }
+	    
+	    function updateProject(id) {
+	    	$.ajax({
+                type: "post",
+                url: "/project/update_status.json?id="+id,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.result) {
+                        layer.msg('设置成功并给业主发送了评分邮件');
+                        $("#table_list_1").trigger("reloadGrid");
+                    }
+                },
+                error: function (errMsg) {
+                    syk.alertSysError();
+                }
+            });
 	    }
     //]]>
 </script>

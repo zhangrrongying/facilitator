@@ -1,0 +1,130 @@
+<form id="exportform" class="form-horizontal" role="form" data-toggle="validator">
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>企业名称：</label></div>
+        <div class="col-md-4" id="farmName" th:inline="text">[[${obj.name}]]</div>
+        <div class="col-md-3">
+        	<input id="licenseImgs" name="licenseImgs" type="hidden" th:value="${obj.licenseImgs}"/>
+        	<div id="fileName_1" style="display: inline;"></div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>企业法人：</label></div>
+        <div class="col-md-4" th:inline="text">[[${obj.corporation}]]</div>
+        <div class="col-md-3" id="fileName_2">
+        	<input id="identityCardImgs" name="identityCardImgs" type="hidden" th:value="${obj.identityCardImgs}"/>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>信用代码：</label></div>
+        <div class="col-md-5" th:inline="text">[[${obj.serialNum}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>企业法人电话：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.corporationPhone}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>企业简称：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.linkName}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>注册资本：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.registeredCapital}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>注册地址：</label></div>
+        <div class="col-md-6" id="description_1" th:inline="text">[[${obj.registerAddress}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>办公地址：</label></div>
+        <div class="col-md-6" id="description_1" th:inline="text">[[${obj.workAddress}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>联系人：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.linkMan}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>联系电话：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.linkPhone}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>座机：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.deskPhone}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>邮箱：</label></div>
+        <div class="col-md-6" th:inline="text">[[${obj.email}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>资质证书名称：</label></div>
+        <div class="col-md-4" id="farmName" th:inline="text">[[${obj.certificationName}]]</div>
+        <div class="col-md-3" id="fileName_3">
+      	  <input id="certificateImgs" name="certificateImgs" type="hidden" th:value="${obj.certificateImgs}"/>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>资质证书等级：</label></div>
+        <div class="col-md-6" id="description_1" th:inline="text">[[${obj.certificationLevel}]]</div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group row">
+        <div class="col-md-5 text-right"><label>企业简介：</label></div>
+        <div class="col-md-6" id="description_1" th:inline="text">[[${obj.description}]]</div>
+    </div>
+</form>
+<script type="text/javascript" th:inline="text">
+    //<![CDATA[
+   $(function () {
+	   var form = $("#exportform");
+	   if($("#licenseImgs").val() != null && $("#licenseImgs").val() != ""){
+       		$.each($("#licenseImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,1);
+	        });
+       }
+       
+       if($("#certificateImgs").val() != null && $("#certificateImgs").val() != ""){
+	        $.each($("#certificateImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,3);
+	        });
+       }
+       
+       if($("#identityCardImgs").val() != null && $("#identityCardImgs").val() != ""){
+       		$.each($("#identityCardImgs").val().split(','), function (index, obj) {
+	        	var name = obj.substring(obj.lastIndexOf("/")+1, obj.length);
+	            setImgs(obj,name,2);
+	        });
+       }
+       $('.fancybox').fancybox({
+           openEffect: 'none',
+           closeEffect: 'none'
+       });
+    });         
+   function setImgs(url,imageName,type){
+	   var url = encodeURI(url);
+	   var $attach = $("<div class='attach' type='"+type+"' imgName = '"+imageName+"'></div>");
+       var a = $("<a class='fancybox' target='_blank'><img src='" + url + "' style='width:40px;height:40px;'/></a>").prop("href", url);
+       $attach.append(a);
+       if(type == 1){
+    	   $attach.appendTo("#fileName_1");
+       }else if(type == 2){
+       	$attach.appendTo("#fileName_2");	
+       }else if(type == 3){
+       	$attach.appendTo("#fileName_3");
+       }
+   }
+    //]]>
+</script>

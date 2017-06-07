@@ -58,12 +58,20 @@ public class SupplierController {
 	@RequestMapping(value = "/supplier/obj", method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
 		HashMap<String, Object> variables = new HashMap<String, Object>();
-		int id = Integer.valueOf(request.getParameter("id"));		 
+		int id = Integer.valueOf(request.getParameter("id"));	
+		int isView = 0;
+		if(request.getParameter("isView") != null){
+			isView = Integer.valueOf(request.getParameter("isView"));
+		}
 		FacSupplierModel obj = null;
 		if(id > 0)
 			obj =supplierBiz.getModelById(id);
 		variables.put("obj", obj);
-		return thymeleafHelper.processHtml(variables,"pages/supplier", request, response, servletContext);
+		if(isView == 0){
+			return thymeleafHelper.processHtml(variables,"pages/supplier", request, response, servletContext);
+		}else{
+			return thymeleafHelper.processHtml(variables,"pages/supplier_view", request, response, servletContext);
+		}
 	} 
 	
 	@SSLTag

@@ -55,9 +55,9 @@
 		
 		<select id="queryBkdProjects" orm="facProject" templated="true">
 			<![CDATA[
-			SELECT a.*,b.`Name` AS projectTypeName,c.`Name` AS createUserName FROM fac_project a LEFT JOIN 
-			fac_project_type b ON a.Project_Type_Id = b.Id LEFT JOIN sys_user c ON a.Create_User = c.Id
-			WHERE a.Is_Del = 0
+			SELECT a.*,b.`Name` AS projectTypeName,c.`Name` AS createUserName,s.`Name` AS supplierName FROM fac_project a LEFT JOIN 
+			fac_project_type b ON a.Project_Type_Id = b.Id LEFT JOIN sys_user c ON a.Create_User = c.Id LEFT JOIN fac_supplier_project_relative d 
+			ON a.Id = d.Project_Id LEFT JOIN fac_supplier s ON d.Supplier_Id = s.Id WHERE a.Is_Del = 0
 		    
 		    #notEmpty($name)
 		      AND a.`Name` LIKE concat('%',:name,'%') 
@@ -128,6 +128,12 @@
 			<![CDATA[
 			SELECT c.*,b.Name AS supplierName,b.Id AS supplierId FROM fac_project c LEFT JOIN fac_supplier_project_relative a ON a.Project_Id = c.Id 
 			LEFT JOIN fac_supplier b ON a.Supplier_Id = b.Id WHERE c.Id = :id
+			]]>
+		</select>
+		
+		<select id="getProprietors" orm="sysUser" templated="true">
+			<![CDATA[
+			SELECT a.* FROM sys_user a LEFT JOIN sys_role_user b ON a.Id = b.User_Id WHERE b.Role_Id = 3
 			]]>
 		</select>
   	</sqlMap>

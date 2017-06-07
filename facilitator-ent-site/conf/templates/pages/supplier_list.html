@@ -64,9 +64,9 @@
         	var btns = '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">操作<span class="caret"></span></button>' +
       		'<ul class="dropdown-menu">';
       		if ([[${hasEditBtn}]] == true) {
-	           btns = btns + '<li><a href="#" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'\',\'编辑\');">编辑<i class="fa fa-edit"></i></a></li>';
+	           btns = btns + '<li><a href="#" onclick="javascript:return navPage(\'/pages/supplier/obj?id='+rowObject.id+'&isView=0\',\'编辑\');">编辑<i class="fa fa-edit"></i></a></li>';
 	        }
-        	btns = btns + '<li><a href="#" onclick="look(' + rowObject.id + ');">查看</a></li>';
+        	btns = btns + '<li><a href="#" onclick="supplierView(' + rowObject.id + ');">查看</a></li>';
 			return btns + '</ul></div>';
 		}
 
@@ -79,6 +79,11 @@
      		   '<i class="fa fa-minus-square"></i></a>';
      	   }
         }
+        
+        function supplierView(id) {
+            syk.parent.sykModal.open({ url: "/pages/supplier/obj?id="+id+"&isView=1", title: "供应商详情", top: '10%', ftitle: '', size: 600 , isSubmit: false});
+        }
+        
         function delSupplier() {
 	        var rowIds = jQuery("#table_list_1").jqGrid('getGridParam', 'selarrrow');
 	        if (rowIds == null || rowIds == '') {
