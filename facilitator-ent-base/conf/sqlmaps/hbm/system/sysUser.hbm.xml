@@ -41,5 +41,10 @@
                 <comment>登录次数</comment>
             </column>
         </property>
+         <property name="supplierId" type="java.lang.Integer">
+            <column name="Supplier_Id" not-null="true">
+                <comment>供应商Id</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

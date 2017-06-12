@@ -86,6 +86,7 @@ public class HomeController {
 		model.addAttribute("projectList", projectList);
 		model.addAttribute("menus", rootMenu);
 		model.addAttribute("userName", authData.getUserName());
+		model.addAttribute("roleName", role.getName());
 
 		model.addAttribute("authData", authData);
 		if (authData != null) {

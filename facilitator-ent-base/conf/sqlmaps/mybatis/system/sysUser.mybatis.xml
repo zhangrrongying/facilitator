@@ -52,7 +52,7 @@
 		<update orm="sysUser" id="updateUser" templated="true">
 		<![CDATA[
 			update sys_user a,sys_role_user r 
-			set r.Role_Id=:roleId,a.UserName=:userName, a.Name=:name,a.Email=:email,a.Phone= :phone,a.Status=:status
+			set r.Role_Id=:roleId,a.UserName=:userName, a.Name=:name,a.Email=:email,a.Phone= :phone,a.Status=:status,a.Supplier_Id=:supplierId 
 			WHERE  r.User_Id=a.Id AND a.Id=:id
 		]]>
 		</update>

@@ -213,4 +213,17 @@ public class SupplierDao extends SpringGuzzBaseDao {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		return this.list("getProprietors",params);
 	}
+	
+	/**
+	 * 查询供应商
+	 * @return
+	 * @return List<FacSupplierModel>
+	 * @author zhangry
+	 * @date 2017年6月12日 下午9:15:47
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FacSupplierModel> getSuppliers(){
+		SearchExpression se = SearchExpression.forLoadAll(FacSupplierModel.class);
+		return this.list(se);
+	}
 }

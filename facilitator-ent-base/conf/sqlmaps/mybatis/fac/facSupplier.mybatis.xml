@@ -120,7 +120,7 @@
 		<select id="getBidProjectListByUserId" orm="facProject" templated="true">
 			<![CDATA[
 			SELECT b.* FROM fac_supplier_project_relative a LEFT JOIN fac_project b ON b.Id = a.Project_Id 
-			LEFT JOIN fac_supplier c ON a.Supplier_Id = c.Id WHERE c.Create_User = :userId
+			LEFT JOIN fac_supplier c ON a.Supplier_Id = c.Id LEFT JOIN sys_user d ON c.Id = d.Supplier_Id WHERE d.Id = :userId
 			]]>
 		</select>
 		

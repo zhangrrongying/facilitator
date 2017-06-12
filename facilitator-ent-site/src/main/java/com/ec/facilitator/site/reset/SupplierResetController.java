@@ -125,6 +125,12 @@ public class SupplierResetController {
 			BooleanResultModel br = new BooleanResultModel();
 			br.setResult( supplierBiz.delSupplier(supplierIds));
 			return br;
-			
+		}
+		
+		@AuthTag
+		@SSLTag
+		@RequestMapping(value = "/suppliers.json", method = RequestMethod.GET)
+		public @ResponseBody List<FacSupplierModel> getSuppliers() throws Exception {
+			return supplierBiz.getSuppliers();
 		}
 }

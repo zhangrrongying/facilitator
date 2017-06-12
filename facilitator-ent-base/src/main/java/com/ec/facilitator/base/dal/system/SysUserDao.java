@@ -163,6 +163,7 @@ public class SysUserDao extends SpringGuzzBaseDao {
 		}else{
 			params.put("status", user.getStatus());
 		}
+		params.put("supplierId", user.getSupplierId());
 		return this.executeUpdate("updateUser", params) > 0;
 	}
 	

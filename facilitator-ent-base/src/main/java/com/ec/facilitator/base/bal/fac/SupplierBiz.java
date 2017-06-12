@@ -379,5 +379,16 @@ public class SupplierBiz {
 		mailSender.sendMailAsync(mails, "项目评分",velocityModel, "scoreNotice.vm", ContentFormat.Html);
 		result.setResult(true);
 		return result;
+	} 
+	
+	/**
+	 * 查询供应商
+	 * @return
+	 * @return List<FacSupplierModel>
+	 * @author zhangry
+	 * @date 2017年6月12日 下午9:14:36
+	 */
+	public List<FacSupplierModel> getSuppliers(){
+		return supplierDao.getSuppliers();
 	}
 }
